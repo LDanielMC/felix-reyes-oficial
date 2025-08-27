@@ -1,5 +1,8 @@
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
+import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -66,182 +69,336 @@ export const Contact = () => {
     <section id="contacto" className="section-padding bg-gradient-subtle">
       <div className="container-custom">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6">
+        <motion.div 
+          className="text-center mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, threshold: 0.3 }}
+          variants={fadeInUp}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h2 
+            className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6"
+            variants={fadeInUp}
+            transition={{ delay: 0.2 }}
+          >
             Contáctanos
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-3xl mx-auto"
+            variants={fadeInUp}
+            transition={{ delay: 0.4 }}
+          >
             Estamos aquí para ayudarle. Comuníquese con nosotros para una consulta 
             gratuita y descubra cómo podemos impulsar el éxito de su empresa.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Contact Information */}
-          <div className="lg:col-span-1">
-            <h3 className="text-2xl font-heading font-bold text-primary mb-8">
+          <motion.div 
+            className="lg:col-span-1"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, threshold: 0.3 }}
+            variants={fadeInLeft}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h3 
+              className="text-2xl font-heading font-bold text-primary mb-8"
+              variants={fadeInUp}
+              transition={{ delay: 0.2 }}
+            >
               Información de Contacto
-            </h3>
+            </motion.h3>
             
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="card-elegant">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <info.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
-                      {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-muted-foreground text-sm mb-1">
-                          {detail}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <StaggerContainer delay={0.1}>
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
+                  <StaggerItem key={index}>
+                    <motion.div 
+                      className="card-elegant"
+                      whileHover={{ 
+                        scale: 1.02,
+                        transition: { type: "spring", stiffness: 400, damping: 17 }
+                      }}
+                    >
+                      <div className="flex items-start space-x-4">
+                        <motion.div 
+                          className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0"
+                          whileHover={{ 
+                            scale: 1.1,
+                            backgroundColor: "rgba(59, 130, 246, 0.2)",
+                            transition: { duration: 0.3 }
+                          }}
+                        >
+                          <motion.div
+                            whileHover={{ 
+                              rotate: 360,
+                              transition: { duration: 0.6 }
+                            }}
+                          >
+                            <info.icon className="h-6 w-6 text-primary" />
+                          </motion.div>
+                        </motion.div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
+                          {info.details.map((detail, idx) => (
+                            <motion.p 
+                              key={idx} 
+                              className="text-muted-foreground text-sm mb-1"
+                              whileHover={{ 
+                                color: "#3b82f6",
+                                transition: { duration: 0.3 }
+                              }}
+                            >
+                              {detail}
+                            </motion.p>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </div>
+            </StaggerContainer>
 
             {/* CTA */}
-            <div className="mt-8 p-6 bg-primary rounded-xl text-white">
+            <motion.div 
+              className="mt-8 p-6 bg-primary rounded-xl text-white"
+              variants={fadeInUp}
+              transition={{ delay: 0.6 }}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { type: "spring", stiffness: 400, damping: 17 }
+              }}
+            >
               <h4 className="font-heading font-bold text-xl mb-3">
                 ¿Necesita atención inmediata?
               </h4>
               <p className="text-white/90 mb-4">
                 Llámenos ahora para una consulta telefónica gratuita.
               </p>
-              <button className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors duration-200">
+              <motion.button 
+                className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-white/90 transition-colors duration-200"
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 400, damping: 17 }
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
                 Llamar Ahora
-              </button>
-            </div>
-          </div>
+              </motion.button>
+            </motion.div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="card-elegant">
-              <h3 className="text-2xl font-heading font-bold text-primary mb-8">
+          <motion.div 
+            className="lg:col-span-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, threshold: 0.3 }}
+            variants={fadeInRight}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <motion.div 
+              className="card-elegant"
+              whileHover={{ 
+                scale: 1.01,
+                transition: { type: "spring", stiffness: 400, damping: 17 }
+              }}
+            >
+              <motion.h3 
+                className="text-2xl font-heading font-bold text-primary mb-8"
+                variants={fadeInUp}
+                transition={{ delay: 0.4 }}
+              >
                 Solicitar Consulta Gratuita
-              </h3>
+              </motion.h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+              <motion.form 
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+                variants={fadeInUp}
+                transition={{ delay: 0.6 }}
+              >
+                <StaggerContainer delay={0.1}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <StaggerItem>
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                          Nombre Completo *
+                        </label>
+                        <motion.input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
+                          value={formData.name}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                          placeholder="Su nombre completo"
+                          whileFocus={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
+                        />
+                      </div>
+                    </StaggerItem>
+
+                    <StaggerItem>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                          Email *
+                        </label>
+                        <motion.input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                          placeholder="su@email.com"
+                          whileFocus={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
+                        />
+                      </div>
+                    </StaggerItem>
+                  </div>
+                </StaggerContainer>
+
+                <StaggerContainer delay={0.1}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <StaggerItem>
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                          Teléfono *
+                        </label>
+                        <motion.input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          required
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                          placeholder="+52 (33) 1234-5678"
+                          whileFocus={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
+                        />
+                      </div>
+                    </StaggerItem>
+
+                    <StaggerItem>
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
+                          Empresa
+                        </label>
+                        <motion.input
+                          type="text"
+                          id="company"
+                          name="company"
+                          value={formData.company}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                          placeholder="Nombre de su empresa"
+                          whileFocus={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                          }}
+                        />
+                      </div>
+                    </StaggerItem>
+                  </div>
+                </StaggerContainer>
+
+                <StaggerItem>
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Nombre Completo *
+                    <label htmlFor="service" className="block text-sm font-medium text-foreground mb-2">
+                      Servicio de Interés *
                     </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
+                    <motion.select
+                      id="service"
+                      name="service"
                       required
-                      value={formData.name}
+                      value={formData.service}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="Su nombre completo"
-                    />
+                      whileFocus={{ 
+                        scale: 1.02,
+                        transition: { duration: 0.2 }
+                      }}
+                    >
+                      <option value="">Seleccione un servicio</option>
+                      {services.map((service, index) => (
+                        <option key={index} value={service}>{service}</option>
+                      ))}
+                    </motion.select>
                   </div>
+                </StaggerItem>
 
+                <StaggerItem>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email *
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                      Mensaje *
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
+                    <motion.textarea
+                      id="message"
+                      name="message"
                       required
-                      value={formData.email}
+                      rows={5}
+                      value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="su@email.com"
+                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
+                      placeholder="Descríbanos sus necesidades específicas..."
+                      whileFocus={{ 
+                        scale: 1.02,
+                        transition: { duration: 0.2 }
+                      }}
                     />
                   </div>
-                </div>
+                </StaggerItem>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Teléfono *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="+52 (33) 1234-5678"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                      Empresa
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="Nombre de su empresa"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-foreground mb-2">
-                    Servicio de Interés *
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    required
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                <StaggerItem>
+                  <motion.button
+                    type="submit"
+                    className="w-full btn-secondary flex items-center justify-center space-x-2"
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { type: "spring", stiffness: 400, damping: 17 }
+                    }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <option value="">Seleccione un servicio</option>
-                    {services.map((service, index) => (
-                      <option key={index} value={service}>{service}</option>
-                    ))}
-                  </select>
-                </div>
+                    <motion.div
+                      animate={{ 
+                        x: [0, 5, 0],
+                        transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+                      }}
+                    >
+                      <Send className="h-5 w-5" />
+                    </motion.div>
+                    <span>Enviar Solicitud</span>
+                  </motion.button>
+                </StaggerItem>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Mensaje *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
-                    placeholder="Descríbanos sus necesidades específicas..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full btn-secondary flex items-center justify-center space-x-2"
-                >
-                  <Send className="h-5 w-5" />
-                  <span>Enviar Solicitud</span>
-                </button>
-
-                <p className="text-sm text-muted-foreground text-center">
-                  Al enviar este formulario, acepta que nos comuniquemos con usted 
-                  para proporcionarle la información solicitada.
-                </p>
-              </form>
-            </div>
-          </div>
+                <StaggerItem>
+                  <motion.p 
+                    className="text-sm text-muted-foreground text-center"
+                    variants={fadeInUp}
+                    transition={{ delay: 0.2 }}
+                  >
+                    Al enviar este formulario, acepta que nos comuniquemos con usted 
+                    para proporcionarle la información solicitada.
+                  </motion.p>
+                </StaggerItem>
+              </motion.form>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

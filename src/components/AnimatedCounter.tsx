@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useCounterAnimation } from '@/hooks/use-animations';
 
 interface AnimatedCounterProps {
   end: number;
@@ -10,54 +11,29 @@ interface AnimatedCounterProps {
 
 export const AnimatedCounter = ({ 
   end, 
-  duration = 2000, 
+  duration = 2, 
   suffix = '', 
   prefix = '',
   className = ''
 }: AnimatedCounterProps) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const countRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
-          
-          const increment = end / (duration / 16);
-          let current = 0;
-          
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= end) {
-              setCount(end);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, 16);
-          
-          return () => clearInterval(timer);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (countRef.current) {
-      observer.observe(countRef.current);
-    }
-
-    return () => {
-      if (countRef.current) {
-        observer.unobserve(countRef.current);
-      }
-    };
-  }, [end, duration, isVisible]);
+  const { count, ref } = useCounterAnimation(end, duration);
 
   return (
-    <span ref={countRef} className={`counter ${className}`}>
+    <motion.span 
+      ref={ref} 
+      className={`counter ${className}`}
+      initial={{ opacity: 0, scale: 0.5 }}
+      whileInView={{ 
+        opacity: 1, 
+        scale: 1,
+        transition: {
+          duration: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94]
+        }
+      }}
+      viewport={{ once: true, threshold: 0.5 }}
+    >
       {prefix}{count.toLocaleString()}{suffix}
-    </span>
+    </motion.span>
   );
 };

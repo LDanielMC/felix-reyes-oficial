@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useHeaderScroll } from '@/hooks/use-header-scroll';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isVisible, isScrolled } = useHeaderScroll();
 
   const navigationItems = [
     { name: 'Inicio', href: '#inicio' },
@@ -13,91 +16,260 @@ export const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <>
+    <motion.header 
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border transition-all duration-300 ${
+        isScrolled ? 'bg-background/95 shadow-lg' : 'bg-background/90'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ 
+        y: isVisible ? 0 : -120,
+        opacity: isVisible ? 1 : 0
+      }}
+      transition={{ 
+        duration: 0.4, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        type: "spring",
+        stiffness: 100,
+        damping: 20
+      }}
+    >
       {/* Top Bar */}
-      <div className="border-b border-border/50">
+      <motion.div 
+        className="border-b border-border/50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+      >
         <div className="container-custom">
           <div className="flex items-center justify-between py-2 text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2 text-muted-foreground">
+            <motion.div 
+              className="flex items-center space-x-6"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
+              <motion.div 
+                className="flex items-center space-x-2 text-muted-foreground"
+                whileHover={{ 
+                  color: "#3b82f6",
+                  transition: { duration: 0.3 }
+                }}
+              >
                 <Phone className="h-4 w-4" />
                 <span>+52 (33) 3615-4291</span>
-              </div>
-              <div className="flex items-center space-x-2 text-muted-foreground">
+              </motion.div>
+              <motion.div 
+                className="flex items-center space-x-2 text-muted-foreground"
+                whileHover={{ 
+                  color: "#3b82f6",
+                  transition: { duration: 0.3 }
+                }}
+              >
                 <Mail className="h-4 w-4" />
                 <span>contacto@felixreyes.com</span>
-              </div>
-            </div>
-            <div className="hidden md:block">
+              </motion.div>
+            </motion.div>
+            <motion.div 
+              className="hidden md:block"
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
               <span className="text-primary font-semibold">Más de 50 años de experiencia</span>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Navigation */}
       <div className="container-custom">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <div className="flex items-center">
-            <div className="text-2xl font-heading font-bold text-primary">
+          <motion.div 
+            className="flex items-center"
+            initial={{ x: -30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <motion.div 
+              className="text-2xl font-heading font-bold text-primary"
+              whileHover={{ 
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 }
+              }}
+            >
               Félix Reyes
               <span className="block text-sm font-normal text-muted-foreground">Contadores S.A. de C.V.</span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <a
+          <motion.nav 
+            className="hidden lg:flex items-center space-x-8"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+          >
+            {navigationItems.map((item, index) => (
+              <motion.a
                 key={item.name}
                 href={item.href}
                 className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
+                whileHover={{ 
+                  y: -2,
+                  transition: { type: "spring", stiffness: 400, damping: 17 }
+                }}
               >
                 {item.name}
-              </a>
+              </motion.a>
             ))}
-          </nav>
+          </motion.nav>
 
           {/* CTA Button */}
-          <div className="hidden lg:block">
-            <button className="btn-secondary">
+          <motion.div 
+            className="hidden lg:block"
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 1.0, duration: 0.6 }}
+          >
+            <motion.button 
+              className="btn-secondary"
+              whileHover={{ 
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 }
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
               Consulta Gratuita
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
             className="lg:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            <AnimatePresence mode="wait">
+              {isMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="h-6 w-6" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu className="h-6 w-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-background">
-          <div className="container-custom py-4">
-            <nav className="flex flex-col space-y-4">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className="lg:hidden border-t border-border bg-background"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <div className="container-custom py-4">
+              <motion.nav 
+                className="flex flex-col space-y-4"
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.4 }}
+              >
+                {navigationItems.map((item, index) => (
+                  <motion.a
+                    key={item.name}
+                    href={item.href}
+                    className="text-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
+                    whileHover={{ 
+                      x: 10,
+                      transition: { type: "spring", stiffness: 400, damping: 17 }
+                    }}
+                  >
+                    {item.name}
+                  </motion.a>
+                ))}
+                <motion.button 
+                  className="btn-secondary mt-4"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.4 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { type: "spring", stiffness: 400, damping: 17 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {item.name}
-                </a>
-              ))}
-              <button className="btn-secondary mt-4">
-                Consulta Gratuita
-              </button>
-            </nav>
-          </div>
-        </div>
+                  Consulta Gratuita
+                </motion.button>
+              </motion.nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+    
+    {/* Floating Navigation Button - aparece cuando el header está oculto */}
+    <AnimatePresence>
+      {!isVisible && (
+        <motion.div
+          className="fixed top-4 right-4 z-50"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.button
+            className="bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/90 transition-colors duration-200"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            title="Volver al inicio"
+          >
+            <motion.div
+              animate={{ 
+                y: [0, -2, 0],
+                transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+              }}
+            >
+              ↑
+            </motion.div>
+          </motion.button>
+        </motion.div>
       )}
-    </header>
+    </AnimatePresence>
+    </>
   );
 };
