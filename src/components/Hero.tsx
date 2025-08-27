@@ -1,5 +1,5 @@
 import { AnimatedCounter } from './AnimatedCounter';
-import { CheckCircle, Award, Users, TrendingUp } from 'lucide-react';
+import { CheckCircle, Award, Users, TrendingUp, DollarSign } from 'lucide-react';
 import heroImage from '@/assets/hero-accounting.jpg';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeInLeft, fadeInRight, scaleIn } from '@/hooks/use-animations';
@@ -136,7 +136,7 @@ export const Hero = () => {
                 suffix="+"
                 className="text-3xl lg:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium">Clientes Satisfechos</p>
+              <p className="text-muted-foreground font-medium">CLIENTES TOTALES</p>
             </motion.div>
 
             {/* Stats Card 2 */}
@@ -157,16 +157,40 @@ export const Hero = () => {
                 <TrendingUp className="h-8 w-8 text-secondary mx-auto mb-4" />
               </motion.div>
               <AnimatedCounter 
-                end={652} 
+                end={15} 
                 suffix="+"
                 className="text-3xl lg:text-4xl font-bold text-secondary block mb-2"
               />
-              <p className="text-muted-foreground font-medium">Casos de Éxito</p>
+              <p className="text-muted-foreground font-medium">AÑOS EN EL NEGOCIO</p>
             </motion.div>
 
             {/* Stats Card 3 */}
             <motion.div 
-              className="card-elegant bg-white/95 backdrop-blur-sm text-center col-span-2"
+              className="card-elegant bg-white/95 backdrop-blur-sm text-center"
+              variants={scaleIn}
+              transition={{ delay: 0.8 }}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400, damping: 17 }
+              }}
+            >
+              <motion.div
+                initial={{ rotate: 0 }}
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
+                <DollarSign className="h-8 w-8 text-accent mx-auto mb-4" />
+              </motion.div>
+              <AnimatedCounter 
+                end={178} 
+                suffix="+"
+                className="text-3xl lg:text-4xl font-bold text-accent block mb-2"
+              />
+              <p className="text-muted-foreground font-medium">MDP FACTURADOS</p>
+            </motion.div>
+
+            <motion.div 
+              className="card-elegant bg-white/95 backdrop-blur-sm text-center"
               variants={scaleIn}
               transition={{ delay: 1.0 }}
               whileHover={{ 
@@ -182,11 +206,11 @@ export const Hero = () => {
                 <Award className="h-8 w-8 text-accent mx-auto mb-4" />
               </motion.div>
               <AnimatedCounter 
-                end={50} 
+                end={652} 
                 suffix="+"
                 className="text-3xl lg:text-4xl font-bold text-accent block mb-2"
               />
-              <p className="text-muted-foreground font-medium">Años de Experiencia Profesional</p>
+              <p className="text-muted-foreground font-medium">CASOS DE ÉXITO</p>
             </motion.div>
           </motion.div>
         </div>

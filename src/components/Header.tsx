@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 
 export const Header = () => {
@@ -8,11 +9,11 @@ export const Header = () => {
   const { isVisible, isScrolled } = useHeaderScroll();
 
   const navigationItems = [
-    { name: 'Inicio', href: '#inicio' },
-    { name: 'Nosotros', href: '#nosotros' },
-    { name: 'Servicios', href: '#servicios' },
-    { name: 'Noticias', href: '#noticias' },
-    { name: 'Contacto', href: '#contacto' },
+    { name: 'Inicio', href: '/' },
+    { name: 'Nosotros', href: '/#nosotros' },
+    { name: 'Servicios', href: '/servicios' },
+    { name: 'Noticias', href: '/#noticias' },
+    { name: 'Contacto', href: '/#contacto' },
   ];
 
   return (
@@ -112,10 +113,8 @@ export const Header = () => {
             transition={{ delay: 0.7, duration: 0.6 }}
           >
             {navigationItems.map((item, index) => (
-              <motion.a
+              <motion.div
                 key={item.name}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.8 + index * 0.1, duration: 0.6 }}
@@ -124,8 +123,13 @@ export const Header = () => {
                   transition: { type: "spring", stiffness: 400, damping: 17 }
                 }}
               >
-                {item.name}
-              </motion.a>
+                <Link
+                  to={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-200 font-medium block"
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
             ))}
           </motion.nav>
 
@@ -202,22 +206,15 @@ export const Header = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
               >
-                {navigationItems.map((item, index) => (
-                  <motion.a
+                {navigationItems.map((item) => (
+                  <Link
                     key={item.name}
-                    href={item.href}
-                    className="text-foreground hover:text-primary transition-colors duration-200 font-medium py-2"
+                    to={item.href}
+                    className="text-foreground/90 hover:text-primary transition-colors px-3 py-2 text-sm font-medium block"
                     onClick={() => setIsMenuOpen(false)}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
-                    whileHover={{ 
-                      x: 10,
-                      transition: { type: "spring", stiffness: 400, damping: 17 }
-                    }}
                   >
                     {item.name}
-                  </motion.a>
+                  </Link>
                 ))}
                 <motion.button 
                   className="btn-secondary mt-4"
