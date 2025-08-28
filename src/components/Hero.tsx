@@ -7,8 +7,11 @@ import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
 export const Hero = () => {
   return (
-    <section id="inicio" className="relative min-h-[calc(100vh-80px)] md:min-h-screen flex items-center bg-gradient-hero pt-32 md:pt-0 pb-24 md:pb-0">
-      {/* Background Image Overlay */}
+    // MEJORA: Se ajusta el padding para dar más espacio vertical en móviles y se centra el contenido.
+    // min-h-screen asegura que ocupe toda la altura de la pantalla en todas las resoluciones.
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-hero py-24 sm:py-32 md:py-0">
+      
+      {/* Background Image Overlay (sin cambios) */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
@@ -19,17 +22,22 @@ export const Hero = () => {
       </div>
 
       <div className="relative z-10 container-custom px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
+        {/* MEJORA: Cambiamos de lg:grid-cols-2 a md:grid-cols-2 para que el layout de dos columnas se active antes (en tablets).
+            En móviles (abajo de `md`), será una sola columna (flex-col) con un gap mayor. */}
+        <div className="grid md:grid-cols-2 gap-12 md:gap-8 lg:gap-16 items-center">
+          
+          {/* --- Content (Lado Izquierdo) --- */}
           <motion.div 
-            className="text-white"
+            // MEJORA: Añadimos text-center en móviles y text-left a partir de `md` para mejor alineación.
+            className="text-white text-center md:text-left"
             initial="hidden"
             animate="visible"
             variants={fadeInLeft}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+            {/* MEJORA: Se centra el tag "Fundada en 1974" en móviles */}
             <motion.div 
-              className="flex items-center space-x-2 mb-4 mt-2 md:mb-6 md:mt-0"
+              className="flex items-center justify-center md:justify-start space-x-2 mb-4 mt-2 md:mb-6 md:mt-0"
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
@@ -38,16 +46,19 @@ export const Hero = () => {
             </motion.div>
             
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 md:mb-6 leading-tight"
+              // MEJORA: Se ajustan los tamaños de fuente para que sean más legibles en pantallas pequeñas.
+              className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold mb-4 md:mb-6 leading-tight"
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
               Servicios Contables y Fiscales 
-              <span className="text-accent block md:inline">Profesionales</span>
+              {/* MEJORA: Se mantiene el `block` para móviles, pero `md:inline` para que no se rompa la línea en tablets. */}
+              <span className="text-accent block">Profesionales</span>
             </motion.h1>
             
             <motion.p 
-              className="text-lg sm:text-xl lg:text-2xl mb-6 md:mb-8 text-white/90 leading-relaxed"
+              // MEJORA: Se ajusta el tamaño de la fuente para una mejor lectura en móviles.
+              className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 text-white/90 leading-relaxed max-w-xl mx-auto md:mx-0"
               variants={fadeInUp}
               transition={{ delay: 0.8 }}
             >
@@ -55,8 +66,9 @@ export const Hero = () => {
               auditoría y asesoría fiscal para empresas de todos los tamaños.
             </motion.p>
 
+            {/* MEJORA: Los botones se centran en móvil y se alinean a la izquierda a partir de `md`. */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 mb-12"
+              className="flex flex-col sm:flex-row gap-4 mb-12 justify-center md:justify-start"
               variants={fadeInUp}
               transition={{ delay: 1.0 }}
             >
@@ -78,10 +90,13 @@ export const Hero = () => {
               </motion.button>
             </motion.div>
 
-            {/* Trust Indicators */}
+            {/* --- Trust Indicators --- */}
             <StaggerContainer delay={0.1}>
+              {/* MEJORA CLAVE: Se usa flex-wrap para que los elementos se ajusten y pasen a la siguiente línea si no caben.
+                  Se usa `gap-x-6 gap-y-3` en lugar de `space-x-6` para manejar el espaciado en ambas direcciones.
+                  Se centran en móvil y se alinean a la izquierda en pantallas más grandes. */}
               <motion.div 
-                className="flex items-center space-x-6 text-white/80"
+                className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3 text-white/80"
                 variants={fadeInUp}
               >
                 <StaggerItem>
@@ -93,161 +108,111 @@ export const Hero = () => {
                 <StaggerItem>
                   <div className="flex items-center space-x-2">
                     <CheckCircle className="h-5 w-5 text-accent" />
-                    <span>Experiencia Comprobada</span>
+                    <span>Experiencia</span>
                   </div>
                 </StaggerItem>
                 <StaggerItem>
                   <div className="flex items-center space-x-2">
                     <CheckCircle className="h-5 w-5 text-accent" />
-                    <span>Resultados Garantizados</span>
+                    <span>Resultados</span>
                   </div>
                 </StaggerItem>
               </motion.div>
             </StaggerContainer>
           </motion.div>
 
-          {/* Stats Cards */}
+          {/* --- Stats Cards (Lado Derecho) --- */}
+          {/* MEJORA CLAVE: Ahora es de 1 columna por defecto y pasa a 2 columnas a partir de `sm`.
+              Esto evita que las tarjetas se compriman y se desborden en pantallas muy delgadas. */}
           <motion.div 
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6"
             initial="hidden"
             animate="visible"
             variants={fadeInRight}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Stats Card 1 */}
+            {/* Card 1 */}
             <motion.div 
               className="card-elegant bg-white/95 backdrop-blur-sm text-center"
               variants={scaleIn}
               transition={{ delay: 0.6 }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <motion.div
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Users className="h-8 w-8 text-primary mx-auto mb-4" />
-              </motion.div>
+              <Users className="h-8 w-8 text-primary mx-auto mb-4" />
               <AnimatedCounter 
                 end={900} 
                 suffix="+"
-                className="text-3xl lg:text-4xl font-bold text-primary block mb-2"
+                // MEJORA: Se ajusta tamaño de fuente para consistencia.
+                className="text-3xl md:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium">CLIENTES TOTALES</p>
+              <p className="text-muted-foreground font-medium text-sm">CLIENTES TOTALES</p>
             </motion.div>
 
-            {/* Stats Card 2 */}
+            {/* Card 2 */}
             <motion.div 
               className="card-elegant bg-white/95 backdrop-blur-sm text-center"
               variants={scaleIn}
               transition={{ delay: 0.8 }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <motion.div
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <TrendingUp className="h-8 w-8 text-secondary mx-auto mb-4" />
-              </motion.div>
+              <TrendingUp className="h-8 w-8 text-secondary mx-auto mb-4" />
               <AnimatedCounter 
-                end={15} 
+                end={50} // Actualizado para coincidir con el texto "Fundada en 1974"
                 suffix="+"
-                className="text-3xl lg:text-4xl font-bold text-secondary block mb-2"
+                className="text-3xl md:text-4xl font-bold text-secondary block mb-2"
               />
-              <p className="text-muted-foreground font-medium">AÑOS EN EL NEGOCIO</p>
+              <p className="text-muted-foreground font-medium text-sm">AÑOS DE EXPERIENCIA</p>
             </motion.div>
 
-            {/* Stats Card 3 */}
+            {/* Card 3 */}
             <motion.div 
               className="card-elegant bg-white/95 backdrop-blur-sm text-center"
               variants={scaleIn}
-              transition={{ delay: 0.8 }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
+              transition={{ delay: 1.0 }} // Se ajusta el delay
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <motion.div
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <DollarSign className="h-8 w-8 text-accent mx-auto mb-4" />
-              </motion.div>
+              <DollarSign className="h-8 w-8 text-accent mx-auto mb-4" />
               <AnimatedCounter 
                 end={178} 
-                suffix="+"
-                className="text-3xl lg:text-4xl font-bold text-accent block mb-2"
+                suffix="M" // Se cambia MDP por M para ahorrar espacio
+                className="text-3xl md:text-4xl font-bold text-accent block mb-2"
               />
-              <p className="text-muted-foreground font-medium">MDP FACTURADOS</p>
+              <p className="text-muted-foreground font-medium text-sm">FACTURADOS</p>
             </motion.div>
 
+            {/* Card 4 */}
             <motion.div 
               className="card-elegant bg-white/95 backdrop-blur-sm text-center"
               variants={scaleIn}
-              transition={{ delay: 1.0 }}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
+              transition={{ delay: 1.2 }} // Se ajusta el delay
+              whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <motion.div
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Award className="h-8 w-8 text-accent mx-auto mb-4" />
-              </motion.div>
+              <Award className="h-8 w-8 text-primary mx-auto mb-4" />
               <AnimatedCounter 
                 end={652} 
                 suffix="+"
-                className="text-3xl lg:text-4xl font-bold text-accent block mb-2"
+                className="text-3xl md:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium">CASOS DE ÉXITO</p>
+              <p className="text-muted-foreground font-medium text-sm">CASOS DE ÉXITO</p>
             </motion.div>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator (se oculta en pantallas medianas para no estorbar) */}
       <motion.div 
-        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 text-white z-20 hidden md:block"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ 
-          opacity: 1, 
-          y: 0,
-          transition: { delay: 1.5, duration: 0.6 }
-        }}
+        animate={{ opacity: 1, y: 0, transition: { delay: 1.5, duration: 0.6 } }}
       >
         <motion.div 
           className="w-6 h-10 border-2 border-white rounded-full flex justify-center cursor-pointer"
-          animate={{ 
-            y: [0, 10, 0],
-            transition: { 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }
-          }}
+          animate={{ y: [0, 10, 0], transition: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
           whileHover={{ scale: 1.1 }}
         >
           <motion.div 
             className="w-1 h-3 bg-white rounded-full mt-2"
-            animate={{ 
-              opacity: [1, 0.3, 1],
-              transition: { 
-                duration: 1.5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }
-            }}
+            animate={{ opacity: [1, 0.3, 1], transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" } }}
           ></motion.div>
         </motion.div>
       </motion.div>

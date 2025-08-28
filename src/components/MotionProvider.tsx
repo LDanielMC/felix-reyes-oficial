@@ -37,7 +37,7 @@ export const MotionProvider = ({ children }: MotionProviderProps) => {
   }, []);
 
   const motionConfig = {
-    reducedMotion: reducedMotion ? 'always' : 'never',
+    reducedMotion: reducedMotion ? 'always' as const : 'never' as const,
   };
 
   return (
