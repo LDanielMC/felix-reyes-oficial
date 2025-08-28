@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 
@@ -151,20 +151,52 @@ export const ServiceDetail = () => {
     );
   }
 
+  // Animación de página
+  const pageVariants: Variants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -20,
+      transition: { duration: 0.3, ease: [0.4, 0, 0.6, 1] }
+    }
+  };
+
+  // Animación de elementos hijos
+  const itemVariants: Variants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1] as const // Using a smooth cubic-bezier curve
+      }
+    }
+  };
+
   return (
     <div className="relative pt-40">
       <motion.div 
         className="min-h-screen bg-background pb-24 sm:pb-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        key={serviceId} // Importante para reiniciar animaciones al cambiar de servicio
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
+            variants={itemVariants}
         >
           <Link
             to="/servicios"
@@ -178,16 +210,12 @@ export const ServiceDetail = () => {
 
         <motion.div
           className="bg-background rounded-2xl shadow-xl overflow-hidden"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          variants={itemVariants}
         >
           <div className="p-8 md:p-12 lg:flex lg:items-start lg:gap-12">
             <motion.div
               className="lg:w-1/3"
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              variants={itemVariants}
             >
               <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-4xl mb-6">
                 {service.icon}
@@ -198,25 +226,45 @@ export const ServiceDetail = () => {
               {service.benefits && (
                 <motion.div
                   className="bg-primary/5 p-6 rounded-xl mb-8"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
+                  variants={itemVariants}
                 >
-                  <h3 className="font-semibold text-lg text-foreground mb-3">Beneficios clave</h3>
-                  <ul className="space-y-2">
+                  <motion.h3 
+                    className="font-medium text-foreground mb-3"
+                    variants={itemVariants}
+                  >
+                    Beneficios:
+                  </motion.h3>
+                  <motion.ul 
+                    className="space-y-2"
+                    variants={{
+                      animate: {
+                        transition: {
+                          staggerChildren: 0.05
+                        }
+                      }
+                    }}
+                  >
                     {service.benefits.map((benefit, i) => (
-                      <motion.li
-                        key={i}
+                      <motion.li 
                         className="flex items-start"
-                        initial={{ x: -10, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 + (i * 0.05) }}
+                        variants={itemVariants}
+                        whileHover={{ x: 4 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
                       >
-                        <span className="text-primary mr-2">✓</span>
-                        <span className="text-foreground">{benefit}</span>
+                        <motion.span 
+                          className="text-green-500 mr-2 mt-0.5 flex-shrink-0"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                        >
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </motion.span>
+                        <span className="text-foreground/90">{benefit}</span>
                       </motion.li>
                     ))}
-                  </ul>
+                  </motion.ul>
                 </motion.div>
               )}
 
@@ -265,15 +313,33 @@ export const ServiceDetail = () => {
                   {service.details.map((detail, i) => (
                     <motion.div
                       key={i}
-                      className="flex items-start"
-                      initial={{ x: 20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.5 + (i * 0.05) }}
+                      className="flex items-start group"
+                      variants={{
+                        initial: { x: 20, opacity: 0 },
+                        animate: { 
+                          x: 0, 
+                          opacity: 1,
+                          transition: { 
+                            delay: 0.2 + (i * 0.05),
+                            type: 'spring',
+                            stiffness: 300,
+                            damping: 24
+                          }
+                        }
+                      }}
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                     >
-                      <div className="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <div className="flex items-start">
+                        <motion.div 
+                          className="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mr-3 mt-0.5 group-hover:bg-primary/20 transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ type: 'spring', stiffness: 500, damping: 5 }}
+                        >
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        </motion.div>
+                        <p className="text-foreground">{detail}</p>
                       </div>
-                      <p className="text-foreground">{detail}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -347,6 +413,147 @@ export const ServiceDetail = () => {
         </motion.div>
       </div>
       
+      {/* Next Service Section */}
+      <motion.div 
+        className="py-16 px-4 bg-background/50 overflow-hidden"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ 
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+          staggerChildren: 0.1
+        }}
+      >
+        <div className="max-w-7xl mx-auto">
+          <motion.h2 
+            className="text-2xl font-semibold text-foreground mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+          >
+            Explora Nuestros Servicios
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {servicesData
+              .filter(s => s.id !== serviceId) // Excluir el servicio actual
+              .slice(0, 3) // Mostrar hasta 3 servicios
+              .map((nextService, index) => (
+                <motion.div
+                  key={nextService.id}
+                  className="bg-card p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-border h-full group"
+                  initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1,
+                    transition: {
+                      delay: 0.1 * index,
+                      type: 'spring',
+                      stiffness: 100,
+                      damping: 15
+                    }
+                  }}
+                  whileHover={{ 
+                    y: -5,
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                  }}
+                  viewport={{ once: true, margin: "-30px" }}
+                >
+                  <Link 
+                    to={`/servicios/${nextService.id}`}
+                    className="block h-full"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  >
+                    <motion.div 
+                      className="flex items-start h-full"
+                      whileHover={{ x: 4 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                    >
+                      <motion.div 
+                        className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl mr-4 flex-shrink-0 group-hover:bg-primary/20 transition-colors"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 5 }}
+                      >
+                        {nextService.icon}
+                      </motion.div>
+                      <div>
+                        <motion.h3 
+                          className="text-lg font-medium text-foreground mb-1"
+                          layoutId={`service-title-${nextService.id}`}
+                        >
+                          {nextService.title}
+                        </motion.h3>
+                        <motion.p 
+                          className="text-sm text-muted-foreground line-clamp-2"
+                          initial={{ opacity: 0.8 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          {nextService.description}
+                        </motion.p>
+                        <motion.span 
+                          className="inline-flex items-center mt-3 text-sm font-medium text-primary group-hover:underline"
+                          initial={{ x: 0 }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                        >
+                          Ver detalles
+                          <motion.span 
+                            className="ml-1"
+                            animate={{ x: [0, 4, 0] }}
+                            transition={{ 
+                              duration: 1.5, 
+                              repeat: Infinity,
+                              ease: 'easeInOut'
+                            }}
+                          >
+                            →
+                          </motion.span>
+                        </motion.span>
+                      </div>
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
+          </div>
+          
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <Link 
+              to="/servicios" 
+              className="group inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
+            >
+              <motion.span
+                initial={{ x: 0 }}
+                whileHover={{ x: -3 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+              >
+                Ver todos los servicios
+              </motion.span>
+              <motion.span
+                className="ml-2"
+                animate={{ x: [0, 4, 0] }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </motion.span>
+            </Link>
+          </motion.div>
+        </div>
+      </motion.div>
+
       {/* Floating WhatsApp CTA for mobile */}
       <motion.div 
         className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4 sm:hidden"
