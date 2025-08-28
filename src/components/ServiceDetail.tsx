@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, MessageCircle } from 'lucide-react';
 
 type Service = {
   id: string;
@@ -226,12 +226,28 @@ export const ServiceDetail = () => {
                 transition={{ delay: 0.6 }}
                 className="hidden lg:block"
               >
-                <Link
-                  to="/contacto"
-                  className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors w-full"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  className="w-full"
                 >
-                  Solicitar asesoría
-                </Link>
+                  <Link
+                    to="/contacto#contact-form"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 w-full"
+                    onClick={(e) => {
+                      if (window.location.pathname === '/contacto') {
+                        e.preventDefault();
+                        const element = document.getElementById('contact-form');
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }
+                    }}
+                  >
+                    Solicitar asesoría
+                  </Link>
+                </motion.div>
               </motion.div>
             </motion.div>
 
@@ -269,18 +285,52 @@ export const ServiceDetail = () => {
                 <h3 className="text-xl font-semibold text-foreground mb-4">¿Necesitas más información?</h3>
                 <p className="text-muted-foreground mb-6">Nuestro equipo de expertos está listo para atender tus consultas y ofrecerte soluciones personalizadas.</p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    to="/contacto"
-                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors flex-1 text-center"
+                  <motion.a
+                    href="https://wa.me/527773128687?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#25D366] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#128C7E] transition-all duration-200 flex-1 text-center space-x-2"
+                    whileHover={{ 
+                      scale: 1.02,
+                      boxShadow: '0 4px 12px rgba(37, 211, 102, 0.2)'
+                    }}
+                    whileTap={{ 
+                      scale: 0.98,
+                      boxShadow: '0 2px 8px rgba(37, 211, 102, 0.1)'
+                    }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                   >
-                    Contáctanos
-                  </Link>
-                  <a
-                    href="tel:+525512345678" // Recuerda cambiar este número de teléfono
-                    className="inline-flex items-center justify-center px-6 py-3 border border-border text-base font-medium rounded-md text-foreground bg-background hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors flex-1 text-center"
+                    <motion.span 
+                      animate={{ 
+                        rotate: [0, 5, -5, 0],
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: 'reverse'
+                      }}
+                    >
+                      <MessageCircle className="h-5 w-5" />
+                    </motion.span>
+                    <span>WhatsApp</span>
+                  </motion.a>
+                  <motion.a
+                    href="tel:7773128687"
+                    className="inline-flex items-center justify-center px-6 py-3 border border-border text-base font-medium rounded-md text-foreground bg-background hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 flex-1 text-center"
+                    whileHover={{ 
+                      scale: 1.02,
+                      y: -2,
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+                    }}
+                    whileTap={{ 
+                      scale: 0.98,
+                      y: 0,
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)'
+                    }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                   >
                     Llamar ahora
-                  </a>
+                  </motion.a>
                 </div>
               </motion.div>
             </div>
