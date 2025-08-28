@@ -7,6 +7,9 @@ import { createBrowserHistory } from 'history';
 import { MotionProvider } from "@/components/MotionProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import DynamicBlogPost from "./pages/blog/[id]";
+import CriptomonedasPost from "./pages/blog/criptomonedas";
 import { ServiceDetail } from "./components/ServiceDetail";
 import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
@@ -45,6 +48,25 @@ const App = () => (
             <Route path="/servicios/:serviceId" element={
               <MainLayout>
                 <ServiceDetail />
+              </MainLayout>
+            } />
+            
+            {/* Blog Routes */}
+            <Route path="/blog" element={
+              <MainLayout>
+                <Blog />
+              </MainLayout>
+            } />
+            {/* Specific blog post routes */}
+            <Route path="/blog/criptomonedas" element={
+              <MainLayout>
+                <CriptomonedasPost />
+              </MainLayout>
+            } />
+            {/* Catch-all route for other blog posts */}
+            <Route path="/blog/:id" element={
+              <MainLayout>
+                <DynamicBlogPost />
               </MainLayout>
             } />
             

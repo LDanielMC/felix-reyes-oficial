@@ -152,19 +152,19 @@ export const ServiceDetail = () => {
   }
 
   return (
-    <motion.div
-      // MODIFICADO: Aumentado el padding superior (pt-28 a pt-40) para evitar que el header se encime
-      className="min-h-screen bg-gradient-to-b from-background to-muted/10 pt-40 pb-16 px-4 sm:px-6 lg:px-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
+    <div className="relative pt-40">
+      <motion.div 
+        className="min-h-screen bg-background pb-24 sm:pb-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
         >
           <Link
             to="/servicios"
@@ -224,7 +224,7 @@ export const ServiceDetail = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="hidden lg:block"
+                className="w-full"
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -245,6 +245,9 @@ export const ServiceDetail = () => {
                       }
                     }}
                   >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                     Solicitar asesoría
                   </Link>
                 </motion.div>
@@ -285,17 +288,20 @@ export const ServiceDetail = () => {
                 <h3 className="text-xl font-semibold text-foreground mb-4">¿Necesitas más información?</h3>
                 <p className="text-muted-foreground mb-6">Nuestro equipo de expertos está listo para atender tus consultas y ofrecerte soluciones personalizadas.</p>
                 <div className="flex flex-col sm:flex-row gap-4">
+                  {/* WhatsApp button - hidden on mobile */}
                   <motion.a
                     href="https://wa.me/527773128687?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#25D366] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#128C7E] transition-all duration-200 flex-1 text-center space-x-2"
+                    className="hidden sm:inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#25D366] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] transition-all duration-200 flex-1 text-center"
                     whileHover={{ 
                       scale: 1.02,
-                      boxShadow: '0 4px 12px rgba(37, 211, 102, 0.2)'
+                      y: -2,
+                      boxShadow: '0 4px 12px rgba(37, 211, 102, 0.15)'
                     }}
                     whileTap={{ 
                       scale: 0.98,
+                      y: 0,
                       boxShadow: '0 2px 8px rgba(37, 211, 102, 0.1)'
                     }}
                     transition={{ type: 'spring', stiffness: 400, damping: 10 }}
@@ -329,6 +335,9 @@ export const ServiceDetail = () => {
                     }}
                     transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                   >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
                     Llamar ahora
                   </motion.a>
                 </div>
@@ -337,6 +346,44 @@ export const ServiceDetail = () => {
           </div>
         </motion.div>
       </div>
+      
+      {/* Floating WhatsApp CTA for mobile */}
+      <motion.div 
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4 sm:hidden"
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
+      >
+        <motion.a
+          href="https://wa.me/527773128687?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white rounded-xl p-4 shadow-lg shadow-[#128C7E]/30 flex items-center justify-between w-full"
+          whileHover={{ 
+            scale: 1.02, 
+            boxShadow: '0 10px 25px -5px rgba(18, 140, 126, 0.3), 0 10px 10px -5px rgba(18, 140, 126, 0.2)' 
+          }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="flex items-center">
+            <div className="bg-white/20 p-2 rounded-lg mr-3">
+              <MessageCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-medium text-sm">¿Necesitas ayuda?</p>
+              <p className="text-xs opacity-90">Chatea por WhatsApp</p>
+            </div>
+          </div>
+          <span className="bg-white text-[#128C7E] font-semibold px-4 py-2 rounded-lg text-sm flex items-center">
+            Abrir chat
+            <svg className="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
+        </motion.a>
+      </motion.div>
     </motion.div>
+    
+    </div>
   );
 };

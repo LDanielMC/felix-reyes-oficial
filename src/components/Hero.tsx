@@ -7,7 +7,7 @@ import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
 export const Hero = () => {
   return (
-    <section id="inicio" className="relative min-h-screen flex items-center bg-gradient-hero">
+    <section id="inicio" className="relative min-h-[calc(100vh-80px)] md:min-h-screen flex items-center bg-gradient-hero pt-32 md:pt-0 pb-24 md:pb-0">
       {/* Background Image Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -18,7 +18,7 @@ export const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
       </div>
 
-      <div className="relative z-10 container-custom">
+      <div className="relative z-10 container-custom px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <motion.div 
@@ -29,25 +29,25 @@ export const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <motion.div 
-              className="flex items-center space-x-2 mb-6"
+              className="flex items-center space-x-2 mb-4 mt-2 md:mb-6 md:mt-0"
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
-              <Award className="h-6 w-6 text-accent" />
-              <span className="text-accent font-semibold">Fundada en 1974</span>
+              <Award className="h-5 w-5 md:h-6 md:w-6 text-accent flex-shrink-0" />
+              <span className="text-accent font-semibold text-sm md:text-base">Fundada en 1974</span>
             </motion.div>
             
             <motion.h1 
-              className="text-4xl lg:text-6xl font-heading font-bold mb-6 leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 md:mb-6 leading-tight"
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
               Servicios Contables y Fiscales 
-              <span className="text-accent"> Profesionales</span>
+              <span className="text-accent block md:inline">Profesionales</span>
             </motion.h1>
             
             <motion.p 
-              className="text-xl lg:text-2xl mb-8 text-white/90 leading-relaxed"
+              className="text-lg sm:text-xl lg:text-2xl mb-6 md:mb-8 text-white/90 leading-relaxed"
               variants={fadeInUp}
               transition={{ delay: 0.8 }}
             >
@@ -218,7 +218,7 @@ export const Hero = () => {
 
       {/* Scroll Indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ 
           opacity: 1, 

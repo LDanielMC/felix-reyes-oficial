@@ -1,6 +1,6 @@
 import { Phone, Mail, MapPin, Calendar, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { fadeInUp } from '@/hooks/use-animations';
+import { fadeInUp } from '../hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
 export const Footer = () => {
@@ -8,15 +8,24 @@ export const Footer = () => {
     { name: 'Inicio', href: '#inicio' },
     { name: 'Nosotros', href: '#nosotros' },
     { name: 'Servicios', href: '#servicios' },
+    { name: 'Blog', href: '#blog' },
     { name: 'Contacto', href: '#contacto' },
   ];
 
   const services = [
     'Contabilidad General',
+    'Contabilidad Gubernamental',
+    'Asesoría Administrativa',
+    'Asesoría Contable',
+    'Asesoría Laboral',
     'Asesoría Fiscal',
-    'Auditorías',
     'Asesoría Financiera',
-    'Precios de Transferencia'
+    'Asesoría Patrimonial',
+    'Auditoría de control interno',
+    'Auditoría Financiera',
+    'Auditoría Fiscal',
+    'Auditoría de Seguridad Social',
+    'Estudios de Precios de transferencia'
   ];
 
   const currentYear = new Date().getFullYear();
@@ -24,36 +33,35 @@ export const Footer = () => {
   return (
     <footer className="bg-primary text-white">
       {/* Main Footer */}
-      <div className="container-custom py-16">
+      <div className="container-custom py-8 md:py-12">
         <StaggerContainer delay={0.1}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {/* Company Info */}
             <StaggerItem>
-              <div className="lg:col-span-2">
+              <div className="sm:col-span-2">
                 <motion.div 
-                  className="mb-6"
+                  className="mb-4"
                   variants={fadeInUp}
                   transition={{ delay: 0.2 }}
                 >
-                  <h3 className="text-2xl font-heading font-bold mb-2">
+                  <h3 className="text-xl md:text-2xl font-heading font-bold mb-1">
                     Félix Reyes Contadores
                   </h3>
-                  <p className="text-white/80 text-sm">S.A. de C.V.</p>
+                  <p className="text-white/80 text-xs md:text-sm">S.A. de C.V.</p>
                 </motion.div>
                 
                 <motion.p 
-                  className="text-white/90 mb-6 leading-relaxed"
+                  className="text-white/90 mb-4 text-sm md:text-base leading-relaxed"
                   variants={fadeInUp}
                   transition={{ delay: 0.3 }}
                 >
-                  Más de 50 años brindando servicios profesionales de contabilidad, 
-                  auditoría y asesoría fiscal. Comprometidos con la excelencia y 
-                  el éxito de nuestros clientes.
+                    Más de 50 años brindando servicios profesionales de contabilidad, 
+                    auditoría y asesoría fiscal.
                 </motion.p>
 
                 {/* Contact Info */}
                 <StaggerContainer delay={0.1}>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
@@ -70,7 +78,7 @@ export const Footer = () => {
                         >
                           <Phone className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90">+52 (33) 3615-4291</span>
+                        <span className="text-white/90 text-sm md:text-base">+52 (33) 3615-4291</span>
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
@@ -89,7 +97,7 @@ export const Footer = () => {
                         >
                           <Mail className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90">contacto@felixreyes.com</span>
+                        <span className="text-white/90 text-sm md:text-base break-all">contacto@felixreyes.com</span>
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
@@ -108,7 +116,7 @@ export const Footer = () => {
                         >
                           <MapPin className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90">Guadalajara, Jalisco, México</span>
+                        <span className="text-white/90 text-sm md:text-base">GDL, Jalisco, MX</span>
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
@@ -139,14 +147,14 @@ export const Footer = () => {
             <StaggerItem>
               <div>
                 <motion.h4 
-                  className="text-lg font-heading font-semibold mb-6"
+                  className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
                   transition={{ delay: 0.4 }}
                 >
                   Enlaces Rápidos
                 </motion.h4>
                 <StaggerContainer delay={0.1}>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2">
                     {quickLinks.map((link, index) => (
                       <StaggerItem key={index}>
                         <motion.li
@@ -202,27 +210,28 @@ export const Footer = () => {
             <StaggerItem>
               <div>
                 <motion.h4 
-                  className="text-lg font-heading font-semibold mb-6"
+                  className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
                   transition={{ delay: 0.5 }}
                 >
                   Nuestros Servicios
                 </motion.h4>
                 <StaggerContainer delay={0.1}>
-                  <ul className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                     {services.map((service, index) => (
                       <StaggerItem key={index}>
-                        <motion.li
+                        <motion.div
+                          className="flex items-start"
                           whileHover={{ 
-                            x: 10,
+                            x: 5,
                             transition: { type: "spring", stiffness: 400, damping: 17 }
                           }}
                         >
-                          <span className="text-white/80 text-sm">{service}</span>
-                        </motion.li>
+                          <span className="text-white/80 text-xs md:text-sm leading-tight">• {service}</span>
+                        </motion.div>
                       </StaggerItem>
                     ))}
-                  </ul>
+                  </div>
                 </StaggerContainer>
 
                 <motion.div 
@@ -256,27 +265,27 @@ export const Footer = () => {
         className="border-t border-white/20"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true, threshold: 0.3 }}
+        viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="container-custom py-4">
+          <div className="flex flex-col space-y-3 text-center sm:text-left sm:flex-row sm:justify-between sm:items-center">
             <motion.div 
-              className="text-white/80 text-sm"
+              className="text-white/80 text-xs sm:text-sm"
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
-              © {currentYear} Félix Reyes Contadores S.A. de C.V. Todos los derechos reservados.
+              © {currentYear} Félix Reyes Contadores S.A. de C.V.
             </motion.div>
             
             <motion.div 
-              className="flex items-center space-x-6 text-sm"
+              className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm"
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
               <motion.a 
                 href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200"
+                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
                 whileHover={{ 
                   y: -2,
                   transition: { type: "spring", stiffness: 400, damping: 17 }
@@ -284,19 +293,21 @@ export const Footer = () => {
               >
                 Política de Privacidad
               </motion.a>
+              <span className="text-white/40 hidden sm:inline">•</span>
               <motion.a 
                 href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200"
+                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
                 whileHover={{ 
                   y: -2,
                   transition: { type: "spring", stiffness: 400, damping: 17 }
                 }}
               >
-                Términos de Servicio
+                Términos
               </motion.a>
+              <span className="text-white/40 hidden sm:inline">•</span>
               <motion.a 
                 href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200"
+                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
                 whileHover={{ 
                   y: -2,
                   transition: { type: "spring", stiffness: 400, damping: 17 }

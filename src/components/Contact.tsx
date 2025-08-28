@@ -31,13 +31,13 @@ export const Contact = () => {
     {
       icon: Phone,
       title: 'Teléfono',
-      details: ['+52 (33) 3615-4291', '+52 (33) 3615-4292'],
+      details: ['+52 (777) 312 15 47', '+52 (777) 312 40 48', '+52 (777) 314 18 29'],
       action: 'tel:+523336154291'
     },
     {
       icon: Mail,
       title: 'Email',
-      details: ['contacto@felixreyes.com', 'info@felixreyes.com'],
+      details: ['info@felixreyescontadores.com'],
       action: 'mailto:contacto@felixreyes.com'
     },
     {
@@ -49,7 +49,7 @@ export const Contact = () => {
     {
       icon: Clock,
       title: 'Horario',
-      details: ['Lunes a Viernes: 9:00 - 18:00', 'Sábados: 9:00 - 14:00'],
+      details: ['Lunes a Viernes: 9:00 - 17:00'],
       action: '#'
     }
   ];
@@ -66,14 +66,14 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contacto" className="section-padding bg-gradient-subtle">
+    <section id="contacto" className="section-padding bg-gradient-subtle pt-40">
       <div className="container-custom">
         {/* Header */}
         <motion.div 
           className="text-center mb-16"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, threshold: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
           transition={{ duration: 0.8 }}
         >
@@ -100,7 +100,7 @@ export const Contact = () => {
             className="lg:col-span-1"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, threshold: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInLeft}
             transition={{ duration: 0.8 }}
           >
@@ -197,7 +197,7 @@ export const Contact = () => {
             className="lg:col-span-2"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, threshold: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInRight}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
@@ -285,7 +285,7 @@ export const Contact = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                          placeholder="+52 (33) 1234-5678"
+                          placeholder="+52 (777) 123 4567"
                           whileFocus={{ 
                             scale: 1.02,
                             transition: { duration: 0.2 }

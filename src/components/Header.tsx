@@ -12,6 +12,7 @@ export const Header = () => {
     { name: 'Inicio', href: '/' },
     { name: 'Nosotros', href: '/#nosotros' },
     { name: 'Servicios', href: '/servicios' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Noticias', href: '/#noticias' },
     { name: 'Contacto', href: '/#contacto' },
   ];
@@ -60,7 +61,8 @@ export const Header = () => {
                 <Phone className="h-4 w-4" />
                 <span>+52 (33) 3615-4291</span>
               </motion.div>
-              <motion.div 
+              <motion.a 
+                href="mailto:info@felixreyescontadores.com"
                 className="flex items-center space-x-2 text-muted-foreground"
                 whileHover={{ 
                   color: "#3b82f6",
@@ -68,8 +70,8 @@ export const Header = () => {
                 }}
               >
                 <Mail className="h-4 w-4" />
-                <span>contacto@felixreyes.com</span>
-              </motion.div>
+                <span>info@felixreyescontadores.com</span>
+              </motion.a>
             </motion.div>
             <motion.div 
               className="hidden md:block"
