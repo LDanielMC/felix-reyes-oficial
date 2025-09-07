@@ -10,10 +10,9 @@ export const Header = () => {
 
   const navigationItems = [
     { name: 'Inicio', href: '/' },
-    { name: 'Nosotros', href: '/#nosotros' },
+    { name: 'Nosotros', href: '/nosotros' },
     { name: 'Servicios', href: '/servicios' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Noticias', href: '/#noticias' },
     { name: 'Contacto', href: '/#contacto' },
   ];
 
@@ -87,7 +86,7 @@ export const Header = () => {
 
       {/* Main Navigation */}
       <div className="container-custom">
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-2 md:py-3">
           {/* Logo */}
           <motion.div 
             className="flex items-center"
@@ -95,16 +94,20 @@ export const Header = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            <motion.div 
-              className="text-2xl font-heading font-bold text-primary"
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
-            >
-              Félix Reyes
-              <span className="block text-sm font-normal text-muted-foreground">Contadores S.A. de C.V.</span>
-            </motion.div>
+            <Link to="/" className="flex items-center">
+              <motion.img 
+                src="/logo.png"
+                alt="Félix Reyes Contadores - Logo"
+                className="h-10 md:h-16 w-auto object-contain cursor-pointer"
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 400, damping: 17 }
+                }}
+                whileTap={{ scale: 0.98 }}
+                loading="eager"
+                decoding="async"
+              />
+            </Link>
           </motion.div>
 
           {/* Desktop Navigation */}

@@ -15,6 +15,7 @@ import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Contact } from "./components/Contact";
+import Nosotros from "./pages/Nosotros";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,13 @@ const App = () => (
             <Route path="/contacto" element={
               <MainLayout>
                 <Contact />
+              </MainLayout>
+            } />
+            
+            {/* Nosotros Page */}
+            <Route path="/nosotros" element={
+              <MainLayout>
+                <Nosotros />
               </MainLayout>
             } />
             

@@ -1,10 +1,10 @@
-import { motion, Variants, easeInOut } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, Variants, Transition } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
 import { 
   Calculator, FileText, Search, TrendingUp, Shield, 
   Users, PieChart, BookOpen, CheckCircle2, ArrowRight,
-  ChevronLeft, ChevronRight
+  ChevronLeft, ChevronRight, ChevronDown
 } from 'lucide-react';
 
 const services = [
@@ -75,27 +75,43 @@ const container = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+      when: "beforeChildren"
     }
   }
 };
 
 const cardVariants: Variants = {
-  hidden: { 
-    y: 30, 
+  hidden: (i: number) => ({
+    y: 40,
     opacity: 0,
-    scale: 0.95
-  },
-  visible: {
+    scale: 0.96,
+    transition: {
+      duration: 0.3,
+      ease: [0.4, 0, 0.2, 1]
+    }
+  }),
+  visible: (i: number) => ({
     y: 0,
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      delay: i * 0.05,
+      duration: 0.8,
+      ease: [0.215, 0.61, 0.355, 1],
       type: "spring",
-      stiffness: 100
+      stiffness: 100,
+      damping: 15,
+      mass: 0.8
+    }
+  }),
+  hover: {
+    y: -8,
+    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+    transition: {
+      duration: 0.3,
+      ease: 'easeOut'
     }
   }
 };
@@ -103,31 +119,58 @@ const cardVariants: Variants = {
 const iconVariants: Variants = {
   rest: { 
     scale: 1,
-    rotate: 0,
-    transition: { duration: 0.3, ease: easeInOut }
+    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.05))',
   },
   hover: { 
-    scale: 1.1,
-    rotate: 5,
-    transition: { duration: 0.3, ease: easeInOut }
-  }
+    scale: 1.15,
+    rotate: 0,
+    filter: 'drop-shadow(0 8px 16px rgba(99, 102, 241, 0.2))',
+    transition: { 
+      duration: 0.8,
+      ease: [0.4, 0, 0.2, 1],
+    }
+  },
+  hidden: { 
+    opacity: 0, 
+    y: 20,
+    rotateX: 15,
+    scale: 0.95
+  },
+  visible: (i: number) => ({
+    opacity: 1, 
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: { 
+      delay: 0.2 + (i * 0.05),
+      duration: 0.7,
+      ease: [0.16, 1, 0.3, 1],
+      scale: {
+        type: 'spring',
+        stiffness: 300,
+        damping: 12
+      }
+    }
+  })
 };
 
 const arrowVariants: Variants = {
   rest: { 
     x: 0,
-    opacity: 0.7,
+    opacity: 0.8,
+    scale: 1,
     transition: {
       duration: 0.3,
-      ease: "easeInOut"
+      ease: [0.4, 0, 0.2, 1]
     }
   },
   hover: {
-    x: 4,
+    x: 6,
     opacity: 1,
+    scale: 1.1,
     transition: {
       duration: 0.3,
-      ease: "easeInOut"
+      ease: [0.4, 0, 0.2, 1]
     }
   }
 };
@@ -208,175 +251,279 @@ export const Services = () => {
   };
 
   return (
-    <section id="servicios" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-background to-muted/10 overflow-hidden">
-      <div className="container px-4 sm:px-6 lg:px-4 mx-auto max-w-7xl pt-20">
-        <motion.div
-          className="text-center mb-10 sm:mb-12 lg:mb-16 max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <motion.span 
-            className="inline-block px-4 sm:px-6 py-2 mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-primary bg-primary/10 rounded-full backdrop-blur-sm"
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ 
-              delay: 0.2, 
-              duration: 0.5,
-              type: "spring",
-              stiffness: 150
-            }}
+    <>
+      {/* Hero Section - Banner estilo Nosotros */}
+      <section 
+        className="relative pt-32 pb-20 md:pt-40 md:pb-28 text-white overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(16, 65%, 22%))' }}
+      >
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
           >
-            Nuestros Servicios
-          </motion.span>
-          <motion.h2 
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight px-4 sm:px-0"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ 
-              delay: 0.4, 
-              duration: 0.6,
-              ease: [0.25, 0.46, 0.45, 0.94]
-            }}
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight font-serif">
+              Soluciones Contables que Impulsan tu Éxito
+            </h1>
+            <p className="text-xl md:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto font-sans">
+              Servicios integrales diseñados para el crecimiento y la estabilidad financiera de tu negocio. Más de 5 décadas de experiencia a tu servicio.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <motion.a 
+                href="#contacto"
+                className="px-8 py-3.5 bg-secondary text-secondary-foreground font-medium rounded-xl hover:shadow-lg hover:shadow-secondary/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span>Contáctanos</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="servicios" className="relative py-20 sm:py-24 lg:py-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -left-40 w-[800px] h-[800px] bg-primary/10 rounded-full mix-blend-multiply filter blur-[100px] animate-blob opacity-70"></div>
+          <div className="absolute top-1/3 -right-40 w-[700px] h-[700px] bg-secondary/10 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-2000 opacity-70"></div>
+          <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-accent/10 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-4000 opacity-70"></div>
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIvPjwvZz48L2c+PC9zdmc+')] opacity-5"></div>
+        </div>
+        
+        {/* Glow effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(99,102,241,0) 70%) opacity-50"></div>
+        </div>
+        
+        <div className="relative container px-4 sm:px-6 lg:px-4 mx-auto max-w-7xl pt-8 sm:pt-12">
+          <motion.div
+            className="text-center mb-16 sm:mb-20 lg:mb-24 max-w-4xl mx-auto px-4 sm:px-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px 0px -50px 0px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            Soluciones a la medida para tu negocio
-          </motion.h2>
-        </motion.div>
+            <motion.span 
+              className="inline-flex items-center px-5 py-2.5 mb-6 text-sm font-semibold text-primary bg-primary/5 rounded-full backdrop-blur-sm border border-primary/10 hover:bg-primary/10 transition-all duration-500 shadow-sm hover:shadow-primary/5"
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ 
+                delay: 0.1,
+                duration: 0.8,
+                type: "spring",
+                stiffness: 100,
+                damping: 12
+              }}
+            >
+              <span className="relative flex h-2 w-2 mr-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              Nuestros Servicios
+            </motion.span>
+            
+            <motion.h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 sm:mb-8 leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px 0px" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">Servicios </span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 relative">
+                Especializados
+                <motion.span 
+                  className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full"
+                  initial={{ scaleX: 0, originX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </span>
+            </motion.h2>
+            
+            <motion.p 
+              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20px 0px 0px 0px" }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Descubre nuestro portafolio completo de servicios contables y financieros. 
+              <span className="hidden sm:inline">Cada servicio está diseñado para satisfacer las necesidades específicas de tu empresa.</span>
+            </motion.p>
+          </motion.div>
 
         {/* Enhanced Mobile Carousel - Visible en pantallas pequeñas y medianas, oculto en grandes */}
-        <div className="block lg:hidden">
+        <div id="servicios-grid" className="block lg:hidden">
           {/* Contenedor principal para el carrusel y las flechas, usa Flexbox */}
           <div className="relative flex items-center">
             
             {/* Botón de navegación izquierda */}
             <motion.button
               onClick={() => scrollTo('left')}
-              className={`z-20 flex-shrink-0 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-border/70 flex items-center justify-center shadow-md transition-all duration-300 ${
-                canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              } text-foreground`} 
               disabled={!canScrollLeft}
-              whileHover={canScrollLeft ? { scale: 1.1 } : {}}
-              whileTap={canScrollLeft ? { scale: 0.95 } : {}}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
+                !canScrollLeft ? 'opacity-0 pointer-events-none' : ''
+              }`}
+              aria-label="Anterior servicio"
+              whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.3)' }}
+              whileTap={{ scale: 0.95 }}
               initial={{ x: -10, opacity: 0 }}
-              animate={{ x: canScrollLeft ? 0 : -10, opacity: canScrollLeft ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-              aria-label="Servicio anterior"
+              animate={{ 
+                x: canScrollLeft ? 0 : -10, 
+                opacity: canScrollLeft ? 1 : 0,
+                transition: { 
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1]
+                }
+              }}
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-6 h-6" />
             </motion.button>
             
             {/* Contenedor del scroll de las tarjetas */}
-            <motion.div
-              ref={scrollRef}
-              className="flex-grow w-0 flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide px-2 sm:px-4 py-6 mx-2"
-              onScroll={checkScrollButtons}
-              style={{ 
-                scrollSnapType: 'x mandatory',
-                scrollBehavior: 'smooth',
-                WebkitOverflowScrolling: 'touch',
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
+            <motion.div 
+              className="relative w-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px 0px" }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-              {services.map((service, index) => (
-                <motion.div
-                  key={service.id}
-                  className="flex-shrink-0 w-[85vw] max-w-[320px] sm:w-[280px]" // Ancho dinámico para móvil, fijo para sm
-                  style={{ scrollSnapAlign: 'center' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ 
-                    delay: 0.1 * index,
-                    duration: 0.5,
-                    ease: "easeOut"
-                  }}
-                >
-                  <Link to={`/servicios/${service.id}`} className="group block h-full">
-                    <motion.div
-                      className="relative h-full flex flex-col items-center text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-primary/40 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/5 min-h-[300px]"
-                      initial="rest"
-                      whileHover="hover"
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {/* Fondo degradado al pasar el ratón */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                      
-                      {/* Contenedor del icono */}
+              <div 
+                ref={scrollRef}
+                className="flex overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+                onScroll={checkScrollButtons}
+              >
+                {services.map((service, index) => (
+                  <motion.div
+                    key={service.id}
+                    className="flex-shrink-0 w-80 sm:w-96 md:w-[28rem] px-3 snap-center"
+                    variants={cardVariants}
+                    custom={index}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
+                  >
+                    <Link to={`/servicios/${service.id}`} className="group block h-full">
                       <motion.div 
-                        className="relative mb-5 p-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center group-hover:from-primary group-hover:to-primary/80 group-hover:text-white transition-all duration-500 flex-shrink-0"
-                        variants={iconVariants}
+                        className="h-full bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm border border-border/30 rounded-2xl p-7 sm:p-8 flex flex-col transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative group-hover:bg-card/90"
+                        whileHover="hover"
+                        initial="rest"
+                        animate="rest"
+                        variants={cardVariants}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
-                        {service.icon}
-                      </motion.div>
-                      
-                      {/* Título */}
-                      <motion.h3 
-                        className="text-lg font-bold text-foreground mb-4 leading-tight group-hover:text-primary transition-colors duration-300"
-                      >
-                        {service.title}
-                      </motion.h3>
-
-                      {/* Descripción */}
-                      <motion.p 
-                        className="text-sm text-muted-foreground mb-6 line-clamp-3 flex-grow"
-                      >
-                        {service.description}
-                      </motion.p>
-                      
-                      {/* CTA con flecha */}
-                      <div className="mt-auto w-full">
-                        <motion.div 
-                          className="inline-flex items-center justify-center text-primary font-medium text-sm px-6 py-2.5 rounded-lg bg-primary/5 group-hover:bg-primary group-hover:text-white transition-all duration-300 w-full"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <span className="mr-2">Ver detalles</span>
-                          <motion.div variants={arrowVariants}>
-                            <ArrowRight className="w-4 h-4" />
+                        {/* Hover effect background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+                        
+                        {/* Subtle grid pattern */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
+                             style={{
+                               backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                               backgroundSize: '20px 20px',
+                             }}
+                        />
+                        
+                        <div className="relative z-10">
+                          <motion.div 
+                            className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center mb-6 text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
+                            variants={iconVariants}
+                            custom={index}
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            {React.cloneElement(service.icon, { 
+                              className: 'w-7 h-7 relative z-10',
+                              strokeWidth: 1.75
+                            })}
                           </motion.div>
-                        </motion.div>
-                      </div>
-
-                      {/* Overlay sutil para efecto hover */}
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                    </motion.div>
-                  </Link>
-                </motion.div>
-              ))}
+                          
+                          <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500">
+                            {service.title}
+                          </h3>
+                          
+                          <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+                            {service.description}
+                          </p>
+                          
+                          <motion.div 
+                            className="inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500 mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 w-full justify-between"
+                            variants={arrowVariants}
+                            custom={index}
+                          >
+                            <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                              Más información
+                            </span>
+                            <motion.div
+                              className="w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500"
+                              variants={{
+                                rest: { rotate: 0 },
+                                hover: { rotate: 45 }
+                              }}
+                            >
+                              <ChevronRight className="w-4 h-4" />
+                            </motion.div>
+                          </motion.div>
+                        </div>
+                        
+                        {/* Decorative elements */}
+                        <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      </motion.div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
             
             {/* Botón de navegación derecha */}
             <motion.button
               onClick={() => scrollTo('right')}
-              className={`z-20 flex-shrink-0 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-border/70 flex items-center justify-center shadow-md transition-all duration-300 ${
-                canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              } text-foreground`} 
               disabled={!canScrollRight}
-              whileHover={canScrollRight ? { scale: 1.1 } : {}}
-              whileTap={canScrollRight ? { scale: 0.95 } : {}}
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ x: canScrollRight ? 0 : 10, opacity: canScrollRight ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
+              className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
+                !canScrollRight ? 'opacity-0 pointer-events-none' : ''
+              }`}
               aria-label="Siguiente servicio"
+              whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.3)' }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ 
+                x: canScrollRight ? 0 : 10, 
+                opacity: canScrollRight ? 1 : 0,
+                transition: { 
+                  duration: 0.4,
+                  ease: [0.16, 1, 0.3, 1]
+                }
+              }}
             >
-              {<ChevronRight className="w-5 h-5" />}
+              <ChevronRight className="w-6 h-6" />
             </motion.button>
 
           </div>
 
-          {/* Indicadores de scroll */}
-          <div className="flex justify-center mt-4 gap-1.5">
+          {/* Enhanced scroll indicators */}
+          <motion.div 
+            className="flex justify-center mt-6 gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             {services.map((_, index) => (
               <motion.button
                 key={index}
                 onClick={() => {
                   if (scrollRef.current) {
-                    // El índice ahora se mapea directamente a las tarjetas dentro del scrollRef
                     const card = scrollRef.current.children[index] as HTMLElement;
                     card?.scrollIntoView({
                       behavior: 'smooth',
@@ -385,27 +532,49 @@ export const Services = () => {
                     });
                   }
                 }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`relative h-1.5 rounded-full transition-all duration-500 ${
                   currentSlide === index 
-                    ? 'bg-primary w-6' 
-                    : 'bg-primary/20 hover:bg-primary/40'
+                    ? 'w-8 bg-gradient-to-r from-primary to-primary/80' 
+                    : 'w-3 bg-primary/20 hover:bg-primary/40'
                 }`}
                 aria-label={`Ir al servicio ${index + 1}`}
-                initial={{ scale: 0.8, opacity: 0.5 }}
+                initial={{ scale: 0.9, opacity: 0.7 }}
                 animate={{ 
-                  scale: currentSlide === index ? 1.1 : 0.8,
-                  opacity: currentSlide === index ? 1 : 0.5
+                  scale: currentSlide === index ? 1 : 0.9,
+                  opacity: currentSlide === index ? 1 : 0.7,
+                  width: currentSlide === index ? '2rem' : '0.75rem'
                 }}
-                whileHover={{ scale: 1.1, opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              />
+                whileHover={{ 
+                  scale: 1.1,
+                  opacity: 1,
+                  width: currentSlide === index ? '2rem' : '1rem'
+                }}
+                transition={{ 
+                  type: 'spring', 
+                  stiffness: 500, 
+                  damping: 30,
+                  duration: 0.3
+                }}
+              >
+                {currentSlide === index && (
+                  <motion.span 
+                    className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 rounded-full"
+                    layoutId="activeIndicator"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30
+                    }}
+                  />
+                )}
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Desktop Grid - Visible solo en pantallas grandes */}
         <motion.div 
-          className="hidden lg:grid grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6"
+          className="hidden lg:grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6"
           variants={container}
           initial="hidden"
           whileInView="visible"
@@ -417,62 +586,111 @@ export const Services = () => {
               variants={cardVariants}
               custom={index}
               className="h-full"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
             >
               <Link to={`/servicios/${service.id}`} className="group block h-full">
                 <motion.div
-                  className="relative h-full flex flex-col items-center text-center p-8 bg-white/50 backdrop-blur-sm rounded-2xl border border-border/50 hover:border-primary/40 transition-all duration-500 group-hover:shadow-xl group-hover:shadow-primary/10"
+                  className="relative h-full flex flex-col p-8 bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm rounded-2xl border border-border/30 hover:border-primary/50 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-primary/10 overflow-hidden"
                   initial="rest"
                   whileHover="hover"
                   whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.3 }}
+                  variants={cardVariants}
                 >
-                  {/* Background gradient on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  {/* Hover effect background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+                  
+                  {/* Subtle grid pattern */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
+                       style={{
+                         backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                         backgroundSize: '20px 20px',
+                       }}
+                  />
                   
                   {/* Icon container */}
                   <motion.div 
-                    className="relative mb-6 p-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center group-hover:from-primary group-hover:to-primary/80 group-hover:text-white transition-all duration-500"
+                    className="relative mb-6 p-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
                     variants={iconVariants}
+                    custom={index}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
-                    {service.icon}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {React.cloneElement(service.icon, { 
+                      className: 'w-7 h-7 relative z-10',
+                      strokeWidth: 1.75
+                    })}
                   </motion.div>
                   
                   {/* Title */}
-                  <motion.h3 
-                    className="text-lg font-bold text-foreground mb-6 leading-tight group-hover:text-primary transition-colors duration-300"
-                    initial={{ opacity: 1 }}
-                    whileHover={{ opacity: 1 }}
-                  >
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500">
                     {service.title}
-                  </motion.h3>
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
                   
                   {/* CTA with arrow */}
-                  <div className="mt-auto">
-                    <motion.div 
-                      className="inline-flex items-center justify-center text-primary font-medium text-sm px-4 py-2 rounded-lg bg-primary/5 group-hover:bg-primary group-hover:text-white transition-all duration-300"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span className="mr-2">Ver detalles</span>
-                      <motion.div variants={arrowVariants}>
-                        <ArrowRight className="w-4 h-4" />
+                  <motion.div 
+                    className="mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 transition-colors duration-500"
+                    variants={arrowVariants}
+                    custom={index}
+                  >
+                    <div className="inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500">
+                      <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                        Ver detalles
+                      </span>
+                      <motion.div
+                        className="w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500 ml-2"
+                        variants={{
+                          rest: { rotate: 0 },
+                          hover: { rotate: 45 }
+                        }}
+                      >
+                        <ChevronRight className="w-4 h-4" />
                       </motion.div>
-                    </motion.div>
-                  </div>
-
-                  {/* Subtle hover effect overlay */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    </div>
+                  </motion.div>
+                  
+                  {/* Decorative elements */}
+                  <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </motion.div>
               </Link>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Elementos decorativos (permanecen sin cambios) */}
+        {/* Decorative elements with improved animations */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-48 sm:w-72 lg:w-96 h-48 sm:h-72 lg:h-96 bg-primary/3 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: 'reverse',
+              ease: 'easeInOut'
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 right-1/4 w-48 sm:w-72 lg:w-96 h-48 sm:h-72 lg:h-96 bg-gradient-to-tr from-secondary/10 to-secondary/5 rounded-full blur-3xl"
+            animate={{
+              scale: [0.9, 1, 0.9],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{
+              duration: 10,
+              delay: 1,
+              repeat: Infinity,
+              repeatType: 'reverse',
+              ease: 'easeInOut'
+            }}
+          />
         </div>
       </div>
 
@@ -488,5 +706,6 @@ export const Services = () => {
         `
       }} />
     </section>
+    </>
   );
 };
