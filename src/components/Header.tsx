@@ -96,7 +96,7 @@ export const Header = memo(() => {
                 className="h-8 sm:h-10 md:h-16 w-auto object-contain cursor-pointer hover:scale-105 transition-transform duration-200"
                 loading="eager"
                 decoding="async"
-                fetchPriority="high"
+                {...({ fetchpriority: "high" } as any)}
               />
             </Link>
           </div>

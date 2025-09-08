@@ -191,7 +191,7 @@ const OptimizedImage = memo<ImageProps>(({ src, alt, onClick, className }) => {
                 decoding="async"
                 width="800"
                 height="450"
-                fetchPriority="low"
+                {...({ fetchpriority: "low" } as any)}
             />
             {!isLoaded && (
                 <div className="absolute inset-0 bg-muted animate-pulse" />
@@ -311,7 +311,7 @@ const ImageCarousel = memo(({ images }: ImageCarouselProps) => {
                                 decoding="async"
                                 width="800"
                                 height="400"
-                                fetchPriority={index === 0 ? 'high' : 'low'}
+                                {...({ fetchpriority: index === 0 ? 'high' : 'low' } as any)}
                                 draggable={false}
                             />
                         </div>

@@ -56,13 +56,15 @@ export const Contact = () => {
 
   const services = [
     'Contabilidad General',
-    'Asesoría Fiscal',
-    'Auditorías',
+    'Contabilidad Gubernamental',
+    'Asesoría Contable',
+    'Asesoría Administrativa',
+    'Asesoría Laboral',
     'Asesoría Financiera',
     'Asesoría Patrimonial',
-    'Asesoría Laboral',
-    'Precios de Transferencia',
-    'Asesoría Administrativa'
+    'Asesoría Fiscal',
+    'Auditorías',
+    'Estudios de Precios de Transferencia'
   ];
 
   return (
