@@ -1,6 +1,6 @@
 import { Award, ArrowRight, Users, Building2, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
-import lugar from '@/assets/Lugar.jpg';
+import lugar from '@/assets/lugar_Felix.webp';
 import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 

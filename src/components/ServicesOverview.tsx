@@ -1,5 +1,6 @@
 import { Users, FileText, Shield, TrendingUp, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
@@ -108,14 +109,17 @@ export const ServicesOverview = () => {
                   </p>
 
                   {/* CTA Link */}
-                  <motion.a 
-                    href={`/servicios/${service.id}`}
-                    className="flex items-center justify-center space-x-2 text-primary font-semibold group-hover:text-secondary transition-colors duration-300"
+                  <motion.div
                     whileHover={{ x: 5 }}
                   >
-                    <span>Saber más</span>
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </motion.a>
+                    <Link 
+                      to={`/servicios/${service.id}`}
+                      className="flex items-center justify-center space-x-2 text-primary font-semibold group-hover:text-secondary transition-colors duration-300"
+                    >
+                      <span>Saber más</span>
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </StaggerItem>
             ))}
@@ -131,17 +135,20 @@ export const ServicesOverview = () => {
           variants={fadeInUp}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <motion.a 
-            href="/servicios"
-            className="btn-primary inline-block"
+          <motion.div
             whileHover={{ 
               scale: 1.05,
               transition: { type: "spring", stiffness: 400, damping: 17 }
             }}
             whileTap={{ scale: 0.95 }}
           >
-            Ver Todos los Servicios
-          </motion.a>
+            <Link 
+              to="/servicios"
+              className="btn-primary inline-block"
+            >
+              Ver Todos los Servicios
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>
