@@ -1,6 +1,6 @@
 import { Award, ArrowRight, Users, Building2, TrendingUp } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
-import { memo, useRef } from 'react';
+import { memo, useRef, useState, useEffect } from 'react';
 import lugar from '@/assets/lugar_Felix.webp';
 import { Link } from 'react-router-dom';
 
@@ -63,13 +63,13 @@ const HighlightCard = memo(({ highlight, index }: HighlightCardProps) => {
   return (
     <div 
       ref={ref}
-      className={`card-elegant group cursor-pointer hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 transform ${
+      className={`card-elegant group cursor-pointer hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-500 transform ${
         isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
       }`}
-      style={{ transitionDelay: `${index * 100}ms` }}
+      style={{ transitionDelay: `${index * 150}ms` }}
     >
       <div className="flex items-center space-x-6">
-        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center ${highlight.color} group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center ${highlight.color} group-hover:scale-105 group-hover:rotate-1 transition-all duration-500`}>
           <highlight.icon className="h-8 w-8" />
         </div>
         
@@ -82,7 +82,7 @@ const HighlightCard = memo(({ highlight, index }: HighlightCardProps) => {
           </p>
         </div>
         
-        <div className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+        <div className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-500">
           <ArrowRight className="h-5 w-5 text-muted-foreground" />
         </div>
       </div>
@@ -91,6 +91,16 @@ const HighlightCard = memo(({ highlight, index }: HighlightCardProps) => {
 });
 
 export const About = memo(() => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  // Preload image
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.onerror = () => setImageError(true);
+    img.src = lugar;
+  }, []);
 
   return (
     <section id="nosotros" className="section-padding bg-gradient-subtle">
@@ -146,41 +156,73 @@ export const About = memo(() => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <div className="relative group hover:scale-[1.02] transition-transform duration-300">
+            <div className="relative group hover:scale-[1.01] transition-transform duration-500">
               {/* Main Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 shadow-elegant">
-                <div className="aspect-[4/5] bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center">
+                <div className="aspect-[4/5] relative bg-gradient-to-br from-muted/30 to-muted/10">
+                  {/* Loading placeholder */}
+                  {!imageLoaded && !imageError && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                    </div>
+                  )}
+                  
+                  {/* Error placeholder */}
+                  {imageError && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-muted/20">
+                      <Building2 className="h-16 w-16 text-muted-foreground/50" />
+                    </div>
+                  )}
+                  
+                  {/* Actual image */}
                   <img 
                     src={lugar}
                     alt="Félix Reyes Contadores - Oficina profesional"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
+                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
+                      imageLoaded 
+                        ? 'opacity-100 group-hover:scale-105' 
+                        : 'opacity-0'
+                    }`}
+                    style={{ 
+                      transform: 'translateZ(0)',
+                      willChange: 'transform'
+                    }}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageError(true)}
                   />
                 </div>
                 
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Overlay Gradient - Only show when image is loaded */}
+                {imageLoaded && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                )}
                 
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"></div>
+                {/* Decorative Elements - Reduced motion */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl transition-opacity duration-500" style={{ opacity: imageLoaded ? 1 : 0 }}></div>
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/20 rounded-full blur-3xl transition-opacity duration-500" style={{ opacity: imageLoaded ? 1 : 0 }}></div>
               </div>
 
-              {/* Floating Badge - Simplified */}
-              <div className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-hover border border-primary/10 hover:-translate-y-1 transition-transform duration-300">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center">
-                    <Building2 className="h-6 w-6 text-primary" />
+              {/* Floating Badge - Only show when image is loaded */}
+              {imageLoaded && (
+                <motion.div 
+                  className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-hover border border-primary/10 hover:-translate-y-1 transition-transform duration-500"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center">
+                      <Building2 className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-primary">Oficina Central</p>
+                      <p className="text-xs text-muted-foreground">Guadalajara, Jalisco</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-primary">Oficina Central</p>
-                    <p className="text-xs text-muted-foreground">Guadalajara, Jalisco</p>
-                  </div>
-                </div>
-              </div>
+                </motion.div>
+              )}
             </div>
           </motion.div>
 
@@ -200,10 +242,10 @@ export const About = memo(() => {
             </div>
 
             {/* Trust Badge - Simplified */}
-            <div className="card-elegant bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20 hover:scale-[1.02] transition-transform duration-300">
+            <div className="card-elegant bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20 hover:scale-[1.01] transition-transform duration-500">
               <div className="text-center">
-                <div className="inline-block mb-4 animate-pulse">
-                  <Award className="h-12 w-12 text-accent mx-auto" />
+                <div className="inline-block mb-4">
+                  <Award className="h-12 w-12 text-accent mx-auto animate-pulse" />
                 </div>
                 <h3 className="text-lg font-heading font-bold text-primary mb-2">
                   Certificación Profesional
