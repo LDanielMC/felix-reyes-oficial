@@ -37,39 +37,41 @@ export const Header = () => {
     >
       {/* Top Bar */}
       <motion.div 
-        className="border-b border-border/50"
+        className="border-b border-border/50 hidden sm:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6 }}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between py-2 text-sm">
+          <div className="flex items-center justify-between py-2 text-xs sm:text-sm">
             <motion.div 
-              className="flex items-center space-x-6"
+              className="flex items-center space-x-2 sm:space-x-6"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
               <motion.div 
-                className="flex items-center space-x-2 text-muted-foreground"
+                className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground"
                 whileHover={{ 
-                  color: "#3b82f6",
+                  color: "hsl(var(--primary))",
                   transition: { duration: 0.3 }
                 }}
               >
-                <Phone className="h-4 w-4" />
-                <span>+52 (33) 3615-4291</span>
+                <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden xs:inline">+52 (33) 3615-4291</span>
+                <span className="xs:hidden">Tel</span>
               </motion.div>
               <motion.a 
                 href="mailto:info@felixreyescontadores.com"
-                className="flex items-center space-x-2 text-muted-foreground"
+                className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground"
                 whileHover={{ 
-                  color: "#3b82f6",
+                  color: "hsl(var(--primary))",
                   transition: { duration: 0.3 }
                 }}
               >
-                <Mail className="h-4 w-4" />
-                <span>info@felixreyescontadores.com</span>
+                <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">info@felixreyescontadores.com</span>
+                <span className="sm:hidden">Email</span>
               </motion.a>
             </motion.div>
             <motion.div 
@@ -86,7 +88,7 @@ export const Header = () => {
 
       {/* Main Navigation */}
       <div className="container-custom">
-        <div className="flex items-center justify-between py-2 md:py-3">
+        <div className="flex items-center justify-between py-1 sm:py-2 md:py-3">
           {/* Logo */}
           <motion.div 
             className="flex items-center"
@@ -98,7 +100,7 @@ export const Header = () => {
               <motion.img 
                 src="/logo.png"
                 alt="Félix Reyes Contadores - Logo"
-                className="h-10 md:h-16 w-auto object-contain cursor-pointer"
+                className="h-8 sm:h-10 md:h-16 w-auto object-contain cursor-pointer"
                 whileHover={{ 
                   scale: 1.05,
                   transition: { type: "spring", stiffness: 400, damping: 17 }
@@ -198,15 +200,17 @@ export const Header = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="lg:hidden border-t border-border bg-background"
+            className={`lg:hidden border-t border-border transition-all duration-300 ${
+              isScrolled ? 'bg-background/95' : 'bg-background/90'
+            }`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <div className="container-custom py-4">
+            <div className="container-custom py-3 sm:py-4">
               <motion.nav 
-                className="flex flex-col space-y-4"
+                className="flex flex-col space-y-3 sm:space-y-4"
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
@@ -215,14 +219,14 @@ export const Header = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="text-foreground/90 hover:text-primary transition-colors px-3 py-2 text-sm font-medium block"
+                    className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
                 <motion.button 
-                  className="btn-secondary mt-4"
+                  className="btn-secondary mt-3 sm:mt-4 text-sm"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.4 }}

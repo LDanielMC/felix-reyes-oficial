@@ -186,109 +186,61 @@ interface CarouselImage {
 
 interface ImageCarouselProps {
     images: CarouselImage[];
-    autoRotateInterval?: number;
 }
 
-// Componente de Carousel de Imágenes optimizado para rendimiento
-const ImageCarousel = ({ images, autoRotateInterval = 6000 }: ImageCarouselProps) => {
+// Componente de Carousel ultra-optimizado para móviles
+const ImageCarousel = ({ images }: ImageCarouselProps) => {
     const [emblaRef, emblaApi] = useEmblaCarousel({ 
         loop: true,
         dragFree: false,
-        containScroll: 'trimSnaps',
+        duration: 15, // Transición más rápida
         skipSnaps: false,
-        duration: 25, // Transición más rápida
     });
     
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const [canScrollPrev, setCanScrollPrev] = useState(false);
-    const [canScrollNext, setCanScrollNext] = useState(false);
-    const autoRotateTimeout = useRef<NodeJS.Timeout>();
-    const isUserInteracting = useRef(false);
+    const [isLoaded, setIsLoaded] = useState<boolean[]>(new Array(images.length).fill(false));
     
-    // Funciones de navegación optimizadas
+    // Funciones de navegación ultra-simplificadas
     const scrollPrev = useCallback(() => {
-        if (emblaApi && canScrollPrev) {
-            emblaApi.scrollPrev();
-            isUserInteracting.current = true;
-            if (autoRotateTimeout.current) {
-                clearTimeout(autoRotateTimeout.current);
-            }
-        }
-    }, [emblaApi, canScrollPrev]);
+        emblaApi?.scrollPrev();
+    }, [emblaApi]);
 
     const scrollNext = useCallback(() => {
-        if (emblaApi && canScrollNext) {
-            emblaApi.scrollNext();
-            isUserInteracting.current = true;
-            if (autoRotateTimeout.current) {
-                clearTimeout(autoRotateTimeout.current);
-            }
-        }
-    }, [emblaApi, canScrollNext]);
+        emblaApi?.scrollNext();
+    }, [emblaApi]);
 
     const scrollTo = useCallback((index: number) => {
-        if (emblaApi) {
-            emblaApi.scrollTo(index);
-            isUserInteracting.current = true;
-            if (autoRotateTimeout.current) {
-                clearTimeout(autoRotateTimeout.current);
-            }
-        }
+        emblaApi?.scrollTo(index);
     }, [emblaApi]);
-    
-    // Auto-rotación simplificada
-    const startAutoRotate = useCallback(() => {
-        if (autoRotateTimeout.current) {
-            clearTimeout(autoRotateTimeout.current);
-        }
-        
-        autoRotateTimeout.current = setTimeout(() => {
-            if (emblaApi && !isUserInteracting.current) {
-                emblaApi.scrollNext();
-                startAutoRotate();
-            }
-        }, autoRotateInterval);
-    }, [emblaApi, autoRotateInterval]);
 
-    // Manejo de eventos optimizado
+    // Manejo de eventos mínimo
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
         setSelectedIndex(emblaApi.selectedScrollSnap());
-        setCanScrollPrev(emblaApi.canScrollPrev());
-        setCanScrollNext(emblaApi.canScrollNext());
     }, [emblaApi]);
 
-    // Efecto principal simplificado
+    // Efecto único y simple
     useEffect(() => {
         if (!emblaApi) return;
-        
         emblaApi.on('select', onSelect);
-        onSelect(); // Inicializar estado
-        startAutoRotate();
-        
+        onSelect();
         return () => {
             emblaApi.off('select', onSelect);
-            if (autoRotateTimeout.current) {
-                clearTimeout(autoRotateTimeout.current);
-            }
         };
-    }, [emblaApi, onSelect, startAutoRotate]);
-    
-    // Reset de interacción del usuario
-    useEffect(() => {
-        const resetUserInteraction = () => {
-            isUserInteracting.current = false;
-            startAutoRotate();
-        };
-        
-        const timer = setTimeout(resetUserInteraction, autoRotateInterval * 2);
-        return () => clearTimeout(timer);
-    }, [selectedIndex, startAutoRotate, autoRotateInterval]);
+    }, [emblaApi, onSelect]);
 
     const openLightbox = useCallback((index: number) => {
         setSelectedIndex(index);
         setIsOpen(true);
+    }, []);
+
+    const handleImageLoad = useCallback((index: number) => {
+        setIsLoaded(prev => {
+            const newLoaded = [...prev];
+            newLoaded[index] = true;
+            return newLoaded;
+        });
     }, []);
 
     return (
@@ -300,75 +252,70 @@ const ImageCarousel = ({ images, autoRotateInterval = 6000 }: ImageCarouselProps
                 <div className="flex">
                     {images.map((img, index) => (
                         <div 
-                            key={`${img.src}-${index}`}
-                            className="flex-[0_0_100%] min-w-0 relative"
+                            key={index}
+                            className="flex-[0_0_100%] min-w-0 relative bg-muted"
                         >
+                            {!isLoaded[index] && (
+                                <div className="absolute inset-0 bg-muted animate-pulse" />
+                            )}
                             <img
                                 src={img.src}
                                 alt={img.alt}
                                 loading={index === 0 ? 'eager' : 'lazy'}
-                                className="h-[400px] md:h-[450px] w-full object-cover cursor-pointer transition-opacity duration-200"
+                                className={`h-[350px] md:h-[400px] w-full object-cover cursor-pointer ${
+                                    isLoaded[index] ? 'opacity-100' : 'opacity-0'
+                                } transition-opacity duration-300`}
                                 onClick={() => openLightbox(index)}
+                                onLoad={() => handleImageLoad(index)}
                                 decoding="async"
                                 width="800"
-                                height="450"
-                                style={{ contentVisibility: 'auto' }}
+                                height="400"
                             />
                         </div>
                     ))}
                 </div>
             </div>
             
-            {/* Botones de navegación simplificados */}
+            {/* Botones de navegación ultra-simplificados */}
             <button 
-                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/90 flex items-center justify-center shadow-md hover:bg-background transition-colors z-10 touch-manipulation"
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-lg z-10 touch-manipulation active:scale-95"
                 onClick={scrollPrev}
-                disabled={!canScrollPrev}
-                aria-label="Imagen anterior"
+                aria-label="Anterior"
             >
-                <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-foreground" />
+                <ChevronLeft className="w-5 h-5 text-gray-800" />
             </button>
             <button 
-                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full bg-background/90 flex items-center justify-center shadow-md hover:bg-background transition-colors z-10 touch-manipulation"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-lg z-10 touch-manipulation active:scale-95"
                 onClick={scrollNext}
-                disabled={!canScrollNext}
-                aria-label="Siguiente imagen"
+                aria-label="Siguiente"
             >
-                <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-foreground" />
+                <ChevronRight className="w-5 h-5 text-gray-800" />
             </button>
             
-            {/* Indicadores simplificados */}
-            <div className="absolute bottom-4 left-0 right-0">
-                <div className="flex justify-center gap-1.5">
+            {/* Indicadores minimalistas */}
+            <div className="absolute bottom-3 left-0 right-0">
+                <div className="flex justify-center gap-1">
                     {images.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => scrollTo(index)}
-                            className={`w-2 h-2 rounded-full transition-all duration-200 touch-manipulation ${
-                                index === selectedIndex ? 'scale-125 bg-primary' : 'bg-foreground/30 hover:bg-foreground/50'
+                            className={`w-2 h-2 rounded-full touch-manipulation ${
+                                index === selectedIndex ? 'bg-white' : 'bg-white/40'
                             }`}
-                            aria-label={`Ir a la imagen ${index + 1}`}
+                            aria-label={`Imagen ${index + 1}`}
                         />
                     ))}
                 </div>
             </div>
             
-            {/* Lightbox optimizado */}
+            {/* Lightbox condicional */}
             {isOpen && (
                 <Lightbox
                     open={isOpen}
                     close={() => setIsOpen(false)}
                     slides={images.map(img => ({ src: img.src }))}
                     index={selectedIndex}
-                    controller={{ closeOnBackdropClick: true, closeOnPullDown: true }}
-                    render={{
-                        buttonPrev: () => <ChevronLeft className="w-8 h-8" />,
-                        buttonNext: () => <ChevronRight className="w-8 h-8" />,
-                        iconClose: () => <X className="w-6 h-6" />,
-                    }}
-                    styles={{
-                        container: { backgroundColor: 'rgba(0, 0, 0, 0.9)' },
-                    }}
+                    controller={{ closeOnBackdropClick: true }}
                 />
             )}
         </div>
