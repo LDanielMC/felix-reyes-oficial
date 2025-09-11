@@ -9,7 +9,7 @@ export const Hero = () => {
   return (
     // MEJORA: Se ajusta el padding para dar más espacio vertical en móviles y se centra el contenido.
     // min-h-screen asegura que ocupe toda la altura de la pantalla en todas las resoluciones.
-    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-hero pt-48 sm:pt-56 md:pt-40 pb-24 sm:pb-32 md:pb-0">
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-hero pt-40 sm:pt-48 md:pt-32 pb-24 sm:pb-32 md:pb-0">
       
       {/* Background Image Overlay (sin cambios) */}
       <div className="absolute inset-0 z-0">

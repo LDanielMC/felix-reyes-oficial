@@ -30,41 +30,37 @@ export const About = () => {
     <section id="nosotros" className="section-padding bg-gradient-subtle">
       <div className="container-custom">
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 gap-16 items-center">
-          {/* Content */}
+          {/* Content - Optimized */}
           <motion.div
             className="xl:col-span-1"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInLeft}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
-            <motion.div 
-              className="flex items-center space-x-2 mb-6"
-              variants={fadeInUp}
-              transition={{ delay: 0.2 }}
-            >
+            <div className="flex items-center space-x-2 mb-6">
               <Award className="h-6 w-6 text-accent" />
               <span className="text-accent font-semibold text-sm uppercase tracking-wider">Fundada en 1974</span>
-            </motion.div>
+            </div>
             
             <motion.h2 
-              className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6 leading-tight font-serif"
+              className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6 leading-tight"
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
               Líderes en Servicios
               <span className="text-secondary block"> Contables y Fiscales</span>
-            </motion.h2>
+            </h2>
             
             <motion.p 
-              className="text-xl text-muted-foreground mb-8 leading-relaxed font-sans"
+              className="text-xl text-muted-foreground mb-8 leading-relaxed"
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
               Cinco décadas de excelencia profesional respaldando el crecimiento 
               empresarial con soluciones contables integrales y asesoría especializada.
-            </motion.p>
+            </p>
 
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 mb-8"
@@ -73,23 +69,33 @@ export const About = () => {
             >
               <motion.a 
                 href="/nosotros"
-                className="btn-primary inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                className="btn-primary inline-flex items-center space-x-2"
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 400, damping: 17 }
+                }}
+                whileTap={{ scale: 0.95 }}
               >
                 <span>Conocer Nuestra Historia</span>
                 <ArrowRight className="h-4 w-4" />
-              </motion.a>
+              </Link>
               
-              <motion.a 
+              <a 
                 href="#contacto"
-                className="btn-outline inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                className="btn-outline inline-flex items-center space-x-2"
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 400, damping: 17 }
+                }}
+                whileTap={{ scale: 0.95 }}
               >
                 <span>Solicitar Consulta</span>
                 <TrendingUp className="h-4 w-4" />
-              </motion.a>
-            </motion.div>
+              </a>
+            </div>
           </motion.div>
 
-          {/* Professional Image Section */}
+          {/* Professional Image Section - Optimized */}
           <motion.div 
             className="xl:col-span-1 lg:order-last xl:order-none"
             initial="hidden"
@@ -98,30 +104,26 @@ export const About = () => {
             variants={fadeInUp}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <motion.div 
-              className="relative group"
-              whileHover={{ 
-                scale: 1.02,
-                transition: { type: "spring", stiffness: 400, damping: 17 }
-              }}
-            >
+            <div className="relative group hover:scale-[1.01] transition-transform duration-500">
               {/* Main Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 shadow-elegant">
                 {/* Image Placeholder - Replace src with your actual image */}
-                <div className="aspect-[5/5] bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center">
+                <div className="aspect-[4/5] bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center">
                   <img 
                     src={lugar}
                     alt="Félix Reyes Contadores - Oficina profesional"
-                    className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                {/* Overlay Gradient - Only show when image is loaded */}
+                {imageLoaded && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                )}
                 
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"></div>
+                {/* Decorative Elements - Reduced motion */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl transition-opacity duration-500" style={{ opacity: imageLoaded ? 1 : 0 }}></div>
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/20 rounded-full blur-3xl transition-opacity duration-500" style={{ opacity: imageLoaded ? 1 : 0 }}></div>
               </div>
 
               {/* Floating Badge */}
@@ -142,23 +144,23 @@ export const About = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-primary">Oficina Central</p>
-                    <p className="text-xs text-muted-foreground font-sans">Cuernavaca, Morelos</p>
+                    <p className="text-xs text-muted-foreground">Guadalajara, Jalisco</p>
                   </div>
                 </div>
               </motion.div>
             </motion.div>
           </motion.div>
 
-          {/* Highlights Cards */}
+          {/* Highlights Cards - Optimized */}
           <motion.div 
             className="xl:col-span-1 space-y-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInRight}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <StaggerContainer delay={0.1}>
+            <div className="space-y-6">
               {highlights.map((highlight, index) => (
                 <StaggerItem key={index}>
                   <motion.div 
@@ -195,6 +197,12 @@ export const About = () => {
                         </p>
                       </div>
                       
+                      <motion.div
+                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        whileHover={{ x: 5 }}
+                      >
+                        <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                      </motion.div>
                     </div>
                   </motion.div>
                 </StaggerItem>
@@ -221,17 +229,17 @@ export const About = () => {
                 >
                   <Award className="h-12 w-12 text-accent mx-auto" />
                 </motion.div>
-                <h3 className="text-lg font-heading font-bold text-primary mb-2 font-serif">
+                <h3 className="text-lg font-heading font-bold text-primary mb-2">
                   Certificación Profesional
                 </h3>
                 <p className="text-sm text-muted-foreground font-sans">
                   Respaldados por las más altas certificaciones contables y fiscales
                 </p>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
     </section>
   );
-};
+});

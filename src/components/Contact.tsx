@@ -1,10 +1,13 @@
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
+import { FloatingNotification } from './ui/FloatingNotification';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,11 +16,83 @@ export const Contact = () => {
     service: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<{
+    isVisible: boolean;
+    type: 'success' | 'error';
+    message: string;
+  }>({ isVisible: false, type: 'success', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // EmailJS configuration
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_gsmjfap';
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_nguzek9';
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'c9TUNcq5SWBnXrw9S';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    
+    if (!formRef.current) return;
+    
+    setIsSubmitting(true);
+    setNotification({ isVisible: false, type: 'success', message: '' });
+    
+    try {
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        company: formData.company || 'No especificada',
+        service: formData.service,
+        message: formData.message,
+        to_email: 'ivanespinoza0226@gmail.com',
+        reply_to: formData.email,
+        // Additional context
+        submission_date: new Date().toLocaleString('es-MX', {
+          timeZone: 'America/Mexico_City',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      // Success
+      setNotification({
+        isVisible: true,
+        type: 'success',
+        message: '¡Gracias por contactarnos! Hemos recibido su solicitud y nos pondremos en contacto con usted pronto.'
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        message: ''
+      });
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setNotification({
+        isVisible: true,
+        type: 'error',
+        message: 'Hubo un error al enviar su solicitud. Por favor, intente nuevamente o contáctenos directamente por teléfono.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -56,13 +131,15 @@ export const Contact = () => {
 
   const services = [
     'Contabilidad General',
-    'Asesoría Fiscal',
-    'Auditorías',
+    'Contabilidad Gubernamental',
+    'Asesoría Contable',
+    'Asesoría Administrativa',
+    'Asesoría Laboral',
     'Asesoría Financiera',
     'Asesoría Patrimonial',
-    'Asesoría Laboral',
-    'Precios de Transferencia',
-    'Asesoría Administrativa'
+    'Asesoría Fiscal',
+    'Auditorías',
+    'Estudios de Precios de Transferencia'
   ];
 
   return (
@@ -217,6 +294,7 @@ export const Contact = () => {
               </motion.h3>
 
               <motion.form 
+                ref={formRef}
                 onSubmit={handleSubmit} 
                 className="space-y-6"
                 variants={fadeInUp}
@@ -367,22 +445,38 @@ export const Contact = () => {
                 <StaggerItem>
                   <motion.button
                     type="submit"
-                    className="w-full btn-secondary flex items-center justify-center space-x-2"
-                    whileHover={{ 
+                    disabled={isSubmitting}
+                    className={`w-full btn-secondary flex items-center justify-center space-x-2 transition-all duration-200 ${
+                      isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+                    whileHover={!isSubmitting ? { 
                       scale: 1.02,
                       transition: { type: "spring", stiffness: 400, damping: 17 }
-                    }}
-                    whileTap={{ scale: 0.98 }}
+                    } : {}}
+                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                   >
-                    <motion.div
-                      animate={{ 
-                        x: [0, 5, 0],
-                        transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
-                      }}
-                    >
-                      <Send className="h-5 w-5" />
-                    </motion.div>
-                    <span>Enviar Solicitud</span>
+                    {isSubmitting ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        />
+                        <span>Enviando...</span>
+                      </>
+                    ) : (
+                      <>
+                        <motion.div
+                          animate={{ 
+                            x: [0, 5, 0],
+                            transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+                          }}
+                        >
+                          <Send className="h-5 w-5" />
+                        </motion.div>
+                        <span>Enviar Solicitud</span>
+                      </>
+                    )}
                   </motion.button>
                 </StaggerItem>
 
@@ -401,6 +495,15 @@ export const Contact = () => {
           </motion.div>
         </div>
       </div>
+      
+      {/* Floating Notification */}
+      <FloatingNotification
+        message={notification.message}
+        type={notification.type}
+        isVisible={notification.isVisible}
+        onClose={() => setNotification({ ...notification, isVisible: false })}
+        autoCloseDelay={3000}
+      />
     </section>
   );
 };

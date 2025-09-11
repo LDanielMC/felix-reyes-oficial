@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { motion, Variants, Transition } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
@@ -7,7 +7,28 @@ import {
   ChevronLeft, ChevronRight, ChevronDown
 } from 'lucide-react';
 
-const services = [
+// TypeScript interfaces
+interface Service {
+  id: string;
+  title: string;
+  icon: React.ReactElement;
+  description: string;
+}
+
+interface ServiceCardProps {
+  service: Service;
+  index: number;
+  isMobile?: boolean;
+}
+
+interface NavigationButtonProps {
+  direction: 'left' | 'right';
+  onClick: () => void;
+  disabled: boolean;
+  canScroll: boolean;
+}
+
+const services: Service[] = [
   {
     id: 'contabilidad-general',
     title: 'Contabilidad General',
@@ -175,7 +196,116 @@ const arrowVariants: Variants = {
   }
 };
 
-export const Services = () => {
+// Memoized Navigation Button Component
+const NavigationButton = memo(({ direction, onClick, disabled, canScroll }: NavigationButtonProps) => {
+  const isLeft = direction === 'left';
+  const Icon = isLeft ? ChevronLeft : ChevronRight;
+  
+  return (
+    <motion.button
+      onClick={onClick}
+      disabled={disabled}
+      className={`absolute ${isLeft ? 'left-0 -translate-x-2' : 'right-0 translate-x-2'} top-1/2 -translate-y-1/2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
+        !canScroll ? 'opacity-0 pointer-events-none' : ''
+      }`}
+      aria-label={`${isLeft ? 'Anterior' : 'Siguiente'} servicio`}
+      whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.3)' }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ x: isLeft ? -10 : 10, opacity: 0 }}
+      animate={{ 
+        x: canScroll ? 0 : (isLeft ? -10 : 10), 
+        opacity: canScroll ? 1 : 0,
+        transition: { 
+          duration: 0.4,
+          ease: [0.16, 1, 0.3, 1]
+        }
+      }}
+    >
+      <Icon className="w-6 h-6" />
+    </motion.button>
+  );
+});
+
+// Memoized Service Card Component
+const ServiceCard = memo(({ service, index, isMobile = false }: ServiceCardProps) => {
+  return (
+    <motion.div
+      className={isMobile ? "flex-shrink-0 w-80 sm:w-96 md:w-[28rem] px-3 snap-center" : "h-full"}
+      variants={cardVariants}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
+    >
+      <Link to={`/servicios/${service.id}`} className="group block h-full">
+        <motion.div 
+          className={`h-full bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm border border-border/30 rounded-2xl ${isMobile ? 'p-7 sm:p-8' : 'p-8'} flex flex-col transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative group-hover:bg-card/90`}
+          whileHover="hover"
+          initial="rest"
+          animate="rest"
+          variants={cardVariants}
+        >
+          {/* Hover effect background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+          
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
+               style={{
+                 backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                 backgroundSize: '20px 20px',
+               }}
+          />
+          
+          <div className="relative z-10">
+            <motion.div 
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center mb-6 text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
+              variants={iconVariants}
+              custom={index}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {React.cloneElement(service.icon, { 
+                className: 'w-7 h-7 relative z-10',
+                strokeWidth: 1.75
+              })}
+            </motion.div>
+            
+            <h3 className={`${isMobile ? 'text-2xl' : 'text-xl'} font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500`}>
+              {service.title}
+            </h3>
+            
+            <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+              {service.description}
+            </p>
+            
+            <motion.div 
+              className={`inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500 mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 ${isMobile ? 'w-full justify-between' : ''}`}
+              variants={arrowVariants}
+              custom={index}
+            >
+              <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                {isMobile ? 'Más información' : 'Ver detalles'}
+              </span>
+              <motion.div
+                className={`w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500 ${isMobile ? '' : 'ml-2'}`}
+                variants={{
+                  rest: { rotate: 0 },
+                  hover: { rotate: 45 }
+                }}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </motion.div>
+            </motion.div>
+          </div>
+          
+          {/* Decorative elements */}
+          <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        </motion.div>
+      </Link>
+    </motion.div>
+  );
+});
+
+export const Services = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -235,18 +365,41 @@ export const Services = () => {
 
   const scrollTo = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      // Get the width of a single card + its gap for precise scrolling
-      const firstCard = scrollRef.current.children[0] as HTMLElement;
-      if (!firstCard) return;
-
-      const cardWidth = firstCard.offsetWidth; // Width of the card
-      const gap = parseInt(window.getComputedStyle(scrollRef.current).gap || '0'); // Get the gap from the parent
-      const scrollAmount = direction === 'left' ? -(cardWidth + gap) : (cardWidth + gap);
+      const container = scrollRef.current;
+      const containerWidth = container.clientWidth;
+      const scrollAmount = containerWidth * 0.8; // Scroll 80% of container width
       
-      scrollRef.current.scrollBy({
-        left: scrollAmount,
+      const targetScroll = direction === 'left' 
+        ? container.scrollLeft - scrollAmount
+        : container.scrollLeft + scrollAmount;
+      
+      container.scrollTo({
+        left: targetScroll,
         behavior: 'smooth'
       });
+      
+      // Update scroll state after animation
+      setTimeout(() => {
+        checkScrollButtons();
+      }, 300);
+    }
+  };
+
+  const scrollToCard = (index: number) => {
+    if (scrollRef.current) {
+      const card = scrollRef.current.children[index] as HTMLElement;
+      if (card) {
+        const container = scrollRef.current;
+        const cardLeft = card.offsetLeft;
+        const cardWidth = card.offsetWidth;
+        const containerWidth = container.clientWidth;
+        const scrollLeft = cardLeft - (containerWidth - cardWidth) / 2;
+        
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -372,27 +525,12 @@ export const Services = () => {
           <div className="relative flex items-center">
             
             {/* Botón de navegación izquierda */}
-            <motion.button
+            <NavigationButton
+              direction="left"
               onClick={() => scrollTo('left')}
               disabled={!canScrollLeft}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
-                !canScrollLeft ? 'opacity-0 pointer-events-none' : ''
-              }`}
-              aria-label="Anterior servicio"
-              whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ 
-                x: canScrollLeft ? 0 : -10, 
-                opacity: canScrollLeft ? 1 : 0,
-                transition: { 
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1]
-                }
-              }}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </motion.button>
+              canScroll={canScrollLeft}
+            />
             
             {/* Contenedor del scroll de las tarjetas */}
             <motion.div 
@@ -408,106 +546,23 @@ export const Services = () => {
                 onScroll={checkScrollButtons}
               >
                 {services.map((service, index) => (
-                  <motion.div
+                  <ServiceCard
                     key={service.id}
-                    className="flex-shrink-0 w-80 sm:w-96 md:w-[28rem] px-3 snap-center"
-                    variants={cardVariants}
-                    custom={index}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
-                  >
-                    <Link to={`/servicios/${service.id}`} className="group block h-full">
-                      <motion.div 
-                        className="h-full bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm border border-border/30 rounded-2xl p-7 sm:p-8 flex flex-col transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative group-hover:bg-card/90"
-                        whileHover="hover"
-                        initial="rest"
-                        animate="rest"
-                        variants={cardVariants}
-                      >
-                        {/* Hover effect background */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
-                        
-                        {/* Subtle grid pattern */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
-                             style={{
-                               backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                               backgroundSize: '20px 20px',
-                             }}
-                        />
-                        
-                        <div className="relative z-10">
-                          <motion.div 
-                            className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center mb-6 text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
-                            variants={iconVariants}
-                            custom={index}
-                          >
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            {React.cloneElement(service.icon, { 
-                              className: 'w-7 h-7 relative z-10',
-                              strokeWidth: 1.75
-                            })}
-                          </motion.div>
-                          
-                          <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500">
-                            {service.title}
-                          </h3>
-                          
-                          <p className="text-muted-foreground text-base mb-6 leading-relaxed">
-                            {service.description}
-                          </p>
-                          
-                          <motion.div 
-                            className="inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500 mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 w-full justify-between"
-                            variants={arrowVariants}
-                            custom={index}
-                          >
-                            <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                              Más información
-                            </span>
-                            <motion.div
-                              className="w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500"
-                              variants={{
-                                rest: { rotate: 0 },
-                                hover: { rotate: 45 }
-                              }}
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </motion.div>
-                          </motion.div>
-                        </div>
-                        
-                        {/* Decorative elements */}
-                        <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                      </motion.div>
-                    </Link>
-                  </motion.div>
+                    service={service}
+                    index={index}
+                    isMobile={true}
+                  />
                 ))}
               </div>
             </motion.div>
             
             {/* Botón de navegación derecha */}
-            <motion.button
+            <NavigationButton
+              direction="right"
               onClick={() => scrollTo('right')}
               disabled={!canScrollRight}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
-                !canScrollRight ? 'opacity-0 pointer-events-none' : ''
-              }`}
-              aria-label="Siguiente servicio"
-              whileHover={{ scale: 1.05, boxShadow: '0 10px 25px -5px rgba(99, 102, 241, 0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ 
-                x: canScrollRight ? 0 : 10, 
-                opacity: canScrollRight ? 1 : 0,
-                transition: { 
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1]
-                }
-              }}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </motion.button>
+              canScroll={canScrollRight}
+            />
 
           </div>
 
@@ -522,16 +577,7 @@ export const Services = () => {
             {services.map((_, index) => (
               <motion.button
                 key={index}
-                onClick={() => {
-                  if (scrollRef.current) {
-                    const card = scrollRef.current.children[index] as HTMLElement;
-                    card?.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'nearest',
-                      inline: 'center'
-                    });
-                  }
-                }}
+                onClick={() => scrollToCard(index)}
                 className={`relative h-1.5 rounded-full transition-all duration-500 ${
                   currentSlide === index 
                     ? 'w-8 bg-gradient-to-r from-primary to-primary/80' 
@@ -581,84 +627,12 @@ export const Services = () => {
           viewport={{ once: true, margin: "-50px" }}
         >
           {services.map((service, index) => (
-            <motion.div
+            <ServiceCard
               key={service.id}
-              variants={cardVariants}
-              custom={index}
-              className="h-full"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
-            >
-              <Link to={`/servicios/${service.id}`} className="group block h-full">
-                <motion.div
-                  className="relative h-full flex flex-col p-8 bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm rounded-2xl border border-border/30 hover:border-primary/50 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-primary/10 overflow-hidden"
-                  initial="rest"
-                  whileHover="hover"
-                  whileTap={{ scale: 0.98 }}
-                  variants={cardVariants}
-                >
-                  {/* Hover effect background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
-                  
-                  {/* Subtle grid pattern */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
-                       style={{
-                         backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                         backgroundSize: '20px 20px',
-                       }}
-                  />
-                  
-                  {/* Icon container */}
-                  <motion.div 
-                    className="relative mb-6 p-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
-                    variants={iconVariants}
-                    custom={index}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    {React.cloneElement(service.icon, { 
-                      className: 'w-7 h-7 relative z-10',
-                      strokeWidth: 1.75
-                    })}
-                  </motion.div>
-                  
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500">
-                    {service.title}
-                  </h3>
-                  
-                  {/* Description */}
-                  <p className="text-muted-foreground text-base mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-                  
-                  {/* CTA with arrow */}
-                  <motion.div 
-                    className="mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 transition-colors duration-500"
-                    variants={arrowVariants}
-                    custom={index}
-                  >
-                    <div className="inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500">
-                      <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                        Ver detalles
-                      </span>
-                      <motion.div
-                        className="w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500 ml-2"
-                        variants={{
-                          rest: { rotate: 0 },
-                          hover: { rotate: 45 }
-                        }}
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                  
-                  {/* Decorative elements */}
-                  <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                </motion.div>
-              </Link>
-            </motion.div>
+              service={service}
+              index={index}
+              isMobile={false}
+            />
           ))}
         </motion.div>
 
@@ -705,7 +679,7 @@ export const Services = () => {
           }
         `
       }} />
-    </section>
+      </section>
     </>
   );
-};
+});
