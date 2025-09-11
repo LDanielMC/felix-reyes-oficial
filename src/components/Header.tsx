@@ -39,21 +39,6 @@ export const Header = () => {
         <div className="border-b border-border/50 hidden sm:block">
           <div className="container-custom">
             <div className="flex items-center justify-between py-2 text-xs sm:text-sm">
-              <div className="flex items-center space-x-2 sm:space-x-6">
-                <a href="tel:+523336154291" className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground hover:text-primary transition-colors duration-200">
-                  <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden xs:inline">+52 (33) 3615-4291</span>
-                  <span className="xs:hidden">Tel</span>
-                </a>
-                <a
-                  href="mailto:info@felixreyescontadores.com"
-                  className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">info@felixreyescontadores.com</span>
-                  <span className="sm:hidden">Email</span>
-                </a>
-              </div>
               <div className="hidden md:block">
                 <span className="text-primary font-semibold">Más de 50 años de experiencia</span>
               </div>
