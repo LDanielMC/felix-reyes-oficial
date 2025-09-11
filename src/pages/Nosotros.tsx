@@ -54,27 +54,6 @@ const StatCard = ({ number, label, delay = 0 }) => {
     )
 }
 
-// Tarjeta para la sección de Testimonios
-const TestimonialCard = ({ quote, name, company, delay = 0 }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.3 });
-    return(
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay }}
-            className="bg-muted/50 p-8 rounded-lg border border-border space-y-4"
-        >
-            <Quote className="text-primary w-8 h-8 opacity-50" />
-            <p className="text-foreground italic">"{quote}"</p>
-            <div className="pt-2">
-                <p className="font-bold text-foreground font-serif">{name}</p>
-                <p className="text-sm text-muted-foreground">{company}</p>
-            </div>
-        </motion.div>
-    )
-}
 
 // Tarjeta para la sección de Valores
 const ValueCard = ({ icon: Icon, title, description, delay = 0 }) => {
@@ -456,11 +435,6 @@ const Nosotros = () => {
               </div>
           </div>
       </section>
-        
-        {/* Socios y Colaboradores Section */}
-        <section className="py-16 md:py-24 bg-muted/50">
-            {/* ...código de la sección Socios y Colaboradores sin cambios... */}
-        </section>
       </div>
     );
   };

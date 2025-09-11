@@ -1,6 +1,6 @@
 import { AnimatedCounter } from './AnimatedCounter';
-import { CheckCircle, Award, Users, TrendingUp, DollarSign } from 'lucide-react';
-import heroImage from '@/assets/hero-accounting.jpg';
+import { CheckCircle, Award, Users, TrendingUp, Briefcase, ShieldCheck } from 'lucide-react';
+import heroImage from '@/assets/hero-accounting.webp';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeInLeft, fadeInRight, scaleIn } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
@@ -9,7 +9,7 @@ export const Hero = () => {
   return (
     // MEJORA: Se ajusta el padding para dar más espacio vertical en móviles y se centra el contenido.
     // min-h-screen asegura que ocupe toda la altura de la pantalla en todas las resoluciones.
-    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-hero py-24 sm:py-32 md:py-0">
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-hero pt-48 sm:pt-56 md:pt-40 pb-24 sm:pb-32 md:pb-0">
       
       {/* Background Image Overlay (sin cambios) */}
       <div className="absolute inset-0 z-0">
@@ -62,8 +62,7 @@ export const Hero = () => {
               variants={fadeInUp}
               transition={{ delay: 0.8 }}
             >
-              Más de 50 años de experiencia brindando soluciones integrales en contabilidad, 
-              auditoría y asesoría fiscal para empresas de todos los tamaños.
+              Confía en Félix Reyes Contadores, una firma con más de cinco décadas de experiencia brindando soluciones contables, financieras y administrativas a nivel nacional e internacional
             </motion.p>
 
             {/* MEJORA: Los botones se centran en móvil y se alinean a la izquierda a partir de `md`. */}
@@ -73,17 +72,13 @@ export const Hero = () => {
               transition={{ delay: 1.0 }}
             >
               <motion.button 
-                className="btn-secondary"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-secondary transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 Solicitar Consulta
               </motion.button>
               <motion.button 
-                className="btn-outline text-white border-white hover:bg-white hover:text-primary"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-outline text-white border-white hover:bg-white hover:text-primary transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 Conocer Servicios
@@ -171,13 +166,13 @@ export const Hero = () => {
               transition={{ delay: 1.0 }} // Se ajusta el delay
               whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <DollarSign className="h-8 w-8 text-accent mx-auto mb-4" />
+              <Briefcase className="h-8 w-8 text-accent mx-auto mb-4" />
               <AnimatedCounter 
-                end={178} 
-                suffix="M" // Se cambia MDP por M para ahorrar espacio
+                end={40} 
+                suffix="+"
                 className="text-3xl md:text-4xl font-bold text-accent block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">FACTURADOS</p>
+              <p className="text-muted-foreground font-medium text-sm">PROFESIONALES ESPECIALIZADOS</p>
             </motion.div>
 
             {/* Card 4 */}
@@ -187,13 +182,13 @@ export const Hero = () => {
               transition={{ delay: 1.2 }} // Se ajusta el delay
               whileHover={{ scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 17 } }}
             >
-              <Award className="h-8 w-8 text-primary mx-auto mb-4" />
+              <ShieldCheck className="h-8 w-8 text-primary mx-auto mb-4" />
               <AnimatedCounter 
-                end={652} 
-                suffix="+"
+                end={100} 
+                suffix="%"
                 className="text-3xl md:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">CASOS DE ÉXITO</p>
+              <p className="text-muted-foreground font-medium text-sm">CONFIANZA Y TRANSPARENCIA</p>
             </motion.div>
           </motion.div>
         </div>

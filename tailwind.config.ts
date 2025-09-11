@@ -8,8 +8,9 @@ export default {
   ],
   theme: {
     fontFamily: {
-      sans: ['Arial', 'sans-serif'],
-      serif: ['"Times New Roman"', 'serif'],
+      sans: ["Arial", "sans-serif"],
+      serif: ["Times New Roman", "serif"],
+      heading: ["Times New Roman", "serif"], // Added for titles
     },
     container: {
       center: true,

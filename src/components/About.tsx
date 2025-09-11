@@ -1,6 +1,6 @@
 import { Award, ArrowRight, Users, Building2, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
-import lugar from '@/assets/Lugar.jpg';
+import lugar from '@/assets/Lugar.webp';
 import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
 
@@ -49,7 +49,7 @@ export const About = () => {
             </motion.div>
             
             <motion.h2 
-              className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6 leading-tight"
+              className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6 leading-tight font-serif"
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
@@ -58,7 +58,7 @@ export const About = () => {
             </motion.h2>
             
             <motion.p 
-              className="text-xl text-muted-foreground mb-8 leading-relaxed"
+              className="text-xl text-muted-foreground mb-8 leading-relaxed font-sans"
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
@@ -73,12 +73,7 @@ export const About = () => {
             >
               <motion.a 
                 href="/nosotros"
-                className="btn-primary inline-flex items-center space-x-2"
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { type: "spring", stiffness: 400, damping: 17 }
-                }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-primary inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 <span>Conocer Nuestra Historia</span>
                 <ArrowRight className="h-4 w-4" />
@@ -86,12 +81,7 @@ export const About = () => {
               
               <motion.a 
                 href="#contacto"
-                className="btn-outline inline-flex items-center space-x-2"
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { type: "spring", stiffness: 400, damping: 17 }
-                }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-outline inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 <span>Solicitar Consulta</span>
                 <TrendingUp className="h-4 w-4" />
@@ -118,11 +108,11 @@ export const About = () => {
               {/* Main Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 shadow-elegant">
                 {/* Image Placeholder - Replace src with your actual image */}
-                <div className="aspect-[4/5] bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center">
+                <div className="aspect-[5/5] bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center">
                   <img 
                     src={lugar}
                     alt="Félix Reyes Contadores - Oficina profesional"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-right transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 
@@ -152,7 +142,7 @@ export const About = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-primary">Oficina Central</p>
-                    <p className="text-xs text-muted-foreground">Guadalajara, Jalisco</p>
+                    <p className="text-xs text-muted-foreground font-sans">Cuernavaca, Morelos</p>
                   </div>
                 </div>
               </motion.div>
@@ -205,12 +195,6 @@ export const About = () => {
                         </p>
                       </div>
                       
-                      <motion.div
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        whileHover={{ x: 5 }}
-                      >
-                        <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                      </motion.div>
                     </div>
                   </motion.div>
                 </StaggerItem>
@@ -237,10 +221,10 @@ export const About = () => {
                 >
                   <Award className="h-12 w-12 text-accent mx-auto" />
                 </motion.div>
-                <h3 className="text-lg font-heading font-bold text-primary mb-2">
+                <h3 className="text-lg font-heading font-bold text-primary mb-2 font-serif">
                   Certificación Profesional
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground font-sans">
                   Respaldados por las más altas certificaciones contables y fiscales
                 </p>
               </div>

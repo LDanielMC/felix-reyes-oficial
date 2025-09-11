@@ -19,9 +19,7 @@ export const Header = () => {
   return (
     <>
     <motion.header 
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border transition-all duration-300 ${
-        isScrolled ? 'bg-background/95 shadow-lg' : 'bg-background/90'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border transition-all duration-300 ${isScrolled ? 'bg-background/95 shadow-lg' : 'bg-background/90'}`}
       initial={{ y: -100 }}
       animate={{ 
         y: isVisible ? 0 : -120,
@@ -44,36 +42,6 @@ export const Header = () => {
       >
         <div className="container-custom">
           <div className="flex items-center justify-between py-2 text-xs sm:text-sm">
-            <motion.div 
-              className="flex items-center space-x-2 sm:space-x-6"
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <motion.div 
-                className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground"
-                whileHover={{ 
-                  color: "hsl(var(--primary))",
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden xs:inline">+52 (33) 3615-4291</span>
-                <span className="xs:hidden">Tel</span>
-              </motion.div>
-              <motion.a 
-                href="mailto:info@felixreyescontadores.com"
-                className="flex items-center space-x-1 sm:space-x-2 text-muted-foreground"
-                whileHover={{ 
-                  color: "hsl(var(--primary))",
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">info@felixreyescontadores.com</span>
-                <span className="sm:hidden">Email</span>
-              </motion.a>
-            </motion.div>
             <motion.div 
               className="hidden md:block"
               initial={{ x: 20, opacity: 0 }}
