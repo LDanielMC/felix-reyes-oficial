@@ -16,7 +16,7 @@ export const Hero = () => {
         <img 
           src={heroImage} 
           alt="Félix Reyes Contadores - Servicios profesionales"
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
       </div>

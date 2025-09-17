@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import { motion, Variants, Transition } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import heroAccounting from '@/assets/hero-service.webp';
 import { 
   Calculator, FileText, Search, TrendingUp, Shield, 
   Users, PieChart, BookOpen, CheckCircle2, ArrowRight,
@@ -408,9 +409,12 @@ export const Services = memo(() => {
       {/* Hero Section - Banner estilo Nosotros */}
       <section 
         className="relative pt-32 pb-20 md:pt-40 md:pb-28 text-white overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(16, 65%, 22%))' }}
       >
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        <div className="absolute inset-0 bg-primary">
+          <img src={heroAccounting} alt="Servicios Contables" className="w-full h-full object-cover opacity-80" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-transparent" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -423,7 +427,7 @@ export const Services = memo(() => {
               Soluciones Contables que Impulsan tu Éxito
             </h1>
             <p className="text-xl md:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto font-sans">
-              Servicios integrales diseñados para el crecimiento y la estabilidad financiera de tu negocio. Más de 5 décadas de experiencia a tu servicio.
+              Descubre nuestro portafolio completo de servicios contables y financieros.Cada servicio está diseñado para satisfacer las necesidades específicas de tu empresa.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <motion.a 
@@ -460,64 +464,6 @@ export const Services = memo(() => {
         </div>
         
         <div className="relative container px-4 sm:px-6 lg:px-4 mx-auto max-w-7xl pt-8 sm:pt-12">
-          <motion.div
-            className="text-center mb-16 sm:mb-20 lg:mb-24 max-w-4xl mx-auto px-4 sm:px-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px 0px -50px 0px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.span 
-              className="inline-flex items-center px-5 py-2.5 mb-6 text-sm font-semibold text-primary bg-primary/5 rounded-full backdrop-blur-sm border border-primary/10 hover:bg-primary/10 transition-all duration-500 shadow-sm hover:shadow-primary/5"
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ 
-                delay: 0.1,
-                duration: 0.8,
-                type: "spring",
-                stiffness: 100,
-                damping: 12
-              }}
-            >
-              <span className="relative flex h-2 w-2 mr-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Nuestros Servicios
-            </motion.span>
-            
-            <motion.h2 
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 sm:mb-8 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px 0px" }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">Servicios </span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 relative">
-                Especializados
-                <motion.span 
-                  className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full"
-                  initial={{ scaleX: 0, originX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                />
-              </span>
-            </motion.h2>
-            
-            <motion.p 
-              className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px 0px 0px 0px" }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Descubre nuestro portafolio completo de servicios contables y financieros. 
-              <span className="hidden sm:inline">Cada servicio está diseñado para satisfacer las necesidades específicas de tu empresa.</span>
-            </motion.p>
-          </motion.div>
 
         {/* Enhanced Mobile Carousel - Visible en pantallas pequeñas y medianas, oculto en grandes */}
         <div id="servicios-grid" className="block lg:hidden">

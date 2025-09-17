@@ -168,30 +168,6 @@ export const ClientPortfolio = () => {
     },
   ];
 
-  const stats = [
-    { icon: Building, value: '150+', label: 'Empresas Activas', color: 'primary' },
-    { icon: Users, value: '25+', label: 'Sectores Atendidos', color: 'secondary' },
-    { icon: TrendingUp, value: '98%', label: 'Satisfacción del Cliente', color: 'accent' }
-  ];
-
-  // CORRECCIÓN 1: Objeto para mapear colores a clases estáticas que Tailwind CSS puede leer.
-  const colorClasses = {
-    primary: {
-      text: 'text-primary',
-      bg: 'bg-gradient-to-br from-primary/10 to-primary/5',
-      border: 'border-primary/10'
-    },
-    secondary: {
-      text: 'text-secondary',
-      bg: 'bg-gradient-to-br from-secondary/10 to-secondary/5',
-      border: 'border-secondary/10'
-    },
-    accent: {
-      text: 'text-accent',
-      bg: 'bg-gradient-to-br from-accent/10 to-accent/5',
-      border: 'border-accent/10'
-    }
-  };
 
   return (
     <section className="section-padding bg-muted/50">
@@ -214,30 +190,6 @@ export const ClientPortfolio = () => {
             </div>
         </StaggerContainer>
 
-        {/* --- Fila de Estadísticas (CORREGIDA) --- */}
-        {/* CORRECCIÓN 2: El StaggerContainer ahora es el contenedor del grid. */}
-        <StaggerContainer delay={0.15} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {stats.map((stat) => {
-            const colors = colorClasses[stat.color]; // Se obtienen las clases correctas del objeto.
-            return (
-              <StaggerItem key={stat.label}>
-                <div className="text-center group">
-                  <div 
-                    className={`w-20 h-20 mx-auto mb-4 rounded-2xl border flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${colors.bg} ${colors.border} ${colors.text}`}
-                  >
-                    <stat.icon className="h-9 w-9" />
-                  </div>
-                  <div className={`text-5xl font-bold ${colors.text} mb-2 font-serif`}>
-                    {stat.value}
-                  </div>
-                  <p className="text-muted-foreground font-medium text-lg">
-                    {stat.label}
-                  </p>
-                </div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
 
         {/* --- Grid de Clientes (CORREGIDA) --- */}
         {/* CORRECCIÓN 2: El StaggerContainer ahora es el contenedor del grid. */}

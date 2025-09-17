@@ -1,20 +1,40 @@
 import { useState } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isVisible, isScrolled } = useHeaderScroll();
+  const navigate = useNavigate();
 
   const navigationItems = [
     { name: 'Inicio', href: '/' },
     { name: 'Nosotros', href: '/nosotros' },
     { name: 'Servicios', href: '/servicios' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contacto', href: '/#contacto' },
+    { name: 'Contacto', href: '#contacto' },
   ];
+
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (window.location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const contactSection = document.getElementById('contacto');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100); // Delay for page transition
+    } else {
+      const contactSection = document.getElementById('contacto');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -64,15 +84,29 @@ export const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigationItems.map((item) => {
+                if (item.name === 'Contacto') {
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      onClick={handleContactClick}
+                      className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5 cursor-pointer"
+                    >
+                      {item.name}
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5"
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })} 
             </nav>
 
             {/* CTA Button */}
@@ -129,16 +163,30 @@ export const Header = () => {
             >
               <div className="container-custom py-3 sm:py-4">
                 <nav className="flex flex-col space-y-3 sm:space-y-4">
-                  {navigationItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {navigationItems.map((item) => {
+                    if (item.name === 'Contacto') {
+                      return (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          onClick={handleContactClick}
+                          className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5 cursor-pointer"
+                        >
+                          {item.name}
+                        </a>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                   <button className="btn-secondary mt-3 sm:mt-4 text-sm transition-transform hover:scale-105 active:scale-95 duration-200">
                     Consulta Gratuita
                   </button>
