@@ -17,7 +17,18 @@ export const Header = () => {
     { name: 'Contacto', href: '#contacto' },
   ];
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      const homeSection = document.getElementById('inicio');
+      if (homeSection) {
+        homeSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleContactClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (window.location.pathname !== '/') {
       navigate('/');
@@ -68,14 +79,14 @@ export const Header = () => {
 
         {/* Main Navigation */}
         <div className="container-custom">
-          <div className="flex items-center justify-between py-1 sm:py-2 md:py-3">
+          <div className="flex items-center justify-between py-5 sm:py-2 md:py-3">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="flex items-center">
+              <Link to="/" className="flex items-center" onClick={handleHomeClick}>
                 <img
-                  src="/logo.png"
+                  src="/logo.svg"
                   alt="Félix Reyes Contadores - Logo"
-                  className="h-8 sm:h-10 md:h-16 w-auto object-contain cursor-pointer transition-transform hover:scale-105 duration-200"
+                  className="h-12 sm:h-14 md:h-20 w-auto object-contain cursor-pointer transition-transform hover:scale-105 duration-200"
                   loading="eager"
                   decoding="async"
                 />
@@ -97,6 +108,18 @@ export const Header = () => {
                     </a>
                   );
                 }
+                if (item.name === 'Inicio') {
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      onClick={handleHomeClick}
+                      className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5"
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                }
                 return (
                   <Link
                     key={item.name}
@@ -111,8 +134,8 @@ export const Header = () => {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <button className="btn-secondary transition-transform hover:scale-105 active:scale-95 duration-200">
-                Consulta Gratuita
+              <button onClick={handleContactClick} className="btn-secondary transition-transform hover:scale-105 active:scale-95 duration-200">
+                Solicitar consulta
               </button>
             </div>
 
@@ -176,6 +199,18 @@ export const Header = () => {
                         </a>
                       );
                     }
+                    if (item.name === 'Inicio') {
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          onClick={handleHomeClick}
+                          className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
+                        >
+                          {item.name}
+                        </Link>
+                      );
+                    }
                     return (
                       <Link
                         key={item.name}
@@ -187,8 +222,8 @@ export const Header = () => {
                       </Link>
                     );
                   })}
-                  <button className="btn-secondary mt-3 sm:mt-4 text-sm transition-transform hover:scale-105 active:scale-95 duration-200">
-                    Consulta Gratuita
+                  <button onClick={handleContactClick} className="btn-secondary mt-3 sm:mt-4 text-sm transition-transform hover:scale-105 active:scale-95 duration-200">
+                    Solicitar consulta
                   </button>
                 </nav>
               </div>

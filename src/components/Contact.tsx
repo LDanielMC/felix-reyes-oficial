@@ -12,7 +12,6 @@ export const Contact = () => {
     name: '',
     email: '',
     phone: '',
-    company: '',
     service: '',
     message: ''
   });
@@ -42,7 +41,6 @@ export const Contact = () => {
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
-        company: formData.company || 'No especificada',
         service: formData.service,
         message: formData.message,
         to_email: 'ivanespinoza0226@gmail.com',
@@ -78,7 +76,6 @@ export const Contact = () => {
         name: '',
         email: '',
         phone: '',
-        company: '',
         service: '',
         message: ''
       });
@@ -222,16 +219,15 @@ export const Contact = () => {
                         <div>
                           <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
                           {info.details.map((detail, idx) => (
-                            <motion.p 
+                            <a 
                               key={idx} 
-                              className="text-muted-foreground text-sm mb-1"
-                              whileHover={{ 
-                                color: "#3b82f6",
-                                transition: { duration: 0.3 }
-                              }}
+                              href={info.title === 'Teléfono' ? `tel:${detail.replace(/\s/g, '')}` : info.title === 'Email' ? `mailto:${detail}` : info.title === 'Dirección' ? info.action : '#'}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`block text-muted-foreground text-sm mb-1 ${info.title !== 'Horario' ? 'hover:text-primary transition-colors duration-300' : 'cursor-default'}`}
                             >
                               {detail}
-                            </motion.p>
+                            </a>
                           ))}
                         </div>
                       </div>
@@ -367,27 +363,6 @@ export const Contact = () => {
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                           placeholder="+52 (777) 123 4567"
-                          whileFocus={{ 
-                            scale: 1.02,
-                            transition: { duration: 0.2 }
-                          }}
-                        />
-                      </div>
-                    </StaggerItem>
-
-                    <StaggerItem>
-                      <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                          Empresa
-                        </label>
-                        <motion.input
-                          type="text"
-                          id="company"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                          placeholder="Nombre de su empresa"
                           whileFocus={{ 
                             scale: 1.02,
                             transition: { duration: 0.2 }
