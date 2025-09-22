@@ -8,14 +8,16 @@ import { MotionProvider } from "@/components/MotionProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
-import DynamicBlogPost from "./pages/blog/[id]";
-import CriptomonedasPost from "./pages/blog/criptomonedas";
+import CriptomonedasPost from "./pages/blog/CriptomonedasPost";
+import RegimenFiscal624Post from "./pages/blog/RegimenFiscal624Post";
+import PlataformasTecnologicasPost from "./pages/blog/PlataformasTecnologicasPost";
 import { ServiceDetail } from "./components/ServiceDetail";
 import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Contact } from "./components/Contact";
 import Nosotros from "./pages/Nosotros";
+import { ScrollToHashElement } from "./components/ScrollToHashElement";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ const App = () => (
           }}
         >
           <ScrollToTop />
+          <ScrollToHashElement />
           <Routes>
             <Route path="/" element={<Index />} />
             
@@ -58,16 +61,20 @@ const App = () => (
                 <Blog />
               </MainLayout>
             } />
-            {/* Specific blog post routes */}
+            {/* Blog Post Routes */}
             <Route path="/blog/criptomonedas" element={
               <MainLayout>
                 <CriptomonedasPost />
               </MainLayout>
             } />
-            {/* Catch-all route for other blog posts */}
-            <Route path="/blog/:id" element={
+            <Route path="/blog/regimen-fiscal-624" element={
               <MainLayout>
-                <DynamicBlogPost />
+                <RegimenFiscal624Post />
+              </MainLayout>
+            } />
+            <Route path="/blog/plataformas-tecnologicas" element={
+              <MainLayout>
+                <PlataformasTecnologicasPost />
               </MainLayout>
             } />
             

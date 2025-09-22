@@ -14,6 +14,9 @@ interface Service {
   title: string;
   icon: React.ReactElement;
   description: string;
+  color: string;
+  bgColor: string;
+  hoverColor: string;
 }
 
 interface ServiceCardProps {
@@ -34,61 +37,91 @@ const services: Service[] = [
     id: 'contabilidad-general',
     title: 'Contabilidad General',
     icon: <Calculator className="w-6 h-6" />,
-    description: 'Suministramos información precisa y oportuna para la evaluación, el control y la toma de decisiones.'
+    description: 'Suministramos información precisa y oportuna para la evaluación, el control y la toma de decisiones.',
+    color: 'text-success',
+    bgColor: 'bg-success/10',
+    hoverColor: 'hover:bg-success/20'
   },
   {
     id: 'contabilidad-gubernamental',
     title: 'Contabilidad Gubernamental',
     icon: <FileText className="w-6 h-6" />,
-    description: 'Generamos información financiera y presupuestal que cumpla con las normativas gubernamentales.'
+    description: 'Generamos información financiera y presupuestal que cumpla con las normativas gubernamentales.',
+    color: 'text-primary',
+    bgColor: 'bg-primary/10',
+    hoverColor: 'hover:bg-primary/20'
   },
   {
     id: 'asesoria-contable',
     title: 'Asesoría Contable',
     icon: <Search className="w-6 h-6" />,
-    description: 'Orientación en registros contables para un excelente control interno y cumplimiento fiscal.'
+    description: 'Orientación en registros contables para un excelente control interno y cumplimiento fiscal.',
+    color: 'text-warning',
+    bgColor: 'bg-warning/10',
+    hoverColor: 'hover:bg-warning/20'
   },
   {
     id: 'asesoria-administrativa',
     title: 'Asesoría Administrativa',
     icon: <TrendingUp className="w-6 h-6" />,
-    description: 'Suministramos información clara de las operaciones para la planeación y dirección de la empresa.'
+    description: 'Suministramos información clara de las operaciones para la planeación y dirección de la empresa.',
+    color: 'text-secondary',
+    bgColor: 'bg-secondary/10',
+    hoverColor: 'hover:bg-secondary/20'
   },
   {
     id: 'asesoria-laboral',
     title: 'Asesoría Laboral',
     icon: <Users className="w-6 h-6" />,
-    description: 'Te brindamos la asesoría necesaria para la administración del talento humano.'
+    description: 'Te brindamos la asesoría necesaria para la administración del talento humano.',
+    color: 'text-primary',
+    bgColor: 'bg-primary/10',
+    hoverColor: 'hover:bg-primary/20'
   },
   {
     id: 'asesoria-financiera',
     title: 'Asesoría Financiera',
     icon: <PieChart className="w-6 h-6" />,
-    description: 'Analizamos tus necesidades para la correcta gestión de tus finanzas y el establecimiento de metas.'
+    description: 'Analizamos tus necesidades para la correcta gestión de tus finanzas y el establecimiento de metas.',
+    color: 'text-secondary',
+    bgColor: 'bg-secondary/10',
+    hoverColor: 'hover:bg-secondary/20'
   },
   {
     id: 'asesoria-patrimonial',
     title: 'Asesoría Patrimonial',
     icon: <Shield className="w-6 h-6" />,
-    description: 'Organizamos y protegemos tus bienes, ayudándote a tomar decisiones para hacerlos crecer.'
+    description: 'Organizamos y protegemos tus bienes, ayudándote a tomar decisiones para hacerlos crecer.',
+    color: 'text-warning',
+    bgColor: 'bg-warning/10',
+    hoverColor: 'hover:bg-warning/20'
   },
   {
     id: 'asesoria-fiscal',
     title: 'Asesoría Fiscal',
     icon: <BookOpen className="w-6 h-6" />,
-    description: 'Determinamos impuestos y establecemos estrategias para el correcto cumplimiento de obligaciones fiscales.'
+    description: 'Determinamos impuestos y establecemos estrategias para el correcto cumplimiento de obligaciones fiscales.',
+    color: 'text-accent',
+    bgColor: 'bg-accent/10',
+    hoverColor: 'hover:bg-accent/20'
   },
   {
     id: 'auditorias',
     title: 'Auditorías',
     icon: <CheckCircle2 className="w-6 h-6" />,
-    description: 'Vigilamos y evaluamos la ejecución de controles internos para garantizar el cumplimiento normativo.'
+    description: 'Vigilamos y evaluamos la ejecución de controles internos para garantizar el cumplimiento normativo.',
+    color: 'text-success',
+    bgColor: 'bg-success/10',
+    hoverColor: 'hover:bg-success/20'
   },
   {
     id: 'precios-transferencia',
     title: 'Estudios de Precios de Transferencia',
     icon: <ArrowRight className="w-6 h-6" />,
-    description: 'Determinamos los ingresos acumulables y deducciones autorizadas para negocios con partes relacionadas.'
+    description: 'Determinamos los ingresos acumulables y deducciones autorizadas para negocios con partes relacionadas.',
+    color: 'text-accent',
+    bgColor: 'bg-accent/10',
+    hoverColor: 'hover:bg-warning/20'
   }
 ];
 
@@ -222,44 +255,42 @@ const NavigationButton = memo(({ direction, onClick, disabled, canScroll }: Navi
         }
       }}
     >
-      <Icon className="w-6 h-6" />
+         <Icon className="w-6 h-6" />
     </motion.button>
   );
 });
 
-// Memoized Service Card Component
 const ServiceCard = memo(({ service, index, isMobile = false }: ServiceCardProps) => {
   return (
     <motion.div
-      className={isMobile ? "flex-shrink-0 w-80 sm:w-96 md:w-[28rem] px-3 snap-center" : "h-full"}
-      variants={cardVariants}
+      className="w-full snap-center shrink-0 basis-full sm:basis-[calc(50%-0.75rem)] md:basis-[calc(33.333%-1rem)] lg:basis-auto lg:w-auto"
       custom={index}
+      variants={cardVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px 0px -100px 0px" }}
+      viewport={{ once: true, amount: 0.5 }}
+      whileHover="hover"
     >
-      <Link to={`/servicios/${service.id}`} className="group block h-full">
+      <Link 
+        to={`/servicios/${service.id}`} 
+        className="block h-full"
+        aria-label={`Saber más sobre ${service.title}`}
+      >
         <motion.div 
-          className={`h-full bg-gradient-to-b from-card/80 to-card/60 backdrop-blur-sm border border-border/30 rounded-2xl ${isMobile ? 'p-7 sm:p-8' : 'p-8'} flex flex-col transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative group-hover:bg-card/90`}
-          whileHover="hover"
-          initial="rest"
-          animate="rest"
-          variants={cardVariants}
+          className={`group relative flex flex-col p-6 sm:p-8 rounded-3xl h-full overflow-hidden border transition-all duration-500 ${service.bgColor} ${service.hoverColor} border-transparent hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10`}
+          style={{ minHeight: isMobile ? '380px' : '320px' }}
         >
-          {/* Hover effect background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
-          
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500" 
-               style={{
-                 backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+          <div 
+            className="absolute inset-0 bg-repeat opacity-[0.02]"
+            style={{
+                 backgroundImage: `url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill="%239C92AC" fill-opacity="0.4" fill-rule="evenodd"><path d="M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z"/></g></svg>')`,
                  backgroundSize: '20px 20px',
                }}
           />
           
           <div className="relative z-10">
             <motion.div 
-              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 flex items-center justify-center mb-6 text-primary shadow-sm group-hover:shadow-primary/20 group-hover:scale-110 transition-all duration-500"
+              className={`w-16 h-16 rounded-2xl bg-white/70 flex items-center justify-center mb-6 ${service.color} shadow-sm group-hover:shadow-xl group-hover:scale-110 transition-all duration-500`}
               variants={iconVariants}
               custom={index}
             >
@@ -270,24 +301,24 @@ const ServiceCard = memo(({ service, index, isMobile = false }: ServiceCardProps
               })}
             </motion.div>
             
-            <h3 className={`${isMobile ? 'text-2xl' : 'text-xl'} font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-500`}>
+            <h3 className={`${isMobile ? 'text-2xl' : 'text-xl'} font-bold ${service.color} mb-4 transition-colors duration-500`}>
               {service.title}
             </h3>
             
-            <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+            <p className="text-black/60 text-base mb-6 leading-relaxed">
               {service.description}
             </p>
             
             <motion.div 
-              className={`inline-flex items-center text-sm font-medium text-primary/90 group-hover:text-primary transition-colors duration-500 mt-auto pt-4 border-t border-border/20 group-hover:border-primary/30 ${isMobile ? 'w-full justify-between' : ''}`}
+              className={`inline-flex items-center text-sm font-medium ${service.color} transition-colors duration-500 mt-auto pt-4 border-t border-black/10 ${isMobile ? 'w-full justify-between' : ''}`}
               variants={arrowVariants}
               custom={index}
             >
-              <span className="font-semibold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              <span className="font-semibold">
                 {isMobile ? 'Más información' : 'Ver detalles'}
               </span>
               <motion.div
-                className={`w-7 h-7 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-500 ${isMobile ? '' : 'ml-2'}`}
+                className={`w-7 h-7 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-black/10 transition-all duration-500 ${isMobile ? '' : 'ml-2'}`}
                 variants={{
                   rest: { rotate: 0 },
                   hover: { rotate: 45 }
