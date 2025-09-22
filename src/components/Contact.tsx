@@ -23,9 +23,9 @@ export const Contact = () => {
   }>({ isVisible: false, type: 'success', message: '' });
 
   // EmailJS configuration
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_gsmjfap';
-  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_nguzek9';
-  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'c9TUNcq5SWBnXrw9S';
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_0ksv1hb';
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_vj5a48l';
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '-fZRCUZ32HzbWHGmQ';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ export const Contact = () => {
         phone: formData.phone,
         service: formData.service,
         message: formData.message,
-        to_email: 'ivanespinoza0226@gmail.com',
+        to_email: 'web.felixreyes@gmail.com',
         reply_to: formData.email,
         // Additional context
         submission_date: new Date().toLocaleString('es-MX', {

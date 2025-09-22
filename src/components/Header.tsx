@@ -3,6 +3,7 @@ import { Menu, X, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
+import { Logo } from './Logo';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,17 +80,11 @@ export const Header = () => {
 
         {/* Main Navigation */}
         <div className="container-custom">
-          <div className="flex items-center justify-between py-5 sm:py-2 md:py-3">
+          <div className="flex items-center justify-between py-3">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex-shrink-0">
               <Link to="/" className="flex items-center" onClick={handleHomeClick}>
-                <img
-                  src="/logo.svg"
-                  alt="Félix Reyes Contadores - Logo"
-                  className="h-12 sm:h-14 md:h-20 w-auto object-contain cursor-pointer transition-transform hover:scale-105 duration-200"
-                  loading="eager"
-                  decoding="async"
-                />
+                <Logo className="h-12 sm:h-16 md:h-20 w-auto text-primary cursor-pointer transition-transform hover:scale-105 duration-200" />
               </Link>
             </div>
 

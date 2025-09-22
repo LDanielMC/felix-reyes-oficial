@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Handshake, Landmark, Users, Building, Quote, Lightbulb, Gem, Shield, ShieldCheck, HeartHandshake, Scale, Target, Eye, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
+import heroAboutUs from '/Equipo1.webp';
 
 // Lazy load Lightbox for better initial performance
 const Lightbox = lazy(() => import('yet-another-react-lightbox'));
@@ -444,8 +445,11 @@ const Nosotros = memo(() => {
         <section 
           ref={heroRef}
           className="relative pt-32 pb-20 md:pt-40 md:pb-28 text-white overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(16, 65%, 22%))' }}
         >
+          <div className="absolute inset-0 bg-primary">
+            <img src={heroAboutUs} alt="Sobre Nosotros" className="w-full h-full object-cover opacity-80" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-transparent" />
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div
@@ -506,7 +510,7 @@ const Nosotros = memo(() => {
         </section>
   
         {/* Misión y Visión Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-0">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 items-center">
             <motion.div

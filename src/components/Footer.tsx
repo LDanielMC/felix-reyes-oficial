@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Calendar, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Calendar, ExternalLink, Facebook, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
@@ -55,8 +55,7 @@ export const Footer = () => {
                   variants={fadeInUp}
                   transition={{ delay: 0.3 }}
                 >
-                    Más de 50 años brindando servicios profesionales de contabilidad, 
-                    auditoría y asesoría fiscal.
+                    Confía en Félix Reyes Contadores, una firma con más de cinco décadas de experiencia brindando soluciones contables, financieras y administrativas a nivel nacional e internacional
                 </motion.p>
 
                 {/* Contact Info */}
@@ -78,7 +77,45 @@ export const Footer = () => {
                         >
                           <Phone className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90 text-sm md:text-base">+52 (33) 3615-4291</span>
+                        <span className="text-white/90 text-sm md:text-base">(777) 3121547</span>
+                      </motion.div>
+                    </StaggerItem>
+                    <StaggerItem>
+                      <motion.div 
+                        className="flex items-center space-x-3"
+                        whileHover={{ 
+                          x: 10,
+                          transition: { type: "spring", stiffness: 400, damping: 17 }
+                        }}
+                      >
+                        <motion.div
+                          whileHover={{ 
+                            rotate: 360,
+                            transition: { duration: 0.6 }
+                          }}
+                        >
+                          <Phone className="h-4 w-4 text-accent" />
+                        </motion.div>
+                        <span className="text-white/90 text-sm md:text-base">(777) 3124048</span>
+                      </motion.div>
+                    </StaggerItem>
+                    <StaggerItem>
+                      <motion.div 
+                        className="flex items-center space-x-3"
+                        whileHover={{ 
+                          x: 10,
+                          transition: { type: "spring", stiffness: 400, damping: 17 }
+                        }}
+                      >
+                        <motion.div
+                          whileHover={{ 
+                            rotate: 360,
+                            transition: { duration: 0.6 }
+                          }}
+                        >
+                          <Phone className="h-4 w-4 text-accent" />
+                        </motion.div>
+                        <span className="text-white/90 text-sm md:text-base">(777) 3141829</span>
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
@@ -97,7 +134,7 @@ export const Footer = () => {
                         >
                           <Mail className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90 text-sm md:text-base break-all">contacto@felixreyes.com</span>
+                        <span className="text-white/90 text-sm md:text-base break-all">info@felixreyescontadores.com</span>
                       </motion.div>
                     </StaggerItem>
                     <StaggerItem>
@@ -116,30 +153,43 @@ export const Footer = () => {
                         >
                           <MapPin className="h-4 w-4 text-accent" />
                         </motion.div>
-                        <span className="text-white/90 text-sm md:text-base">GDL, Jalisco, MX</span>
+                        <span className="text-white/90 text-sm md:text-base">Netzahualcoyotl 13, Cuernavaca Centro, Centro, 62000 Cuernavaca, Mor.</span>
                       </motion.div>
                     </StaggerItem>
-                    <StaggerItem>
-                      <motion.div 
-                        className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
-                      >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <Calendar className="h-4 w-4 text-accent" />
-                        </motion.div>
-                        <span className="text-white/90">Fundada en 1974</span>
-                      </motion.div>
-                    </StaggerItem>
+                    
                   </div>
                 </StaggerContainer>
+
+                {/* Social Media Links */}
+                <motion.div
+                  className="mt-6"
+                  variants={fadeInUp}
+                  transition={{ delay: 0.5 }}
+                >
+                  <h5 className="font-semibold mb-3 text-accent">Síguenos</h5>
+                  <div className="flex space-x-4">
+                    <motion.a
+                      href="https://www.facebook.com/felixreyescontadores/?locale=es_LA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/80 hover:text-accent transition-colors duration-200"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <Facebook className="h-6 w-6" />
+                    </motion.a>
+                    <motion.a
+                      href="https://www.instagram.com/felixreyescontadores/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/80 hover:text-accent transition-colors duration-200"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <Instagram className="h-6 w-6" />
+                    </motion.a>
+                  </div>
+                </motion.div>
               </div>
             </StaggerItem>
 
@@ -192,13 +242,7 @@ export const Footer = () => {
                   <StaggerContainer delay={0.1}>
                     <div className="text-sm text-white/80 space-y-1">
                       <StaggerItem>
-                        <p>Lunes a Viernes: 9:00 - 18:00</p>
-                      </StaggerItem>
-                      <StaggerItem>
-                        <p>Sábados: 9:00 - 14:00</p>
-                      </StaggerItem>
-                      <StaggerItem>
-                        <p>Domingos: Cerrado</p>
+                        <p>Lunes a Viernes de 9:00 a 17:00. </p>
                       </StaggerItem>
                     </div>
                   </StaggerContainer>
@@ -233,27 +277,6 @@ export const Footer = () => {
                     ))}
                   </div>
                 </StaggerContainer>
-
-                <motion.div 
-                  className="mt-8"
-                  variants={fadeInUp}
-                  transition={{ delay: 0.7 }}
-                >
-                  <h5 className="font-semibold mb-4 text-accent">Certificaciones</h5>
-                  <StaggerContainer delay={0.1}>
-                    <div className="text-sm text-white/80 space-y-1">
-                      <StaggerItem>
-                        <p>Colegio de Contadores Públicos</p>
-                      </StaggerItem>
-                      <StaggerItem>
-                        <p>Instituto Mexicano de Contadores</p>
-                      </StaggerItem>
-                      <StaggerItem>
-                        <p>Certificación en Normas de Información Financiera</p>
-                      </StaggerItem>
-                    </div>
-                  </StaggerContainer>
-                </motion.div>
               </div>
             </StaggerItem>
           </div>
