@@ -1,0 +1,132 @@
+/**
+ * TypeScript interfaces and data for ServiceDetail components
+ */
+
+export interface Service {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  details: string[];
+  benefits?: string[];
+}
+
+export interface ServiceDetailProps {
+  service: Service;
+}
+
+// Services data array
+export const servicesData: Service[] = [
+  {
+    id: 'contabilidad-general',
+    title: 'Contabilidad General',
+    icon: '📊',
+    description: 'Suministramos información precisa y oportuna para la evaluación, el control y la toma de decisiones.',
+    details: [
+      'Registro, codificación y captura de información contable',
+      'Cumplimiento de las Normas de Información Financiera',
+      'Cumplimiento de requerimientos contables en tiempo y forma',
+      'Correcta determinación de impuestos',
+    ],
+  },
+  {
+    id: 'contabilidad-gubernamental',
+    title: 'Contabilidad Gubernamental',
+    icon: '🏛️',
+    description: 'Generamos información financiera y presupuestal que cumpla con las normativas gubernamentales.',
+    details: [
+      'Identificación y análisis de operaciones que impactan a instituciones públicas',
+      'Procesamiento y reconocimiento de operaciones',
+      'Generación de información financiera y presupuestal',
+      'Cumplimiento de normativas gubernamentales',
+    ],
+  },
+  {
+    id: 'asesoria-contable',
+    title: 'Asesoría Contable',
+    icon: '📈',
+    description: 'Orientación en registros contables para un excelente control interno y cumplimiento fiscal.',
+    details: [
+      'Orientación sobre registros contables para tu empresa',
+      'Implementación de un excelente sistema de control interno',
+      'Cálculo de impuestos',
+      'Presentación de declaraciones fiscales considerando la normatividad vigente',
+    ],
+  },
+  {
+    id: 'asesoria-administrativa',
+    title: 'Asesoría Administrativa',
+    icon: '📋',
+    description: 'Suministramos información clara de las operaciones históricas para la planeación y dirección de la empresa.',
+    details: [
+      'Base para la planeación, organización y control',
+      'Información elemental para la toma de decisiones',
+    ],
+  },
+  {
+    id: 'asesoria-laboral',
+    title: 'Asesoría Laboral',
+    icon: '👥',
+    description: 'Te brindamos la asesoría necesaria para la administración del talento humano.',
+    details: [
+      'Administración del talento humano',
+      'Correcto registro e incorporación a las prestaciones sociales vigentes',
+    ],
+  },
+  {
+    id: 'asesoria-financiera',
+    title: 'Asesoría Financiera',
+    icon: '💰',
+    description: 'Analizamos tus necesidades para la correcta gestión de tus finanzas y el establecimiento de metas.',
+    details: [
+      'Establecimiento de metas financieras específicas',
+      'Orientación en decisiones de inversión a corto, mediano y largo plazo',
+      'Acceso a financiamiento bancario con las tasas de interés más bajas del mercado',
+    ],
+  },
+  {
+    id: 'asesoria-patrimonial',
+    title: 'Asesoría Patrimonial',
+    icon: '🏠',
+    description: 'Organizamos y protegemos tus bienes, ayudándote a tomar decisiones para hacerlos crecer.',
+    details: [
+      'Organización y protección de tus bienes',
+      'Toma de decisiones informadas para hacer crecer tus bienes',
+      'Protección de tus activos',
+    ],
+  },
+  {
+    id: 'asesoria-fiscal',
+    title: 'Asesoría Fiscal',
+    icon: '📝',
+    description: 'Determinamos impuestos y establecemos estrategias para el correcto cumplimiento de tus obligaciones fiscales.',
+    details: [
+      'Determinación de impuestos de acuerdo a la normatividad vigente',
+      'Estrategias en congruencia con el marco legal',
+      'Cumplimiento de obligaciones ante autoridades recaudadoras',
+    ],
+  },
+  {
+    id: 'auditorias',
+    title: 'Auditorías',
+    icon: '🔍',
+    description: 'Vigilamos y evaluamos la ejecución de controles internos para garantizar el cumplimiento normativo.',
+    details: [
+      'Auditoría Fiscal, Financiera, de Seguridad Social y de Control Interno',
+      'Garantía de cumplimiento contable, fiscal y financiero',
+      'Certificación para la presentación de dictámenes oficiales ante el SAT y el IMSS',
+    ],
+  },
+  {
+    id: 'precios-transferencia',
+    title: 'Estudios de Precios de Transferencia',
+    icon: '🌐',
+    description: 'Determinamos los ingresos acumulables y deducciones autorizadas para negocios con partes relacionadas.',
+    details: [
+      'Para contribuyentes con partes relacionadas nacionales o extranjeras',
+      'Asesoría para la declaración maestra',
+      'Asesoría para la declaración local',
+      'Asesoría para la declaración país por país',
+    ],
+  }
+];
