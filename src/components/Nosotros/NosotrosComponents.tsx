@@ -156,7 +156,7 @@ export const ImageCarousel = memo(({ images }: ImageCarouselProps) => {
                 decoding="async"
                 width="800"
                 height="400"
-                {...({ fetchpriority: index === 0 ? 'high' : 'low' } as any)}
+                {...({ fetchpriority: index === 0 ? 'high' : 'low' } as React.ImgHTMLAttributes<HTMLImageElement>)}
                 draggable={false}
               />
             </div>

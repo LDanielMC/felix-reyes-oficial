@@ -43,7 +43,7 @@ export const contactInfo: ContactInfoItem[] = [
     icon: MapPin,
     title: 'Dirección',
     details: ['Netzahualcoyotl 13, Cuernavaca Centro, Centro, 62000 Cuernavaca, Mor.'],
-    action: 'https://maps.app.goo.gl/yYdAV3gQYhYkSjA29'
+    action: 'https://maps.app.goo.gl/3iuCi2EJB6zvPWRK8'
   },
   {
     icon: Clock,

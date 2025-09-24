@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Throttle function for better performance
-const throttle = (func: Function, delay: number) => {
+const throttle = <T extends (...args: unknown[]) => void>(func: T, delay: number) => {
   let timeoutId: NodeJS.Timeout | null = null;
   let lastExecTime = 0;
-  return (...args: any[]) => {
+  return (...args: Parameters<T>) => {
     const currentTime = Date.now();
     
     if (currentTime - lastExecTime > delay) {
@@ -55,15 +55,11 @@ export const useHeaderScroll = () => {
     }
   }, []);
 
-  const throttledHandleScroll = useCallback(
-    throttle(handleScroll, 16), // ~60fps
-    [handleScroll]
-  );
-
   useEffect(() => {
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, [throttledHandleScroll]);
+    const throttledScrollHandler = throttle(handleScroll, 16); // ~60fps
+    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScrollHandler);
+  }, [handleScroll]);
 
   return { isVisible, isScrolled };
 };

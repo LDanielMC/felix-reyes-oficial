@@ -1,8 +1,25 @@
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps, Variants } from 'framer-motion';
 import { useScrollAnimation, useStaggerAnimation, fadeInUp } from '@/hooks/use-animations';
+import { ReactNode } from 'react';
+
+interface AnimatedSectionProps extends Omit<HTMLMotionProps<"div">, "children"> {
+  children: ReactNode;
+  className?: string;
+}
+
+interface StaggerContainerProps extends Omit<HTMLMotionProps<"div">, "children"> {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}
+
+interface StaggerItemProps extends Omit<HTMLMotionProps<"div">, "children"> {
+  children: ReactNode;
+  className?: string;
+}
 
 // Componente wrapper para animaciones
-export const AnimatedSection = ({ children, className = "", ...props }: any) => {
+export const AnimatedSection = ({ children, className = "", ...props }: AnimatedSectionProps) => {
   const { ref, controls } = useScrollAnimation();
 
   return (
@@ -20,7 +37,7 @@ export const AnimatedSection = ({ children, className = "", ...props }: any) => 
 };
 
 // Componente para animaciones escalonadas
-export const StaggerContainer = ({ children, className = "", delay = 0.1, ...props }: any) => {
+export const StaggerContainer = ({ children, className = "", delay = 0.1, ...props }: StaggerContainerProps) => {
   const { ref, controls, containerVariants } = useStaggerAnimation(delay);
 
   return (
@@ -38,15 +55,15 @@ export const StaggerContainer = ({ children, className = "", delay = 0.1, ...pro
 };
 
 // Componente para elementos individuales en animaciones escalonadas
-export const StaggerItem = ({ children, className = "", ...props }: any) => {
-  const itemVariants = {
+export const StaggerItem = ({ children, className = "", ...props }: StaggerItemProps) => {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: "easeOut"
       }
     }
   };
