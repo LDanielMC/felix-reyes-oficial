@@ -1,24 +1,31 @@
-import { useState } from 'react';
-import { Menu, X, Phone, Mail } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 import { Logo } from './Logo';
+import { HeaderTopBar } from './Header/HeaderTopBar';
+import { DesktopNav } from './Header/DesktopNav';
+import { MobileNav } from './Header/MobileNav';
+import { FloatingButton } from './Header/FloatingButton';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isVisible, isScrolled } = useHeaderScroll();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const navigationItems = [
-    { name: 'Inicio', href: '/' },
-    { name: 'Nosotros', href: '/nosotros' },
-    { name: 'Servicios', href: '/servicios' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contacto', href: '#contacto' },
-  ];
+  useEffect(() => {
+    if (isMenuOpen) {
+        document.body.classList.add('overflow-hidden');
+    } else {
+        document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+        document.body.classList.remove('overflow-hidden');
+    };
+  }, [isMenuOpen]);
 
-    const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (window.location.pathname === '/') {
       e.preventDefault();
       const homeSection = document.getElementById('inicio');
@@ -67,191 +74,41 @@ export const Header = () => {
           damping: 20,
         }}
       >
-        {/* Top Bar */}
-        <div className="border-b border-border/50 hidden sm:block">
-          <div className="container-custom">
-            <div className="flex items-center justify-between py-2 text-xs sm:text-sm">
-              <div className="hidden md:block">
-                <span className="text-primary font-semibold">Más de 50 años de experiencia</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Navigation */}
-        <div className="container-custom">
+        <HeaderTopBar />
+        <div className="container-custom relative">
           <div className="flex items-center justify-between py-3">
-            {/* Logo */}
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center" onClick={handleHomeClick}>
                 <Logo className="h-12 sm:h-16 md:h-20 w-auto text-primary cursor-pointer transition-transform hover:scale-105 duration-200" />
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navigationItems.map((item) => {
-                if (item.name === 'Contacto') {
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={handleContactClick}
-                      className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5 cursor-pointer"
-                    >
-                      {item.name}
-                    </a>
-                  );
-                }
-                if (item.name === 'Inicio') {
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      onClick={handleHomeClick}
-                      className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5"
-                    >
-                      {item.name}
-                    </Link>
-                  );
-                }
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="text-foreground hover:text-primary transition-all duration-200 font-medium block hover:-translate-y-0.5"
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })} 
-            </nav>
+            <DesktopNav 
+              location={location} 
+              handleContactClick={handleContactClick} 
+              handleHomeClick={handleHomeClick} 
+              navigate={navigate}
+            />
 
-            {/* CTA Button */}
             <div className="hidden lg:block">
               <button onClick={handleContactClick} className="btn-secondary transition-transform hover:scale-105 active:scale-95 duration-200">
                 Solicitar consulta
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 transition-transform hover:scale-110 active:scale-90 duration-150"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            >
-              <AnimatePresence mode="wait">
-                {isMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <X className="h-6 w-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Menu className="h-6 w-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
+            <MobileNav 
+              isMenuOpen={isMenuOpen} 
+              setIsMenuOpen={setIsMenuOpen} 
+              isScrolled={isScrolled}
+              location={location}
+              handleContactClick={handleContactClick}
+              handleHomeClick={handleHomeClick}
+            />
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className={`lg:hidden border-t border-border transition-all duration-300 ${
-                isScrolled ? 'bg-background/95' : 'bg-background/90'
-              }`}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div className="container-custom py-3 sm:py-4">
-                <nav className="flex flex-col space-y-3 sm:space-y-4">
-                  {navigationItems.map((item) => {
-                    if (item.name === 'Contacto') {
-                      return (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          onClick={handleContactClick}
-                          className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5 cursor-pointer"
-                        >
-                          {item.name}
-                        </a>
-                      );
-                    }
-                    if (item.name === 'Inicio') {
-                      return (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          onClick={handleHomeClick}
-                          className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
-                        >
-                          {item.name}
-                        </Link>
-                      );
-                    }
-                    return (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className="text-foreground/90 hover:text-primary transition-colors px-2 sm:px-3 py-2 text-sm font-medium block rounded-lg hover:bg-primary/5"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
-                    );
-                  })}
-                  <button onClick={handleContactClick} className="btn-secondary mt-3 sm:mt-4 text-sm transition-transform hover:scale-105 active:scale-95 duration-200">
-                    Solicitar consulta
-                  </button>
-                </nav>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.header>
 
-      {/* Floating Navigation Button */}
-      <AnimatePresence>
-        {!isVisible && (
-          <motion.div
-            className="fixed top-4 right-4 z-50"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-          >
-            <button
-              className="bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/90 transition-colors hover:scale-110 active:scale-90 duration-200"
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              title="Volver al inicio"
-              aria-label="Volver al inicio"
-            >
-              <div className="animate-bounce">
-                ↑
-              </div>
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <FloatingButton isVisible={isVisible} />
     </>
   );
 };

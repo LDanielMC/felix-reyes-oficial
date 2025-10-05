@@ -20,7 +20,6 @@ const cardVariants: Variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      delay: i * 0.05,
       duration: 0.8,
       ease: [0.215, 0.61, 0.355, 1],
       type: "spring",
@@ -106,12 +105,12 @@ const arrowVariants: Variants = {
 export const ServicioCard = memo(({ service, index, isMobile = false }: ServiceCardProps) => {
   return (
     <motion.div
-      className="w-full snap-center shrink-0 basis-full sm:basis-[calc(50%-0.75rem)] md:basis-[calc(33.333%-1rem)] lg:basis-auto lg:w-auto"
+      className="w-full snap-center shrink-0 basis-[80%] sm:basis-[45%] md:basis-[31%] lg:basis-auto lg:w-auto"
       custom={index}
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ amount: 0.5 }}
       whileHover="hover"
     >
       <Link

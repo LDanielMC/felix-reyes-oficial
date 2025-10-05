@@ -15,8 +15,8 @@ export const ServiciosCarousel: React.FC = () => {
 
   return (
     <div id="servicios-grid" className="block lg:hidden">
-      {/* Contenedor principal para el carrusel y las flechas, usa Flexbox */}
-      <div className="relative flex items-center">
+      {/* Contenedor principal para el carrusel y las flechas */}
+      <div className="relative">
 
         {/* Botón de navegación izquierda */}
         <NavigationButton
@@ -36,7 +36,7 @@ export const ServiciosCarousel: React.FC = () => {
         >
           <div
             ref={scrollRef}
-            className="flex overflow-x-auto pb-12 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+            className="flex overflow-x-auto pb-12 px-16 scrollbar-hide snap-x snap-mandatory scroll-smooth gap-4 -mx-4"
             onScroll={checkScrollButtons}
           >
             {services.map((service, index) => (

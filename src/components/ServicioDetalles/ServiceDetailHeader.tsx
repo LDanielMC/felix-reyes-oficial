@@ -16,9 +16,19 @@ export const ServiceDetailHeader: React.FC<ServiceDetailProps> = ({ service }) =
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3 }}
     >
-      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-4xl mb-6">
-        {service.icon}
-      </div>
+    <motion.div 
+        className="mb-8"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+    >
+        <img
+            src={service.imageUrl}
+            alt={`Imagen para ${service.title}`}
+            className="w-full h-auto object-cover rounded-xl shadow-lg aspect-video"
+            loading="lazy"
+        />
+    </motion.div>
       <h1 className="text-4xl font-bold text-foreground mb-4">{service.title}</h1>
       <p className="text-lg text-muted-foreground mb-8">{service.description}</p>
 

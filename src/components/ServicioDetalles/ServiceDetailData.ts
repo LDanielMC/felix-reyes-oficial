@@ -9,6 +9,7 @@ export interface Service {
   description: string;
   details: string[];
   benefits?: string[];
+  imageUrl: string; // Add imageUrl property
 }
 
 export interface ServiceDetailProps {
@@ -28,6 +29,7 @@ export const servicesData: Service[] = [
       'Cumplimiento de requerimientos contables en tiempo y forma',
       'Correcta determinación de impuestos',
     ],
+    imageUrl: '/Servicios/Contabilidad_General.webp',
   },
   {
     id: 'contabilidad-gubernamental',
@@ -40,6 +42,7 @@ export const servicesData: Service[] = [
       'Generación de información financiera y presupuestal',
       'Cumplimiento de normativas gubernamentales',
     ],
+    imageUrl: '/Servicios/Contabilidad_Gubernamental.webp',
   },
   {
     id: 'asesoria-contable',
@@ -52,6 +55,7 @@ export const servicesData: Service[] = [
       'Cálculo de impuestos',
       'Presentación de declaraciones fiscales considerando la normatividad vigente',
     ],
+    imageUrl: '/Servicios/Asesoría_Contable.webp',
   },
   {
     id: 'asesoria-administrativa',
@@ -62,6 +66,7 @@ export const servicesData: Service[] = [
       'Base para la planeación, organización y control',
       'Información elemental para la toma de decisiones',
     ],
+    imageUrl: '/Servicios/Asesoría_Administrativa.webp',
   },
   {
     id: 'asesoria-laboral',
@@ -72,6 +77,7 @@ export const servicesData: Service[] = [
       'Administración del talento humano',
       'Correcto registro e incorporación a las prestaciones sociales vigentes',
     ],
+    imageUrl: '/Servicios/Asesoría_Laboral.webp',
   },
   {
     id: 'asesoria-financiera',
@@ -83,6 +89,7 @@ export const servicesData: Service[] = [
       'Orientación en decisiones de inversión a corto, mediano y largo plazo',
       'Acceso a financiamiento bancario con las tasas de interés más bajas del mercado',
     ],
+    imageUrl: '/Servicios/Asesoria_Financiera.webp',
   },
   {
     id: 'asesoria-patrimonial',
@@ -94,6 +101,7 @@ export const servicesData: Service[] = [
       'Toma de decisiones informadas para hacer crecer tus bienes',
       'Protección de tus activos',
     ],
+    imageUrl: '/Servicios/Asesoría_Patrimonial.webp',
   },
   {
     id: 'asesoria-fiscal',
@@ -105,6 +113,7 @@ export const servicesData: Service[] = [
       'Estrategias en congruencia con el marco legal',
       'Cumplimiento de obligaciones ante autoridades recaudadoras',
     ],
+    imageUrl: '/Servicios/Asesoría_Fiscal.webp',
   },
   {
     id: 'auditorias',
@@ -116,6 +125,7 @@ export const servicesData: Service[] = [
       'Garantía de cumplimiento contable, fiscal y financiero',
       'Certificación para la presentación de dictámenes oficiales ante el SAT y el IMSS',
     ],
+    imageUrl: '/Servicios/Auditorías.webp',
   },
   {
     id: 'precios-transferencia',
@@ -128,5 +138,6 @@ export const servicesData: Service[] = [
       'Asesoría para la declaración local',
       'Asesoría para la declaración país por país',
     ],
+    imageUrl: '/Servicios/Estudios_Transferencia.webp',
   }
 ];

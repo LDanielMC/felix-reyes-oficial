@@ -16,7 +16,7 @@ export const NavigationButton = memo(({ direction, onClick, disabled, canScroll 
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`absolute ${isLeft ? 'left-0 -translate-x-2' : 'right-0 translate-x-2'} top-1/2 -translate-y-1/2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
+      className={`absolute ${isLeft ? 'left-4' : 'right-4'} top-1/2 -translate-y-1/2 z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-background/90 backdrop-blur-sm border border-border/30 flex items-center justify-center text-foreground/70 hover:text-white hover:bg-primary hover:border-primary/80 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${
         !canScroll ? 'opacity-0 pointer-events-none' : ''
       }`}
       aria-label={`${isLeft ? 'Anterior' : 'Siguiente'} servicio`}
