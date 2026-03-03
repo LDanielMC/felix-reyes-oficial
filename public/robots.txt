@@ -1,14 +1,21 @@
+# Permisos específicos para principales motores de búsqueda
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+# Permisos para bots de redes sociales
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
+# Permisos generales (cubre cualquier otro bot)
 User-agent: *
 Allow: /
+
+
+# Indica la ubicación de tu sitemap
+Sitemap: https://felixreyescontadores.com.mx/sitemap.xml

@@ -32,7 +32,7 @@ export const NosotrosHeader: React.FC = () => {
             Un Legado de Confianza: Más de 5 Décadas de Excelencia Financiera
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto font-sans">
-            Desde una fundación familiar hasta convertirnos en un referente nacional e internacional, combinamos tradición con innovación para impulsar su crecimiento.
+            Desde una fundación familiar hasta convertirnos en un referente nacional e internacional, combinamos tradición con innovación para impulsar tu crecimiento.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild style={{ backgroundColor: 'hsl(var(--secondary))', color: 'hsl(var(--secondary-foreground))' }} size="lg">

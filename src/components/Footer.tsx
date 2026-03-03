@@ -1,33 +1,45 @@
-import { Phone, Mail, MapPin, Calendar, ExternalLink, Facebook, Instagram } from 'lucide-react';
+import React from 'react';
+import { Phone, Mail, MapPin, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeInUp } from '../hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
+import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+
+// IMPORTA TU LOGO
+import Logoblanco from './logoblanco';
 
 export const Footer = () => {
   const quickLinks = [
-    { name: 'Inicio', href: '#inicio' },
-    { name: 'Nosotros', href: '#nosotros' },
-    { name: 'Servicios', href: '#servicios' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'Contacto', href: '#contacto' },
+    { name: 'Inicio', href: '/#inicio' },
+    { name: 'Nosotros', href: '/nosotros' },
+    { name: 'Servicios', href: '/servicios' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contacto', href: '/#contacto' },
   ];
 
   const services = [
-    'Contabilidad General',
-    'Contabilidad Gubernamental',
-    'Asesoría Administrativa',
-    'Asesoría Contable',
-    'Asesoría Laboral',
     'Asesoría Fiscal',
+    'Asesoría Laboral',
+    'Asesoría Contable',
     'Asesoría Financiera',
     'Asesoría Patrimonial',
-    'Auditoría de control interno',
-    'Auditoría Financiera',
+    'Asesoría Administrativa',
+    'Contabilidad General',
+    'Contabilidad Gubernamental',
     'Auditoría Fiscal',
+    'Auditoría Financiera',
+    'Auditoría de Control Interno',
     'Auditoría de Seguridad Social',
-    'Estudios de Precios de transferencia'
+    'Estudios de Precios de Transferencia'
   ];
 
+  const splitIntoColumns = (arr, cols = 2) => {
+    const out = Array.from({ length: cols }, () => []);
+    arr.forEach((item, i) => out[i % cols].push(item));
+    return out;
+  };
+
+  const [col1, col2] = splitIntoColumns(services, 2);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -36,27 +48,27 @@ export const Footer = () => {
       <div className="container-custom py-8 md:py-12">
         <StaggerContainer delay={0.1}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+
             {/* Company Info */}
             <StaggerItem>
               <div className="sm:col-span-2">
+                
+                {/* LOGO */}
                 <motion.div 
-                  className="mb-4"
+                  className="mb-4 flex items-start"
                   variants={fadeInUp}
                   transition={{ delay: 0.2 }}
                 >
-                  <h3 className="text-xl md:text-2xl font-heading font-bold mb-1">
-                    Félix Reyes Contadores
-                  </h3>
-                  <p className="text-white/80 text-xs md:text-sm">S.A. de C.V.</p>
+                  <Logoblanco className="w-40 h-auto opacity-95" />
                 </motion.div>
-                
-                <motion.p 
-                  className="text-white/90 mb-4 text-sm md:text-base leading-relaxed"
+
+                <motion.h4 
+                  className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.4 }}
                 >
-                    Confía en Félix Reyes Contadores, una firma con más de cinco décadas de experiencia brindando soluciones contables, financieras y administrativas a nivel nacional e internacional
-                </motion.p>
+                  Información de Contacto
+                </motion.h4>
 
                 {/* Contact Info */}
                 <StaggerContainer delay={0.1}>
@@ -64,132 +76,98 @@ export const Footer = () => {
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
+                        whileHover={{ x: 10 }}
                       >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <Phone className="h-4 w-4 text-accent" />
-                        </motion.div>
+                        <Phone className="h-4 w-4 text-accent" />
                         <span className="text-white/90 text-sm md:text-base">(777) 3121547</span>
                       </motion.div>
                     </StaggerItem>
+
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
+                        whileHover={{ x: 10 }}
                       >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <Phone className="h-4 w-4 text-accent" />
-                        </motion.div>
+                        <Phone className="h-4 w-4 text-accent" />
                         <span className="text-white/90 text-sm md:text-base">(777) 3124048</span>
                       </motion.div>
                     </StaggerItem>
+
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
+                        whileHover={{ x: 10 }}
                       >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <Phone className="h-4 w-4 text-accent" />
-                        </motion.div>
+                        <FaWhatsapp className="h-4 w-4 text-accent" />
                         <span className="text-white/90 text-sm md:text-base">(777) 3141829</span>
                       </motion.div>
                     </StaggerItem>
+
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
+                        whileHover={{ x: 10 }}
                       >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <Mail className="h-4 w-4 text-accent" />
-                        </motion.div>
-                        <span className="text-white/90 text-sm md:text-base break-all">info@felixreyescontadores.com</span>
+                        <Mail className="h-4 w-4 text-accent" />
+                        <span className="text-white/90 text-sm md:text-base break-all">
+                          info@felixreyescontadores.com
+                        </span>
                       </motion.div>
                     </StaggerItem>
+
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
-                        whileHover={{ 
-                          x: 10,
-                          transition: { type: "spring", stiffness: 400, damping: 17 }
-                        }}
+                        whileHover={{ x: 10 }}
                       >
-                        <motion.div
-                          whileHover={{ 
-                            rotate: 360,
-                            transition: { duration: 0.6 }
-                          }}
-                        >
-                          <MapPin className="h-4 w-4 text-accent" />
-                        </motion.div>
-                        <span className="text-white/90 text-sm md:text-base">Netzahualcoyotl 13, Cuernavaca Centro, Centro, 62000 Cuernavaca, Mor.</span>
+                        <MapPin className="h-4 w-4 text-accent" />
+                        <span className="text-white/90 text-sm md:text-base">
+                          Netzahualcoyotl 13, Cuernavaca Centro, 62000 Cuernavaca, Mor.
+                        </span>
                       </motion.div>
                     </StaggerItem>
-                    
                   </div>
                 </StaggerContainer>
 
-                {/* Social Media Links */}
-                <motion.div
-                  className="mt-6"
-                  variants={fadeInUp}
-                  transition={{ delay: 0.5 }}
-                >
-                  <h5 className="font-semibold mb-3 text-accent">Síguenos</h5>
-                  <div className="flex space-x-4">
-                    <motion.a
-                      href="https://www.facebook.com/felixreyescontadores/?locale=es_LA"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white/80 hover:text-accent transition-colors duration-200"
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <Facebook className="h-6 w-6" />
-                    </motion.a>
-                    <motion.a
-                      href="https://www.instagram.com/felixreyescontadores/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white/80 hover:text-accent transition-colors duration-200"
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <Instagram className="h-6 w-6" />
-                    </motion.a>
-                  </div>
-                </motion.div>
+                {/* Social Media */}
+               
+                  <motion.div
+                    className="mt-6"
+                    variants={fadeInUp}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <h5 className="font-semibold mb-3 text-accent">Síguenos</h5>
+                    <div className="flex space-x-5">
+                      <motion.a
+                        href="https://www.facebook.com/felixreyescontadores/"
+                        target="_blank"
+                        className="text-white/80 hover:text-accent"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                      >
+                        {/* MÁS GRANDES */}
+                        <FaFacebook className="h-7 w-7 md:h-8 md:w-8" />
+                      </motion.a>
+
+                      <motion.a
+                        href="https://www.instagram.com/felixreyescontadores/"
+                        target="_blank"
+                        className="text-white/80 hover:text-accent"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                      >
+                        <FaInstagram className="h-7 w-7 md:h-8 md:w-8" />
+                      </motion.a>
+
+                      <motion.a
+                        href="https://www.tiktok.com/@felixreyescontadores"
+                        target="_blank"
+                        className="text-white/80 hover:text-accent"
+                        whileHover={{ scale: 1.2, rotate: 360 }}
+                      >
+                        <FaTiktok className="h-7 w-7 md:h-8 md:w-8" />
+                      </motion.a>
+                    </div>
+                  </motion.div>
+
               </div>
             </StaggerItem>
 
@@ -203,29 +181,18 @@ export const Footer = () => {
                 >
                   Enlaces Rápidos
                 </motion.h4>
+
                 <StaggerContainer delay={0.1}>
                   <ul className="space-y-2">
                     {quickLinks.map((link, index) => (
                       <StaggerItem key={index}>
-                        <motion.li
-                          whileHover={{ 
-                            x: 10,
-                            transition: { type: "spring", stiffness: 400, damping: 17 }
-                          }}
-                        >
+                        <motion.li whileHover={{ x: 10 }}>
                           <a 
                             href={link.href}
-                            className="text-white/80 hover:text-accent transition-colors duration-200 flex items-center space-x-2"
+                            className="text-white/80 hover:text-accent flex items-center space-x-2"
                           >
                             <span>{link.name}</span>
-                            <motion.div
-                              whileHover={{ 
-                                rotate: 45,
-                                transition: { duration: 0.3 }
-                              }}
-                            >
-                              <ExternalLink className="h-3 w-3" />
-                            </motion.div>
+                            <ExternalLink className="h-3 w-3" />
                           </a>
                         </motion.li>
                       </StaggerItem>
@@ -239,13 +206,7 @@ export const Footer = () => {
                   transition={{ delay: 0.6 }}
                 >
                   <h5 className="font-semibold mb-4 text-accent">Horarios de Atención</h5>
-                  <StaggerContainer delay={0.1}>
-                    <div className="text-sm text-white/80 space-y-1">
-                      <StaggerItem>
-                        <p>Lunes a Viernes de 9:00 a 17:00. </p>
-                      </StaggerItem>
-                    </div>
-                  </StaggerContainer>
+                  <p className="text-sm text-white/80">Lunes a Viernes de 9:00 a 18:00.</p>
                 </motion.div>
               </div>
             </StaggerItem>
@@ -253,27 +214,29 @@ export const Footer = () => {
             {/* Services */}
             <StaggerItem>
               <div>
-                <motion.h4 
+                <motion.h4
                   className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
                   transition={{ delay: 0.5 }}
                 >
                   Nuestros Servicios
                 </motion.h4>
+
                 <StaggerContainer delay={0.1}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
-                    {services.map((service, index) => (
-                      <StaggerItem key={index}>
-                        <motion.div
-                          className="flex items-start"
-                          whileHover={{ 
-                            x: 5,
-                            transition: { type: "spring", stiffness: 400, damping: 17 }
-                          }}
-                        >
-                          <span className="text-white/80 text-xs md:text-sm leading-tight">• {service}</span>
-                        </motion.div>
-                      </StaggerItem>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+                    {[col1, col2].map((col, colIndex) => (
+                      <ul key={colIndex} className="space-y-2 list-disc pl-5 marker:text-white/60">
+                        {col.map((service, index) => (
+                          <StaggerItem key={index}>
+                            <motion.li 
+                              className="text-white/80 text-xs md:text-sm"
+                              whileHover={{ x: 5 }}
+                            >
+                              {service}
+                            </motion.li>
+                          </StaggerItem>
+                        ))}
+                      </ul>
                     ))}
                   </div>
                 </StaggerContainer>
@@ -284,61 +247,16 @@ export const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <motion.div 
-        className="border-t border-white/20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
+      <motion.div className="border-t border-white/20">
         <div className="container-custom py-4">
-          <div className="flex flex-col space-y-3 text-center sm:text-left sm:flex-row sm:justify-between sm:items-center">
-            <motion.div 
-              className="text-white/80 text-xs sm:text-sm"
-              variants={fadeInUp}
-              transition={{ delay: 0.4 }}
-            >
-              © {currentYear} Félix Reyes Contadores S.A. de C.V.
-            </motion.div>
+          <div className="flex flex-col sm:flex-row justify-between items-center text-xs sm:text-sm text-white/80 gap-3">
+            <span>© {currentYear} Félix Reyes Contadores S.A. de C.V.</span>
             
-            <motion.div 
-              className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm"
-              variants={fadeInUp}
-              transition={{ delay: 0.6 }}
-            >
-              <motion.a 
-                href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
-                whileHover={{ 
-                  y: -2,
-                  transition: { type: "spring", stiffness: 400, damping: 17 }
-                }}
-              >
-                Política de Privacidad
-              </motion.a>
-              <span className="text-white/40 hidden sm:inline">•</span>
-              <motion.a 
-                href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
-                whileHover={{ 
-                  y: -2,
-                  transition: { type: "spring", stiffness: 400, damping: 17 }
-                }}
-              >
-                Términos
-              </motion.a>
-              <span className="text-white/40 hidden sm:inline">•</span>
-              <motion.a 
-                href="#" 
-                className="text-white/80 hover:text-accent transition-colors duration-200 whitespace-nowrap"
-                whileHover={{ 
-                  y: -2,
-                  transition: { type: "spring", stiffness: 400, damping: 17 }
-                }}
-              >
-                Aviso Legal
-              </motion.a>
-            </motion.div>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-accent">Política de Privacidad</a>
+              <a href="#" className="hover:text-accent">Términos</a>
+              <a href="#" className="hover:text-accent">Aviso Legal</a>
+            </div>
           </div>
         </div>
       </motion.div>

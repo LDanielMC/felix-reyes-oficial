@@ -16,7 +16,9 @@ export const ServiceDetailContent: React.FC<ServiceDetailProps> = ({ service }) 
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <h2 className="text-2xl font-semibold text-foreground mb-6">Detalles del servicio</h2>
+        {/* AQUI SE AGREGO font-heading */}
+        <h2 className="text-2xl font-heading font-semibold text-foreground mb-6">Detalles del servicio</h2>
+        
         <div className="space-y-6">
           {service.details.map((detail, i) => (
             <motion.div
@@ -57,12 +59,14 @@ export const ServiceDetailContent: React.FC<ServiceDetailProps> = ({ service }) 
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6 }}
       >
-        <h3 className="text-xl font-semibold text-foreground mb-4">¿Necesitas más información?</h3>
+        {/* AQUI SE AGREGO font-heading */}
+        <h3 className="text-xl font-heading font-semibold text-foreground mb-4">¿Necesitas más información?</h3>
+        
         <p className="text-muted-foreground mb-6">Nuestro equipo de expertos está listo para atender tus consultas y ofrecerte soluciones personalizadas.</p>
         <div className="flex flex-col sm:flex-row gap-4">
           {/* WhatsApp button - hidden on mobile */}
           <motion.a
-            href="https://wa.me/527773128687?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
+            href="https://wa.me/527773141829?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#25D366] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] transition-all duration-200 flex-1 text-center"
@@ -88,7 +92,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailProps> = ({ service }) 
                 repeatType: 'reverse'
               }}
             >
-              <MessageCircle className="h-5 w-5" />
+              <MessageCircle className="h-5 w-5 mr-2" />
             </motion.span>
             <span>WhatsApp</span>
           </motion.a>
@@ -110,7 +114,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailProps> = ({ service }) 
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            Llamar ahora
+            Llamar Ahora
           </motion.a>
         </div>
       </motion.div>

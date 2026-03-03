@@ -35,89 +35,89 @@ export const services: Service[] = [
     title: 'Contabilidad General',
     icon: <Calculator className="w-6 h-6" />,
     description: 'Suministramos información precisa y oportuna para la evaluación, el control y la toma de decisiones.',
-    color: 'text-success',
-    bgColor: 'bg-success/10',
-    hoverColor: 'hover:bg-success/20'
+    color: 'text-cafeOscuro',  // Pantone 1615
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'contabilidad-gubernamental',
     title: 'Contabilidad Gubernamental',
     icon: <FileText className="w-6 h-6" />,
     description: 'Generamos información financiera y presupuestal que cumpla con las normativas gubernamentales.',
-    color: 'text-primary',
-    bgColor: 'bg-primary/10',
-    hoverColor: 'hover:bg-primary/20'
+    color: 'text-naranja',     // Pantone 144
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-contable',
     title: 'Asesoría Contable',
     icon: <Search className="w-6 h-6" />,
     description: 'Orientación en registros contables para un excelente control interno y cumplimiento fiscal.',
-    color: 'text-warning',
-    bgColor: 'bg-warning/10',
-    hoverColor: 'hover:bg-warning/20'
+    color: 'text-amarillo',    // Pantone 142
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-administrativa',
     title: 'Asesoría Administrativa',
     icon: <TrendingUp className="w-6 h-6" />,
     description: 'Suministramos información clara de las operaciones para la planeación y dirección de la empresa.',
-    color: 'text-secondary',
-    bgColor: 'bg-secondary/10',
-    hoverColor: 'hover:bg-secondary/20'
+    color: 'text-verde',       // Pantone 341
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-laboral',
     title: 'Asesoría Laboral',
     icon: <Users className="w-6 h-6" />,
     description: 'Te brindamos la asesoría necesaria para la administración del talento humano.',
-    color: 'text-primary',
-    bgColor: 'bg-primary/10',
-    hoverColor: 'hover:bg-primary/20'
+    color: 'text-rojo',        // Pantone 200
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-financiera',
     title: 'Asesoría Financiera',
     icon: <PieChart className="w-6 h-6" />,
     description: 'Analizamos tus necesidades para la correcta gestión de tus finanzas y el establecimiento de metas.',
-    color: 'text-secondary',
-    bgColor: 'bg-secondary/10',
-    hoverColor: 'hover:bg-secondary/20'
+    color: 'text-verde',
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-patrimonial',
     title: 'Asesoría Patrimonial',
     icon: <Shield className="w-6 h-6" />,
     description: 'Organizamos y protegemos tus bienes, ayudándote a tomar decisiones para hacerlos crecer.',
-    color: 'text-warning',
-    bgColor: 'bg-warning/10',
-    hoverColor: 'hover:bg-warning/20'
+    color: 'text-cafeOscuro',
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'asesoria-fiscal',
     title: 'Asesoría Fiscal',
     icon: <BookOpen className="w-6 h-6" />,
     description: 'Determinamos impuestos y establecemos estrategias para el correcto cumplimiento de obligaciones fiscales.',
-    color: 'text-accent',
-    bgColor: 'bg-accent/10',
-    hoverColor: 'hover:bg-accent/20'
+    color: 'text-naranja',
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'auditorias',
     title: 'Auditorías',
     icon: <CheckCircle2 className="w-6 h-6" />,
     description: 'Vigilamos y evaluamos la ejecución de controles internos para garantizar el cumplimiento normativo.',
-    color: 'text-success',
-    bgColor: 'bg-success/10',
-    hoverColor: 'hover:bg-success/20'
+    color: 'text-rojo',
+    bgColor: '',
+    hoverColor: ''
   },
   {
     id: 'precios-transferencia',
     title: 'Estudios de Precios de Transferencia',
     icon: <ArrowRight className="w-6 h-6" />,
     description: 'Determinamos los ingresos acumulables y deducciones autorizadas para negocios con partes relacionadas.',
-    color: 'text-accent',
-    bgColor: 'bg-accent/10',
-    hoverColor: 'hover:bg-warning/20'
+    color: 'text-amarillo',
+    bgColor: '',
+    hoverColor: ''
   }
 ];

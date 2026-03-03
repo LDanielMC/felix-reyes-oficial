@@ -37,7 +37,7 @@ export const NosotrosTrayectoria: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-foreground font-serif">Nuestra Trayectoria</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed font-sans">
-              <p>Félix Reyes Contadores es una empresa familiar fundada hace más de cinco décadas por el Contador Público Antonio Félix y su esposa Lilia Guadalupe Reyes. Actualmente, sus hijas Carmen, Rocío y Lucía conforman la alta gerencia.</p>
+              <p>Félix Reyes Contadores es una empresa familiar fundada hace más de cinco décadas por el Contador Público Antonio Félix y su esposa Lilia Reyes. Actualmente, sus hijas Carmen, Rocío y Lucía conforman la alta gerencia.</p>
               <p>Nuestra filosofía es la búsqueda constante de la excelencia y la aplicación de la experiencia a los requerimientos financieros que demanda el país, priorizando siempre la información transparente y la más alta calidad.</p>
               <p>El uso de la tecnología y el dominio del idioma inglés nos ha permitido expandir nuestros servicios a clientes en toda la República Mexicana, así como a interesados en Estados Unidos y Canadá, consolidándonos como un referente en el sector.</p>
             </div>

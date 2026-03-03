@@ -1,8 +1,24 @@
 import { Users, FileText, Shield, TrendingUp, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { fadeInUp, fadeInLeft, fadeInRight } from '@/hooks/use-animations';
+import { fadeInUp } from '@/hooks/use-animations';
 import { StaggerContainer, StaggerItem } from './AnimatedComponents';
+
+// 🎨 Mapeo de colores Pantone según ID
+const getServiceColors = (id: string) => {
+  switch (id) {
+    case 'asesoria-laboral':
+      return { text: 'text-rojo', border: 'border-rojo' };
+    case 'contabilidad-general':
+      return { text: 'text-cafeOscuro', border: 'border-cafeOscuro' };
+    case 'auditorias':
+      return { text: 'text-rojo', border: 'border-rojo' };
+    case 'asesoria-financiera':
+      return { text: 'text-verde', border: 'border-verde' };
+    default:
+      return { text: 'text-foreground', border: 'border-border' };
+  }
+};
 
 export const ServicesOverview = () => {
   const services = [
@@ -10,45 +26,34 @@ export const ServicesOverview = () => {
       id: 'asesoria-laboral',
       icon: Users,
       title: 'Asesoría Laboral',
-      description: 'Te brindamos la asesoría necesaria para la administración del talento humano.',
-      color: 'text-primary',
-      bgColor: 'bg-primary/10',
-      hoverColor: 'hover:bg-primary/20'
+      description: 'Te brindamos la asesoría necesaria para la administración del talento humano.'
     },
     {
       id: 'contabilidad-general',
       icon: FileText,
       title: 'Contabilidad General',
-      description: 'Registramos, codificamos y capturamos la información contable.',
-      color: 'text-secondary',
-      bgColor: 'bg-secondary/10',
-      hoverColor: 'hover:bg-secondary/20'
+      description: 'Registramos, codificamos y capturamos la información contable.'
     },
     {
       id: 'auditorias',
       icon: Shield,
       title: 'Auditoría',
-      description: 'Auditorías con los más altos estándares para garantizar el cumplimiento contable.',
-      color: 'text-accent',
-      bgColor: 'bg-accent/10',
-      hoverColor: 'hover:bg-accent/20'
+      description: 'Auditorías con los más altos estándares para garantizar el cumplimiento contable.'
     },
     {
       id: 'asesoria-financiera',
       icon: TrendingUp,
       title: 'Asesoría Financiera',
-      description: 'Analizamos tus necesidades y objetivos para la correcta gestión de tus finanzas.',
-      color: 'text-primary',
-      bgColor: 'bg-primary/10',
-      hoverColor: 'hover:bg-primary/20'
+      description: 'Analizamos tus necesidades y objetivos para la correcta gestión de tus finanzas.'
     }
   ];
 
   return (
     <section className="section-padding bg-gradient-subtle">
       <div className="container-custom">
+
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial="hidden"
           whileInView="visible"
@@ -56,78 +61,101 @@ export const ServicesOverview = () => {
           variants={fadeInUp}
           transition={{ duration: 0.8 }}
         >
-          <motion.h2 
+          <motion.h2
             className="text-4xl lg:text-5xl font-heading font-bold text-primary mb-6"
             variants={fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            Soluciones a la Medida de su
+            Soluciones a la Medida de tu
             <span className="text-secondary"> Crecimiento</span>
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
-            Descubra nuestro amplio portafolio de servicios profesionales diseñados 
-            para impulsar el éxito de su empresa en cada etapa de su desarrollo.
+            Descubre nuestro amplio portafolio de servicios profesionales diseñados 
+            para impulsar el éxito de tu empresa en cada etapa de su desarrollo.
           </motion.p>
         </motion.div>
 
         {/* Services Grid */}
         <StaggerContainer delay={0.1}>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {services.map((service, index) => (
-              <StaggerItem key={index}>
-                <motion.div 
-                  className={`card-elegant ${service.bgColor} ${service.hoverColor} border-0 text-center group cursor-pointer`}
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { type: "spring", stiffness: 400, damping: 17 }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {/* Icon */}
-                  <motion.div 
-                    className={`w-16 h-16 mx-auto mb-6 rounded-full bg-white shadow-md flex items-center justify-center ${service.color}`}
-                    whileHover={{ 
-                      rotate: 360,
-                      transition: { duration: 0.6 }
-                    }}
-                  >
-                    <service.icon className="h-8 w-8" />
-                  </motion.div>
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              const colors = getServiceColors(service.id);
 
-                  {/* Content */}
-                  <h3 className="text-xl font-heading font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* CTA Link */}
+              return (
+                <StaggerItem key={index}>
                   <motion.div
-                    whileHover={{ x: 5 }}
+                    className={`
+                      card-elegant border-4 bg-white text-center group cursor-pointer
+                      transition-all duration-300
+                      ${colors.border}
+                      h-full flex flex-col
+                    `}
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { type: "spring", stiffness: 400, damping: 17 }
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <Link 
-                      to={`/servicios/${service.id}`}
-                      className="flex items-center justify-center space-x-2 text-primary font-semibold group-hover:text-secondary transition-colors duration-300"
+
+                    {/* ICONO */}
+                    <motion.div
+                      className={`
+                        w-16 h-16 mx-auto mb-6 rounded-full bg-white shadow-md
+                        flex items-center justify-center
+                        ${colors.text}
+                      `}
+                      whileHover={{
+                        rotate: 360,
+                        transition: { duration: 0.6 }
+                      }}
                     >
-                      <span>Saber más</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </Link>
+                      <Icon className="h-8 w-8" />
+                    </motion.div>
+
+                    {/* TITULO */}
+                    <h3
+                      className={`
+                        text-xl font-heading font-bold mb-4 transition-colors duration-300
+                        ${colors.text}
+                      `}
+                    >
+                      {service.title}
+                    </h3>
+
+                    {/* DESCRIPCION */}
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    {/* CTA */}
+                    <motion.div whileHover={{ x: 5 }}>
+                      <Link
+                        to={`/servicios/${service.id}`}
+                        className={`
+                          flex items-center justify-center space-x-2 font-semibold
+                          transition-colors duration-300
+                          ${colors.text}
+                        `}
+                      >
+                        <span>Saber más</span>
+                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </Link>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </StaggerItem>
-            ))}
+                </StaggerItem>
+              );
+            })}
           </div>
         </StaggerContainer>
 
-        {/* Bottom CTA */}
-        <motion.div 
+        {/* CTA final */}
+        <motion.div
           className="text-center mt-16"
           initial="hidden"
           whileInView="visible"
@@ -136,17 +164,17 @@ export const ServicesOverview = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <motion.div
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               transition: { type: "spring", stiffness: 400, damping: 17 }
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link 
+            <Link
               to="/servicios"
               className="btn-primary inline-block"
             >
-              Ver Todos los Servicios
+              Explorar Servicios
             </Link>
           </motion.div>
         </motion.div>

@@ -34,8 +34,8 @@ export const Hero = () => {
               variants={fadeInUp}
               transition={{ delay: 0.4 }}
             >
-              <Award className="h-5 w-5 md:h-6 md:w-6 text-accent flex-shrink-0" />
-              <span className="text-accent font-semibold text-sm md:text-base">Fundada en 1974</span>
+              {/* <Award className="h-5 w-5 md:h-6 md:w-6 text-accent flex-shrink-0" /> */}
+              {/* <span className="text-accent font-semibold text-sm md:text-base">Fundada en 1974</span> */}
             </motion.div>
             
             <motion.h1 
@@ -43,9 +43,8 @@ export const Hero = () => {
               variants={fadeInUp}
               transition={{ delay: 0.6 }}
             >
-              Servicios Contables y Fiscales 
+              Servicios Contables, Fiscales y Administrativos
               
-              <span className="text-accent block">Profesionales</span>
             </motion.h1>
             
             <motion.p 
@@ -53,7 +52,7 @@ export const Hero = () => {
               variants={fadeInUp}
               transition={{ delay: 0.8 }}
             >
-              Confía en Félix Reyes Contadores, una firma con más de cinco décadas de experiencia brindando soluciones contables, financieras y administrativas a nivel nacional e internacional
+              Confía en Félix Reyes Contadores, una firma con más de cinco décadas de experiencia brindando soluciones contables, financieras, fiscales y administrativas a nivel nacional e internacional.
             </motion.p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 mb-12 justify-center md:justify-start"
@@ -72,7 +71,7 @@ export const Hero = () => {
                 className="btn-outline text-white border-white hover:bg-white hover:text-primary transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                Conocer Servicios
+                Nuestros Servicios
               </motion.button>
             </motion.div>
 
@@ -123,7 +122,7 @@ export const Hero = () => {
                 // MEJORA: Se ajusta tamaño de fuente para consistencia.
                 className="text-3xl md:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">CLIENTES TOTALES</p>
+              <p className="text-muted-foreground font-medium text-sm">Clientes totales</p>
             </motion.div>
 
             <motion.div 
@@ -138,7 +137,7 @@ export const Hero = () => {
                 suffix="+"
                 className="text-3xl md:text-4xl font-bold text-secondary block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">AÑOS DE EXPERIENCIA</p>
+              <p className="text-muted-foreground font-medium text-sm">Años de experiencia</p>
             </motion.div>
 
             <motion.div 
@@ -153,7 +152,7 @@ export const Hero = () => {
                 suffix="+"
                 className="text-3xl md:text-4xl font-bold text-accent block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">PROFESIONALES ESPECIALIZADOS</p>
+              <p className="text-muted-foreground font-medium text-sm">Profesionales especializados</p>
             </motion.div>
 
             <motion.div 
@@ -168,7 +167,7 @@ export const Hero = () => {
                 suffix="%"
                 className="text-3xl md:text-4xl font-bold text-primary block mb-2"
               />
-              <p className="text-muted-foreground font-medium text-sm">CONFIANZA Y TRANSPARENCIA</p>
+              <p className="text-muted-foreground font-medium text-sm">Confianza y transparencia</p>
             </motion.div>
           </motion.div>
         </div>

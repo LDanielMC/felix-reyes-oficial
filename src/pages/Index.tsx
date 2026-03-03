@@ -5,10 +5,11 @@ import { ClientPortfolio } from '@/components/ClientPortfolio';
 import { ServicesOverview } from '@/components/ServicesOverview';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
+import { WhatsAppButton } from '@/components/WhatsAppButton'; // <--- Importar
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative"> {/* 'relative' ayuda al posicionamiento */}
       <Header />
       <main>
         <Hero />
@@ -18,6 +19,9 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      
+      {/* Botón flotante aquí */}
+      <WhatsAppButton />
     </div>
   );
 };

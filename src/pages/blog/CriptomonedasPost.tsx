@@ -42,7 +42,7 @@ const CriptomonedasPost = () => {
               {post.title}
             </h1>
             <div className="flex items-center text-sm text-gray-500">
-              <span>{post.date}</span>
+              <span>agosto, 2025</span>
               <span className="mx-2">•</span>
               <span>{post.readTime}</span>
             </div>

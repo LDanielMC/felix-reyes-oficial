@@ -55,19 +55,32 @@ export const ContactInfo: React.FC = () => {
                       <info.icon className="h-6 w-6 text-primary" />
                     </motion.div>
                   </motion.div>
-                  <div>
+                  
+                  <div className="flex-1">
                     <h4 className="font-semibold text-foreground mb-2">{info.title}</h4>
+                    
+                    {/* LÓGICA ACTUALIZADA */}
                     {info.details.map((detail, idx) => (
-                      <a
-                        key={idx}
-                        href={info.title === 'Teléfono' ? `tel:${detail.replace(/\s/g, '')}` : info.title === 'Email' ? `mailto:${detail}` : info.title === 'Dirección' ? info.action : '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`block text-muted-foreground text-sm mb-1 ${info.title !== 'Horario' ? 'hover:text-primary transition-colors duration-300' : 'cursor-default'}`}
-                      >
-                        {detail}
-                      </a>
+                      <div key={idx}>
+                        {detail.href ? (
+                          /* Si tiene href (Teléfono, Email, WhatsApp, Mapa) mostramos enlace */
+                          <a
+                            href={detail.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block text-muted-foreground text-sm mb-1 hover:text-primary transition-colors duration-300"
+                          >
+                            {detail.text}
+                          </a>
+                        ) : (
+                          /* Si NO tiene href (Horario) mostramos texto plano */
+                          <p className="block text-muted-foreground text-sm mb-1 cursor-default">
+                            {detail.text}
+                          </p>
+                        )}
+                      </div>
                     ))}
+
                   </div>
                 </div>
               </motion.div>
@@ -87,10 +100,10 @@ export const ContactInfo: React.FC = () => {
         }}
       >
         <h4 className="font-heading font-bold text-xl mb-3">
-          ¿Necesita atención inmediata?
+          ¿Necesitas atención inmediata?
         </h4>
         <p className="text-white/90 mb-4">
-          Llámenos ahora para una consulta telefónica gratuita.
+          Llámanos ahora para una consulta telefónica.
         </p>
         <a href="tel:+527773121547">
           <motion.button

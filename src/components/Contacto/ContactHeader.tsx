@@ -28,8 +28,8 @@ export const ContactHeader: React.FC = () => {
         variants={fadeInUp}
         transition={{ delay: 0.4 }}
       >
-        Estamos aquí para ayudarle. Comuníquese con nosotros para una consulta
-        gratuita y descubra cómo podemos impulsar el éxito de su empresa.
+        Estamos aquí para ayudarte. Comunícate con nosotros para una consulta
+        gratuita y descubre cómo podemos impulsar el éxito de tu empresa.
       </motion.p>
     </motion.div>
   );

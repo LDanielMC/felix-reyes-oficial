@@ -29,11 +29,11 @@ export const ServiciosHeader: React.FC = () => {
             Soluciones Contables que Impulsan tu Éxito
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/80 mb-8 max-w-3xl mx-auto font-sans">
-            Descubre nuestro portafolio completo de servicios contables y financieros.Cada servicio está diseñado para satisfacer las necesidades específicas de tu empresa.
+            Descubre nuestro portafolio completo de servicios contables, fiscales, administrativos  y financieros. Cada servicio está diseñado para satisfacer las necesidades específicas de tu empresa.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <motion.a
-              href="#contacto"
+              href="/#contacto"
               className="px-8 py-3.5 bg-secondary text-secondary-foreground font-medium rounded-xl hover:shadow-lg hover:shadow-secondary/20 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}

@@ -10,13 +10,13 @@ export const About = memo(() => {
     {
       icon: Award,
       value: '50+',
-      label: 'Años de Experiencia',
+      label: 'Años de experiencia',
       color: 'text-primary'
     },
     {
       icon: TrendingUp,
       value: '99%',
-      label: 'Tasa de Retención',
+      label: 'Tasa de retención',
       color: 'text-secondary'
     },
     {
@@ -40,9 +40,9 @@ export const About = memo(() => {
             variants={fadeInLeft}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex items-center space-x-2 mb-6">
-              <Award className="h-6 w-6 text-accent" />
-              <span className="text-accent font-semibold text-sm uppercase tracking-wider">Fundada en 1974</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <Award className="h-8 w-8 text-accent" />
+              <span className="text-accent font-semibold text-lg tracking-wider">Fundada en 1974</span>
             </div>
             
             <motion.h2 
@@ -72,14 +72,14 @@ export const About = memo(() => {
                 href="/nosotros"
                 className="btn-primary inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
-                <span>Conocer Nuestra Historia</span>
+                <span>Nuestra Historia</span>
               </motion.a>
               
               <motion.a 
                 href="#contacto"
                 className="btn-outline inline-flex items-center space-x-2 transition-transform duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
-                <span>Solicitar Consulta</span>
+                <span>Consulta</span>
                 <TrendingUp className="h-4 w-4" />
               </motion.a>
             </motion.div>
@@ -121,8 +121,11 @@ export const About = memo(() => {
               </div>
 
               {/* Floating Badge */}
-              <motion.div 
-                className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-hover border border-primary/10"
+              <motion.a // ¡CAMBIO IMPORTANTE: Ahora es motion.a!
+                href="https://maps.app.goo.gl/c7szB5GUw1R9HJ958" // AÑADIDO: El link de Google Maps
+                target="_blank" // AÑADIDO: Para abrir en una nueva pestaña
+                rel="noopener noreferrer" // AÑADIDO: Buena práctica de seguridad para enlaces externos
+                className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-hover border border-primary/10 cursor-pointer" // Añadí cursor-pointer para mejor UX
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -134,16 +137,16 @@ export const About = memo(() => {
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center">
-                    <Building2 className="h-6 w-6 text-primary" />
+                   <Building2 className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-primary">Oficina Central</p>
-                    <p className="text-xs text-muted-foreground font-sans">Cuernavaca, Morelos</p>
+                   <p className="text-sm font-bold text-primary">Oficina Central</p>
+                   <p className="text-xs text-muted-foreground font-sans">Cuernavaca, Morelos</p>
                   </div>
                 </div>
+              </motion.a> {/* ¡Cierre con motion.a! */}
               </motion.div>
-            </motion.div>
-          </motion.div>
+              </motion.div>
 
           {/* Highlights Cards */}
           <motion.div 

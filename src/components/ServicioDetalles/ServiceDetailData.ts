@@ -1,27 +1,29 @@
-/**
- * TypeScript interfaces and data for ServiceDetail components
- */
+// 👇 IMPORTA LOS ICONOS
+import {
+  Calculator, FileText, Search, TrendingUp, Shield,
+  Users, PieChart, BookOpen, CheckCircle2, ArrowRight
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface Service {
   id: string;
   title: string;
-  icon: string;
+  icon: LucideIcon; // 👈 AQUÍ VA EL TIPO DEL ICONO (NO JSX)
   description: string;
   details: string[];
   benefits?: string[];
-  imageUrl: string; // Add imageUrl property
+  imageUrl: string;
 }
 
 export interface ServiceDetailProps {
   service: Service;
 }
 
-// Services data array
 export const servicesData: Service[] = [
   {
     id: 'contabilidad-general',
     title: 'Contabilidad General',
-    icon: '📊',
+    icon: Calculator, // 👈 OJO: SIN <Calculator />
     description: 'Suministramos información precisa y oportuna para la evaluación, el control y la toma de decisiones.',
     details: [
       'Registro, codificación y captura de información contable',
@@ -34,7 +36,7 @@ export const servicesData: Service[] = [
   {
     id: 'contabilidad-gubernamental',
     title: 'Contabilidad Gubernamental',
-    icon: '🏛️',
+    icon: FileText,
     description: 'Generamos información financiera y presupuestal que cumpla con las normativas gubernamentales.',
     details: [
       'Identificación y análisis de operaciones que impactan a instituciones públicas',
@@ -47,7 +49,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-contable',
     title: 'Asesoría Contable',
-    icon: '📈',
+    icon: Search,
     description: 'Orientación en registros contables para un excelente control interno y cumplimiento fiscal.',
     details: [
       'Orientación sobre registros contables para tu empresa',
@@ -60,7 +62,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-administrativa',
     title: 'Asesoría Administrativa',
-    icon: '📋',
+    icon: TrendingUp,
     description: 'Suministramos información clara de las operaciones históricas para la planeación y dirección de la empresa.',
     details: [
       'Base para la planeación, organización y control',
@@ -71,7 +73,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-laboral',
     title: 'Asesoría Laboral',
-    icon: '👥',
+    icon: Users,
     description: 'Te brindamos la asesoría necesaria para la administración del talento humano.',
     details: [
       'Administración del talento humano',
@@ -82,7 +84,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-financiera',
     title: 'Asesoría Financiera',
-    icon: '💰',
+    icon: PieChart,
     description: 'Analizamos tus necesidades para la correcta gestión de tus finanzas y el establecimiento de metas.',
     details: [
       'Establecimiento de metas financieras específicas',
@@ -94,7 +96,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-patrimonial',
     title: 'Asesoría Patrimonial',
-    icon: '🏠',
+    icon: Shield,
     description: 'Organizamos y protegemos tus bienes, ayudándote a tomar decisiones para hacerlos crecer.',
     details: [
       'Organización y protección de tus bienes',
@@ -106,7 +108,7 @@ export const servicesData: Service[] = [
   {
     id: 'asesoria-fiscal',
     title: 'Asesoría Fiscal',
-    icon: '📝',
+    icon: BookOpen,
     description: 'Determinamos impuestos y establecemos estrategias para el correcto cumplimiento de tus obligaciones fiscales.',
     details: [
       'Determinación de impuestos de acuerdo a la normatividad vigente',
@@ -118,7 +120,7 @@ export const servicesData: Service[] = [
   {
     id: 'auditorias',
     title: 'Auditorías',
-    icon: '🔍',
+    icon: CheckCircle2,
     description: 'Vigilamos y evaluamos la ejecución de controles internos para garantizar el cumplimiento normativo.',
     details: [
       'Auditoría Fiscal, Financiera, de Seguridad Social y de Control Interno',
@@ -130,7 +132,7 @@ export const servicesData: Service[] = [
   {
     id: 'precios-transferencia',
     title: 'Estudios de Precios de Transferencia',
-    icon: '🌐',
+    icon: ArrowRight,
     description: 'Determinamos los ingresos acumulables y deducciones autorizadas para negocios con partes relacionadas.',
     details: [
       'Para contribuyentes con partes relacionadas nacionales o extranjeras',

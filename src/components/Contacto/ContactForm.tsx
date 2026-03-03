@@ -28,7 +28,7 @@ export const ContactForm: React.FC = () => {
   });
 
   // EmailJS configuration
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_0ksv1hb';
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_or1gpai';
   const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_vj5a48l';
   const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '-fZRCUZ32HzbWHGmQ';
 
@@ -48,7 +48,7 @@ export const ContactForm: React.FC = () => {
         phone: formData.phone,
         service: formData.service,
         message: formData.message,
-        to_email: 'web.felixreyes@gmail.com',
+        to_email: 'info@felixreyescontadores.com',
         reply_to: formData.email,
         // Additional context
         submission_date: new Date().toLocaleString('es-MX', {
@@ -85,8 +85,15 @@ export const ContactForm: React.FC = () => {
         message: ''
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending email:', error);
+      console.error('EmailJS Error Details:', {
+        status: error?.status,
+        text: error?.text,
+        message: error?.message,
+        serviceId: EMAILJS_SERVICE_ID,
+        templateId: EMAILJS_TEMPLATE_ID,
+      });
       setNotification({
         isVisible: true,
         type: 'error',
@@ -126,7 +133,7 @@ export const ContactForm: React.FC = () => {
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
-            Solicitar Consulta Gratuita
+            Solicitar Consulta
           </motion.h3>
 
           <motion.form
@@ -141,7 +148,7 @@ export const ContactForm: React.FC = () => {
                 <StaggerItem>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Nombre Completo *
+                      Nombre completo *
                     </label>
                     <motion.input
                       type="text"
@@ -151,7 +158,7 @@ export const ContactForm: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="Su nombre completo"
+                      placeholder="Nombre completo"
                       whileFocus={{
                         scale: 1.02,
                         transition: { duration: 0.2 }
@@ -173,7 +180,7 @@ export const ContactForm: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-                      placeholder="su@email.com"
+                      placeholder="ejemplo@email.com"
                       whileFocus={{
                         scale: 1.02,
                         transition: { duration: 0.2 }
@@ -213,7 +220,7 @@ export const ContactForm: React.FC = () => {
             <StaggerItem>
               <div>
                 <label htmlFor="service" className="block text-sm font-medium text-foreground mb-2">
-                  Servicio de Interés *
+                  Servicio de interés *
                 </label>
                 <motion.select
                   id="service"
@@ -248,7 +255,7 @@ export const ContactForm: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
-                  placeholder="Descríbanos sus necesidades específicas..."
+                  placeholder="Descríbenos tus necesidades específicas..."
                   whileFocus={{
                     scale: 1.02,
                     transition: { duration: 0.2 }
@@ -301,7 +308,7 @@ export const ContactForm: React.FC = () => {
                 variants={fadeInUp}
                 transition={{ delay: 0.2 }}
               >
-                Al enviar este formulario, acepta que nos comuniquemos con usted
+                Al enviar este formulario, acepta que nos comuniquemos 
                 para proporcionarle la información solicitada.
               </motion.p>
             </StaggerItem>

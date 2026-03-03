@@ -4,11 +4,18 @@ import { Phone, Mail, MapPin, Clock, LucideIcon } from 'lucide-react';
  * TypeScript interfaces and data for Contact components
  */
 
+// 1. Creamos una nueva interfaz para los detalles individuales
+export interface ContactDetailItem {
+  text: string;
+  href?: string; // El enlace es opcional
+}
+
 export interface ContactInfoItem {
   icon: LucideIcon;
   title: string;
-  details: string[];
-  action: string;
+  // 2. Actualizamos details para usar la nueva estructura
+  details: ContactDetailItem[]; 
+  action?: string;
 }
 
 export interface FormData {
@@ -30,26 +37,37 @@ export const contactInfo: ContactInfoItem[] = [
   {
     icon: Phone,
     title: 'Teléfono',
-    details: ['+52 (777) 312 15 47', '+52 (777) 312 40 48', '+52 (777) 314 18 29'],
-    action: 'tel:+523336154291'
+    details: [
+      // Enlaces tel: para llamadas normales
+      { text: '+52 (777) 312 15 47', href: 'tel:+527773121547' },
+      { text: '+52 (777) 312 40 48', href: 'tel:+527773124048' },
+      // 3. AQUÍ ESTÁ EL CAMBIO PARA WHATSAPP
+      { text: 'WA (777) 314 18 29', href: 'https://wa.me/527773141829' }
+    ],
+    // action: 'tel:...' // Puedes quitar esto si ya tienes enlaces individuales arriba
   },
   {
     icon: Mail,
     title: 'Email',
-    details: ['info@felixreyescontadores.com'],
+    details: [
+      { text: 'info@felixreyescontadores.com', href: 'mailto:info@felixreyescontadores.com' }
+    ],
     action: 'mailto:contacto@felixreyes.com'
   },
   {
     icon: MapPin,
     title: 'Dirección',
-    details: ['Netzahualcoyotl 13, Cuernavaca Centro, Centro, 62000 Cuernavaca, Mor.'],
+    details: [
+      { text: 'Netzahualcoyotl 13, Cuernavaca Centro, Centro, 62000 Cuernavaca, Mor.', href: 'https://maps.google.com/?q=Netzahualcoyotl+13,+Cuernavaca' }
+    ],
     action: 'https://maps.app.goo.gl/3iuCi2EJB6zvPWRK8'
   },
   {
     icon: Clock,
     title: 'Horario',
-    details: ['Lunes a Viernes: 9:00 - 17:00'],
-    action: '#'
+    details: [
+      { text: 'Lunes a Viernes: 9:00 - 18:00' } // Sin href porque es solo texto
+    ]
   }
 ];
 

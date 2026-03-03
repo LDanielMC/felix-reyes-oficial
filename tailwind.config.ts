@@ -20,8 +20,20 @@ export default {
         "2xl": "1400px",
       },
     },
+    theme: {
+      // Si quieres mover fontFamily/container aquí también se puede,
+      // pero lo dejo como tú lo tenías arriba.
+    },
     extend: {
       colors: {
+        // 🎨 COLORES PANTONE PERSONALIZADOS
+        cafeOscuro: 'rgb(134, 67, 30)',  // Pantone 1615
+        naranja:    'rgb(255, 102, 0)',  // Pantone 144
+        amarillo:   'rgb(239, 189, 71)', // Pantone 142
+        verde:      'rgb(0, 125, 87)',   // Pantone 341
+        rojo:       'rgb(183, 18, 52)',  // Pantone 200
+
+        // 🎨 Colores basados en tus CSS variables
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

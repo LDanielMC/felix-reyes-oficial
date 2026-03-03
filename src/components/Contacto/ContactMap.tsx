@@ -30,7 +30,7 @@ export const ContactMap: React.FC = () => {
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
-            Visítenos en nuestra oficina para una consulta personalizada.
+            Visítanos en nuestra oficina para una consulta personalizada.
           </motion.p>
         </motion.div>
         <motion.div

@@ -7,6 +7,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { navigationItems, servicesData } from './navigation';
+import { FaTiktok } from 'react-icons/fa';
 
 // Animation variants for the menu items
 const containerVariants = {
@@ -179,7 +180,7 @@ export const MobileNav = ({
                                   }`}
                                   onClick={() => setIsMenuOpen(false)}
                                 >
-                                  Ver todos los servicios
+                                  Todos los servicios
                                 </NavLink>
                               </div>
                             </CollapsibleContent>
@@ -205,7 +206,7 @@ export const MobileNav = ({
                 ))}
                 <motion.div variants={itemVariants}>
                   <button onClick={handleContactClick} className="btn-secondary w-full mt-3 sm:mt-4 text-sm transition-transform hover:scale-105 active:scale-95 duration-200">
-                    Solicitar consulta
+                    Solicitar Consulta
                   </button>
                 </motion.div>
                 <motion.div variants={itemVariants} className="mt-6 flex justify-center space-x-6">
@@ -229,6 +230,17 @@ export const MobileNav = ({
                   >
                       <Instagram className="h-6 w-6" />
                   </motion.a>
+                  <motion.a
+                      href="https://www.tiktok.com/@felixreyescontadores"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.4 }}
+                  >
+                      <FaTiktok className="h-6 w-6" />
+                  </motion.a>
+
                 </motion.div>
               </motion.nav>
             </div>

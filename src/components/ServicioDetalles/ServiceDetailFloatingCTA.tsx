@@ -16,7 +16,7 @@ export const ServiceDetailFloatingCTA: React.FC = () => {
       transition={{ delay: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
     >
       <motion.a
-        href="https://wa.me/527773128687?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
+        href="https://wa.me/527773141829?text=Hola,%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white rounded-xl p-4 shadow-lg shadow-[#128C7E]/30 flex items-center justify-between w-full"
@@ -31,7 +31,7 @@ export const ServiceDetailFloatingCTA: React.FC = () => {
             <MessageCircle className="w-5 h-5" />
           </div>
           <div>
-            <p className="font-medium text-sm">¿Necesitas ayuda?</p>
+            <p className="font-medium text-sm">¿Necesitas Ayuda?</p>
             <p className="text-xs opacity-90">Chatea por WhatsApp</p>
           </div>
         </div>
