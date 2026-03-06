@@ -12,6 +12,7 @@ import CriptomonedasPost from "./pages/blog/CriptomonedasPost";
 import RegimenFiscal624Post from "./pages/blog/RegimenFiscal624Post";
 import PlataformasTecnologicasPost from "./pages/blog/PlataformasTecnologicasPost";
 import DepositosBancariosPost from "./pages/blog/DepositosBancariosPost";
+import ResumenEjecutivoPost from "./pages/blog/ResumenEjecutivoPost";
 import { ServiceDetail } from "./components/ServiceDetail";
 import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
@@ -81,6 +82,11 @@ const App = () => (
             <Route path="/blog/depositos-bancarios" element={
               <MainLayout>
                 <DepositosBancariosPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/resumen-ejecutivo" element={
+              <MainLayout>
+                <ResumenEjecutivoPost />
               </MainLayout>
             } />
             

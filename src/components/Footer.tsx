@@ -43,15 +43,15 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-primary text-white min-w-0 overflow-x-hidden">
       {/* Main Footer */}
-      <div className="container-custom py-8 md:py-12">
+      <div className="container-custom py-8 md:py-12 min-w-0">
         <StaggerContainer delay={0.1}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-full">
 
             {/* Company Info */}
             <StaggerItem>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 max-w-full overflow-hidden">
                 
                 {/* LOGO */}
                 <motion.div 
@@ -72,7 +72,7 @@ export const Footer = () => {
 
                 {/* Contact Info */}
                 <StaggerContainer delay={0.1}>
-                  <div className="space-y-2">
+                  <div className="space-y-2 max-w-full">
                     <StaggerItem>
                       <motion.div 
                         className="flex items-center space-x-3"
@@ -105,11 +105,11 @@ export const Footer = () => {
 
                     <StaggerItem>
                       <motion.div 
-                        className="flex items-center space-x-3"
+                        className="flex items-center space-x-3 max-w-full"
                         whileHover={{ x: 10 }}
                       >
-                        <Mail className="h-4 w-4 text-accent" />
-                        <span className="text-white/90 text-sm md:text-base break-all">
+                        <Mail className="h-4 w-4 text-accent flex-shrink-0" />
+                        <span className="text-white/90 text-sm md:text-base break-all overflow-wrap-anywhere">
                           info@felixreyescontadores.com
                         </span>
                       </motion.div>
@@ -117,11 +117,11 @@ export const Footer = () => {
 
                     <StaggerItem>
                       <motion.div 
-                        className="flex items-center space-x-3"
+                        className="flex items-center space-x-3 max-w-full"
                         whileHover={{ x: 10 }}
                       >
-                        <MapPin className="h-4 w-4 text-accent" />
-                        <span className="text-white/90 text-sm md:text-base">
+                        <MapPin className="h-4 w-4 text-accent flex-shrink-0" />
+                        <span className="text-white/90 text-sm md:text-base break-words">
                           Netzahualcoyotl 13, Cuernavaca Centro, 62000 Cuernavaca, Mor.
                         </span>
                       </motion.div>
@@ -132,12 +132,12 @@ export const Footer = () => {
                 {/* Social Media */}
                
                   <motion.div
-                    className="mt-6"
+                    className="mt-6 max-w-full"
                     variants={fadeInUp}
                     transition={{ delay: 0.5 }}
                   >
                     <h5 className="font-semibold mb-3 text-accent">Síguenos</h5>
-                    <div className="flex space-x-5">
+                    <div className="flex space-x-5 max-w-full">
                       <motion.a
                         href="https://www.facebook.com/felixreyescontadores/"
                         target="_blank"
@@ -173,7 +173,7 @@ export const Footer = () => {
 
             {/* Quick Links */}
             <StaggerItem>
-              <div>
+              <div className="max-w-full">
                 <motion.h4 
                   className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
@@ -183,7 +183,7 @@ export const Footer = () => {
                 </motion.h4>
 
                 <StaggerContainer delay={0.1}>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 max-w-full">
                     {quickLinks.map((link, index) => (
                       <StaggerItem key={index}>
                         <motion.li whileHover={{ x: 10 }}>
@@ -213,7 +213,7 @@ export const Footer = () => {
 
             {/* Services */}
             <StaggerItem>
-              <div>
+              <div className="max-w-full overflow-hidden">
                 <motion.h4
                   className="text-base md:text-lg font-heading font-semibold mb-4"
                   variants={fadeInUp}
@@ -223,7 +223,7 @@ export const Footer = () => {
                 </motion.h4>
 
                 <StaggerContainer delay={0.1}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 max-w-full">
                     {[col1, col2].map((col, colIndex) => (
                       <ul key={colIndex} className="space-y-2 list-disc pl-5 marker:text-white/60">
                         {col.map((service, index) => (
@@ -248,7 +248,7 @@ export const Footer = () => {
 
       {/* Bottom Bar */}
       <motion.div className="border-t border-white/20">
-        <div className="container-custom py-4">
+        <div className="container-custom py-4 min-w-0">
           <div className="flex flex-col sm:flex-row justify-between items-center text-xs sm:text-sm text-white/80 gap-3">
             <span>© {currentYear} Félix Reyes Contadores S.A. de C.V.</span>
             

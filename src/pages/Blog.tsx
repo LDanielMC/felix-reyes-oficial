@@ -27,6 +27,18 @@ type ContentCard = ArticleCard | VideoCard;
 const contentCards: ContentCard[] = [
   // Orden descendente por fecha: más reciente primero
   
+  // 4 de marzo, 2026
+  {
+    kind: 'article',
+    id: 'resumen-ejecutivo',
+    title: 'Reformas Fiscales 2026: Resumen Ejecutivo',
+    excerpt: 'Panorama completo de las reformas fiscales 2026',
+    date: '4 de marzo, 2026',
+    readTime: '15 min de lectura',
+    category: 'Fiscal',
+    imageUrl: '/reformasfiscales2.webp',
+  },
+
   // 3 de marzo, 2026
   {
     kind: 'article',

@@ -18,5 +18,6 @@ export const routes = [
   '/blog/criptomonedas',
   '/blog/regimen-fiscal-624',
   '/blog/plataformas-tecnologicas',
-  '/blog/depositos-bancarios'
+  '/blog/depositos-bancarios',
+  '/blog/resumen-ejecutivo',
 ];

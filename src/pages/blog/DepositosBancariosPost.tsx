@@ -26,18 +26,25 @@ const DepositosBancariosPost = () => {
   const [activeSection, setActiveSection] = useState('');
   const [readingProgress, setReadingProgress] = useState(0);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [showTableOfContents, setShowTableOfContents] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 400);
 
-      // Calcular progreso de lectura
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
       const scrolled = (window.scrollY / documentHeight) * 100;
       setReadingProgress(scrolled);
 
-      // Detectar sección activa
+      // Detectar si llegamos al footer
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerRect = footer.getBoundingClientRect();
+        const isNearFooter = footerRect.top < windowHeight;
+        setShowTableOfContents(!isNearFooter);
+      }
+
       const sections = tableOfContents.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 200;
 
@@ -82,7 +89,7 @@ const DepositosBancariosPost = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-24 md:pt-32">
+    <div className="min-h-screen bg-background pt-24 md:pt-32 relative">
       {/* Barra de progreso de lectura */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
         <motion.div
@@ -159,8 +166,10 @@ const DepositosBancariosPost = () => {
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Tabla de contenidos - Desktop sticky sidebar */}
           <aside className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-32">
-              <h3 className="text-lg font-serif font-bold text-foreground mb-4">Contenido</h3>
+            <div className={`fixed top-40 left-8 w-64 z-10 max-h-[calc(100vh-12rem)] overflow-y-auto bg-background/95 backdrop-blur-sm p-4 rounded-lg border border-border shadow-sm transition-opacity duration-300 ${
+              showTableOfContents ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}>
+              <h3 className="text-lg font-serif font-bold text-primary/90 mb-4">Contenido</h3>
               <nav className="space-y-2">
                 {tableOfContents.map((item) => (
                   <button
@@ -252,9 +261,9 @@ const DepositosBancariosPost = () => {
             
             <div className="border-t-2 border-primary mt-8 pt-8"></div>
 
-            <h2 id="planteamiento" className="text-3xl font-serif font-bold text-foreground mb-6 scroll-mt-32">PRESUNCIÓN DE INGRESOS POR DEPÓSITOS BANCARIOS</h2>
+            <h2 id="planteamiento" className="text-3xl font-serif font-bold text-primary mb-6 scroll-mt-32">PRESUNCIÓN DE INGRESOS POR DEPÓSITOS BANCARIOS</h2>
             
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">PLANTEAMIENTO</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">PLANTEAMIENTO</h3>
             <p className="leading-relaxed">
               Derivado de la Reforma Fiscal 2026, ha surgido la interpretación de que la autoridad fiscal podrá presumir ingresos acumulables cuando la suma de depósitos bancarios exceda de $2,028,610.00.
             </p>
@@ -262,7 +271,7 @@ const DepositosBancariosPost = () => {
               Se analiza si dicho monto constituye un límite "libre" de fiscalización cuando no se está inscrito en el Registro Federal de Contribuyentes.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">FUNDAMENTO LEGAL</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">FUNDAMENTO LEGAL</h3>
             
             <h4 className="text-xl font-serif font-bold text-foreground mt-6 mb-3">Artículo 59, fracción III del Código Fiscal de la Federación:</h4>
             <p className="leading-relaxed">
@@ -274,7 +283,7 @@ const DepositosBancariosPost = () => {
               Establece la obligación de inscribirse en el RFC cuando se realicen actividades económicas o se obtengan ingresos.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">ANÁLISIS TÉCNICO</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">ANÁLISIS TÉCNICO</h3>
             <ol className="list-decimal pl-6 space-y-2 my-4">
               <li>La presunción de ingresos no depende exclusivamente del monto de $2,028,610.00.</li>
               <li>Dicho monto no constituye una exención ni un "margen libre" para realizar depósitos.</li>
@@ -282,7 +291,7 @@ const DepositosBancariosPost = () => {
               <li>La presunción admite prueba en contrario, siempre que se demuestre documentalmente el origen de los recursos.</li>
             </ol>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">IMPLICACIONES DE NO ESTAR INSCRITO EN EL RFC</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">IMPLICACIONES DE NO ESTAR INSCRITO EN EL RFC</h3>
             <p className="leading-relaxed">
               Cuando una persona no se encuentra inscrita en el RFC y recibe depósitos bancarios derivados de actividades económicas:
             </p>
@@ -293,7 +302,7 @@ const DepositosBancariosPost = () => {
               <li>Puede iniciarse procedimiento de discrepancia fiscal (en caso de persona física).</li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">CONCLUSIÓN</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">CONCLUSIÓN</h3>
             <p className="leading-relaxed">
               No existe en la legislación fiscal una "zona libre" de depósitos hasta $2,028,610.00.
             </p>
@@ -309,8 +318,8 @@ const DepositosBancariosPost = () => {
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="tasas-retencion-isr" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">TASAS DE RETENCIÓN DE ISR SOBRE INTERESES</h2>
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">EJERCICIOS 2022-2026</h3>
+            <h2 id="tasas-retencion-isr" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">TASAS DE RETENCIÓN DE ISR SOBRE INTERESES</h2>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">EJERCICIOS 2022-2026</h3>
 
             <h4 className="text-xl font-serif font-bold text-foreground mt-6 mb-3">MARCO GENERAL</h4>
             <p className="leading-relaxed">
@@ -372,8 +381,8 @@ const DepositosBancariosPost = () => {
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="modificaciones-ieps" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">MODIFICACIONES A LAS TASAS DEL IEPS</h2>
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">TABLA COMPARATIVA 2025 vs 2026</h3>
+            <h2 id="modificaciones-ieps" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">MODIFICACIONES A LAS TASAS DEL IEPS</h2>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">TABLA COMPARATIVA 2025 vs 2026</h3>
             <p className="leading-relaxed">
               Se presenta la tabla comparativa de las principales modificaciones a las tasas del Impuesto Especial sobre Producción y Servicios (IEPS) derivadas de la Reforma Fiscal 2026, comparando las tasas vigentes en 2025 contra las nuevas tasas aplicables a partir del 1° de enero de 2026.
             </p>
@@ -444,14 +453,14 @@ const DepositosBancariosPost = () => {
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="repatriacion-capitales" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">ESTÍMULOS DE REPATRIACIÓN DE CAPITALES 2026</h2>
+            <h2 id="repatriacion-capitales" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">ESTÍMULOS DE REPATRIACIÓN DE CAPITALES 2026</h2>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">MARCO GENERAL</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">MARCO GENERAL</h3>
             <p className="leading-relaxed">
               La Ley de Ingresos de la Federación para el ejercicio fiscal 2026 establece un estímulo fiscal en materia de repatriación de capitales, mediante el cual los contribuyentes que retornen o ingresen al país recursos mantenidos en el extranjero podrán optar por el pago de un Impuesto Sobre la Renta (ISR) definitivo a una tasa fija del 15%, sin derecho a deducción alguna.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">BASE GRAVABLE</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">BASE GRAVABLE</h3>
             <p className="leading-relaxed">
               La tasa del 15% se aplica sobre el monto total de los recursos que efectivamente se retornen o ingresen al país, es decir, sobre el importe bruto repatriado.
             </p>
@@ -467,7 +476,7 @@ const DepositosBancariosPost = () => {
               En consecuencia, el impuesto no se calcula sobre la diferencia entre el tipo de cambio vigente al momento en que los recursos fueron enviados al extranjero y el tipo de cambio vigente al momento del retorno, sino sobre la totalidad del importe que ingresa a México, convertido a moneda nacional al tipo de cambio aplicable en la fecha de retorno.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">NATURALEZA DEL IMPUESTO</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">NATURALEZA DEL IMPUESTO</h3>
             <p className="leading-relaxed">El ISR pagado bajo este esquema tiene carácter definitivo, por lo que:</p>
             <ul className="list-disc pl-6 space-y-2 my-4">
               <li>No se acumula a los demás ingresos del contribuyente.</li>
@@ -475,7 +484,7 @@ const DepositosBancariosPost = () => {
               <li>No permite deducciones adicionales.</li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">CONSIDERACIONES ADICIONALES</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">CONSIDERACIONES ADICIONALES</h3>
             <p className="leading-relaxed">
               Para acceder al estímulo, deberán cumplirse los requisitos establecidos en la Ley de Ingresos y en las disposiciones de carácter general que emita el Servicio de Administración Tributaria, incluyendo el destino de los recursos a inversiones productivas en el país y su permanencia durante el plazo que establezca la normatividad aplicable.
             </p>
@@ -490,7 +499,7 @@ const DepositosBancariosPost = () => {
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="cfdi-falsos" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">CFDI FALSOS O APÓCRIFOS EN MÉXICO</h2>
+            <h2 id="cfdi-falsos" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">CFDI FALSOS O APÓCRIFOS EN MÉXICO</h2>
 
             <p className="leading-relaxed">
               Existen distintos supuestos en los que un CFDI puede considerarse falso, apócrifo o derivado de una operación inexistente, aun cuando no provenga directamente de una Empresa que Factura Operaciones Simuladas (EFOS).
@@ -499,7 +508,7 @@ const DepositosBancariosPost = () => {
               Fundamento legal principal: Artículo 69-B del Código Fiscal de la Federación.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">SUPUESTOS PRINCIPALES</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">SUPUESTOS PRINCIPALES</h3>
 
             <h4 className="text-xl font-serif font-bold text-foreground mt-6 mb-3">1. CFDI derivados de EFOS</h4>
             <ul className="list-disc pl-6 space-y-2 my-4">
@@ -519,7 +528,7 @@ const DepositosBancariosPost = () => {
               <li><strong>CFDI cancelados sin validación del receptor.</strong></li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">PROCEDIMIENTO PARA VALIDAR UN CFDI</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">PROCEDIMIENTO PARA VALIDAR UN CFDI</h3>
 
             <p className="leading-relaxed"><strong>Paso 1.</strong> Verificar en el portal del SAT:</p>
             <ul className="list-disc pl-6 space-y-2 my-4">
@@ -544,7 +553,7 @@ const DepositosBancariosPost = () => {
               <li>Reportes, fotografías o bitácoras según corresponda</li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">RIESGOS FISCALES</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">RIESGOS FISCALES</h3>
             <ul className="list-disc pl-6 space-y-2 my-4">
               <li>No deducibilidad en ISR.</li>
               <li>No acreditamiento de IVA</li>
@@ -553,16 +562,16 @@ const DepositosBancariosPost = () => {
               <li>Posible responsabilidad penal conforme al artículo 113 Bis del CFF.</li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">CONCLUSIÓN</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">CONCLUSIÓN</h3>
             <p className="leading-relaxed">
               El hecho de que un CFDI esté timbrado no garantiza la materialidad ni la deducibilidad de la operación. La autoridad fiscal actualmente verifica no solo la existencia formal del comprobante, sino la sustancia económica y la realidad de la operación.
             </p>
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="big-data-ml" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">HERRAMIENTAS DE BIG DATA, MACHINE LEARNING Y ANÁLISIS GEOESPACIAL</h2>
+            <h2 id="big-data-ml" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">HERRAMIENTAS DE BIG DATA, MACHINE LEARNING Y ANÁLISIS GEOESPACIAL</h2>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">BIG DATA</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">BIG DATA</h3>
             <p className="leading-relaxed">
               Big Data se refiere al conjunto de tecnologías que permiten procesar, almacenar y analizar volúmenes masivos de información que no pueden ser manejados con herramientas tradicionales. Se caracteriza por las siguientes dimensiones:
             </p>
@@ -577,7 +586,7 @@ const DepositosBancariosPost = () => {
               En materia fiscal, permite analizar millones de comprobantes fiscales digitales (CFDI), cruzar información bancaria y detectar patrones de evasión o simulación.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">MACHINE LEARNING</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">MACHINE LEARNING</h3>
             <p className="leading-relaxed">
               Machine Learning es una rama de la inteligencia artificial que permite a los sistemas aprender automáticamente a partir de datos históricos y detectar patrones sin necesidad de reglas previamente programadas. Sus principales aplicaciones incluyen:
             </p>
@@ -590,7 +599,7 @@ const DepositosBancariosPost = () => {
               En fiscalización, permite identificar probabilidades de evasión, detectar redes de empresas que simulan operaciones y analizar la materialidad de las transacciones.
             </p>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">ANÁLISIS GEOESPACIAL</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">ANÁLISIS GEOESPACIAL</h3>
             <p className="leading-relaxed">
               El análisis geoespacial consiste en el estudio de datos vinculados a una ubicación geográfica específica, utilizando mapas digitales, coordenadas GPS y sistemas de información territorial. Permite:
             </p>
@@ -601,7 +610,7 @@ const DepositosBancariosPost = () => {
               <li>Detectar operaciones territorialmente inconsistentes.</li>
             </ul>
 
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">CONCLUSIÓN</h3>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">CONCLUSIÓN</h3>
             <p className="leading-relaxed">
               Estas herramientas tecnológicas permiten a las autoridades fiscales realizar análisis masivos, predictivos y territoriales, fortaleciendo la detección de operaciones simuladas, la verificación de la materialidad y la identificación de riesgos fiscales.
             </p>
@@ -611,8 +620,8 @@ const DepositosBancariosPost = () => {
 
             <div className="border-t-2 border-primary mt-16 pt-8"></div>
 
-            <h2 id="plataformas-digitales" className="text-3xl font-serif font-bold text-foreground mt-12 mb-6 scroll-mt-32">RÉGIMEN DE PLATAFORMAS DIGITALES EN MÉXICO</h2>
-            <h3 className="text-2xl font-serif font-bold text-foreground mt-8 mb-4">Reforma Fiscal y Miscelánea Fiscal 2026</h3>
+            <h2 id="plataformas-digitales" className="text-3xl font-serif font-bold text-primary mt-12 mb-6 scroll-mt-32">RÉGIMEN DE PLATAFORMAS DIGITALES EN MÉXICO</h2>
+            <h3 className="text-2xl font-serif font-bold text-primary/90 mt-8 mb-4">Reforma Fiscal y Miscelánea Fiscal 2026</h3>
 
             <h4 className="text-xl font-serif font-bold text-foreground mt-6 mb-3">ORIGEN DEL RÉGIMEN</h4>
             <p className="leading-relaxed">
