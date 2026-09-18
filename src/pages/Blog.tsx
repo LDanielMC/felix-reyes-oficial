@@ -1,6 +1,7 @@
 import { motion, Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Youtube } from 'lucide-react';
+import { useSeoMeta } from '../hooks/useSeoMeta';
 
 type BaseCard = {
   id: string;
@@ -26,13 +27,61 @@ type ContentCard = ArticleCard | VideoCard;
 // === Ejemplos: mezcla artículos y videos ===
 const contentCards: ContentCard[] = [
   // Orden descendente por fecha: más reciente primero
-  
+
+  // 7 de agosto, 2026
+  {
+    kind: 'article',
+    id: 'buzon-tributario-estatal-morelos',
+    title: 'Nuevo Buzón Tributario Estatal de Morelos',
+    excerpt: 'El Gobierno de Morelos puso en operación el Buzón Tributario Estatal: notificaciones con plena validez jurídica para contribuyentes del Registro Estatal.',
+    date: '7 de agosto, 2026',
+    readTime: '6 min de lectura',
+    category: 'Fiscal',
+    imageUrl: '/buzon-tributario.webp',
+  },
+
+  // 9 de julio, 2026
+  {
+    kind: 'article',
+    id: 'depositos-efectivo-140000',
+    title: 'Depósitos y retiros en efectivo de $140,000 o más',
+    excerpt: '¿Existe una nueva obligación fiscal? Análisis jurídico y fiscal sobre la medida bancaria vigente desde el 1 de julio de 2026.',
+    date: '9 de julio, 2026',
+    readTime: '10 min de lectura',
+    category: 'Fiscal',
+    imageUrl: '/depositos-efectivo.webp',
+  },
+
+  // 9 de mayo, 2026
+  {
+    kind: 'article',
+    id: 'reforma-laboral-2026',
+    title: 'Reforma a la Ley Federal del Trabajo 2026',
+    excerpt: 'Jornada de 40 horas, límites de horas extras y registros electrónicos: lo que toda empresa debe saber sobre la reforma laboral.',
+    date: '9 de mayo, 2026',
+    readTime: '8 min de lectura',
+    category: 'Laboral',
+    imageUrl: '/reforma-laboral.webp',
+  },
+
+  // 9 de abril, 2026
+  {
+    kind: 'article',
+    id: 'declaracion-anual',
+    title: 'Declaración Anual de Personas Físicas',
+    excerpt: 'Conoce si estás obligado a presentarla, qué documentos necesitas y cómo cumplir antes del 30 de abril.',
+    date: '9 de abril, 2026',
+    readTime: '5 min de lectura',
+    category: 'Fiscal',
+    imageUrl: '/declaracion-anual.webp',
+  },
+
   // 4 de marzo, 2026
   {
     kind: 'article',
     id: 'resumen-ejecutivo',
     title: 'Reformas Fiscales 2026: Resumen Ejecutivo',
-    excerpt: 'Panorama completo de las reformas fiscales 2026',
+    excerpt: 'Panorama de las reformas fiscales 2026: fiscalización, CFDI, due diligence, plataformas digitales y RESICO.',
     date: '4 de marzo, 2026',
     readTime: '15 min de lectura',
     category: 'Fiscal',
@@ -44,7 +93,7 @@ const contentCards: ContentCard[] = [
     kind: 'article',
     id: 'depositos-bancarios',
     title: 'Reformas fiscales 2026: Información complementaria',
-    excerpt: 'Todo sobre las Reformas Fiscales 2026: depósitos bancarios, tasas ISR/IEPS, repatriación, CFDI y plataformas digitales.',
+    excerpt: 'Depósitos bancarios, tasas ISR/IEPS, repatriación de capitales, CFDI y plataformas digitales en las reformas 2026.',
     date: '3 de marzo, 2026',
     readTime: '8 min de lectura',
     category: 'Fiscal',
@@ -68,7 +117,7 @@ const contentCards: ContentCard[] = [
     kind: 'video',
     id: 'video-SAT',
     title: '¿Qué es el SAT y por qué es importante estar al día?',
-    excerpt: 'Conoce qué es el SAT, para qué sirve y por qué es clave mantener tus obligaciones fiscales al día.',
+    excerpt: 'Conoce qué es el SAT y por qué es clave mantener tus obligaciones fiscales al día.',
     date: '24 de septiembre, 2025',
     readTime: '50 seg',
     category: 'Video',
@@ -93,7 +142,7 @@ const contentCards: ContentCard[] = [
     kind: 'article',
     id: 'plataformas-tecnologicas',
     title: 'Régimen de Plataformas Tecnológicas',
-    excerpt: 'Si obtienes ingresos a través de plataformas como Uber, Airbnb o Mercado Libre, este régimen es para ti. Conoce tus obligaciones.',
+    excerpt: 'Ingresos por Uber, Airbnb o Mercado Libre: conoce tus obligaciones fiscales en el Régimen de Plataformas.',
     date: '22 de septiembre, 2025',
     readTime: '11 min de lectura',
     category: 'Fiscal',
@@ -105,7 +154,7 @@ const contentCards: ContentCard[] = [
     kind: 'article',
     id: 'criptomonedas',
     title: 'Criptomonedas: Regulación y Aspectos Fiscales',
-    excerpt: 'Todo lo que necesitas saber sobre criptomonedas, su regulación en México y los aspectos fiscales relevantes para su operación.',
+    excerpt: 'Regulación de criptomonedas en México y los aspectos fiscales clave para su operación.',
     date: '28 de agosto, 2025',
     readTime: '9 min de lectura',
     category: 'Fiscal',
@@ -117,7 +166,7 @@ const contentCards: ContentCard[] = [
     kind: 'article',
     id: 'regimen-fiscal-624',
     title: 'Régimen Fiscal 624: Coordinados',
-    excerpt: 'Guía completa sobre el Régimen de Coordinados para el sector de autotransporte, incluyendo requisitos, obligaciones y estímulos fiscales.',
+    excerpt: 'Régimen de Coordinados para autotransporte: requisitos, obligaciones y estímulos fiscales.',
     date: '25 de agosto, 2025',
     readTime: '7 min de lectura',
     category: 'Fiscal',
@@ -173,6 +222,7 @@ const formatDate = (dateString: string) => {
 };
 
 export default function Blog() {
+  useSeoMeta();
   return (
     <div className="min-h-screen bg-background pt-24 md:pt-32">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">

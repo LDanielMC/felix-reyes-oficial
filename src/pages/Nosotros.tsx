@@ -3,6 +3,7 @@ import { NosotrosHeader } from '../components/Nosotros/NosotrosHeader';
 import { NosotrosTrayectoria } from '../components/Nosotros/NosotrosTrayectoria';
 import { NosotrosMisionVision } from '../components/Nosotros/NosotrosMisionVision';
 import { NosotrosValores } from '../components/Nosotros/NosotrosValores';
+import { useSeoMeta } from '../hooks/useSeoMeta';
 
 /**
  * Nosotros component
@@ -10,6 +11,7 @@ import { NosotrosValores } from '../components/Nosotros/NosotrosValores';
  * Refactored into smaller, reusable subcomponents for better maintainability.
  */
 const Nosotros = memo(() => {
+  useSeoMeta();
   return (
     <div className="bg-background">
       <NosotrosHeader />

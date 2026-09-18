@@ -31,6 +31,67 @@ const ResumenEjecutivoPost = () => {
   const [showTableOfContents, setShowTableOfContents] = useState(true);
 
   useEffect(() => {
+    const PAGE_URL = 'https://felixreyescontadores.com.mx/blog/resumen-ejecutivo';
+    const PAGE_TITLE = 'Reformas Fiscales 2026: Resumen Ejecutivo | Félix Reyes Contadores';
+    const PAGE_DESC = 'Panorama completo de las reformas fiscales 2026 en México: fiscalización, CFDI, due diligence, plataformas digitales, RESICO e impuesto cedular en Morelos.';
+    const PAGE_IMAGE = 'https://felixreyescontadores.com.mx/reformasfiscales2.webp';
+
+    document.title = PAGE_TITLE;
+    const setMeta = (name: string, content: string, prop = false) => {
+      const attr = prop ? 'property' : 'name';
+      let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    setMeta('description', PAGE_DESC);
+    setMeta('keywords', 'reformas fiscales 2026, CFDI 2026, RESICO 2026, fiscalización SAT, due diligence fiscal, plataformas digitales impuestos, impuesto cedular Morelos, contador Cuernavaca');
+    setMeta('og:title', PAGE_TITLE, true);
+    setMeta('og:description', PAGE_DESC, true);
+    setMeta('og:image', PAGE_IMAGE, true);
+    setMeta('og:image:width', '1200', true);
+    setMeta('og:image:height', '630', true);
+    setMeta('og:url', PAGE_URL, true);
+    setMeta('og:type', 'article', true);
+    setMeta('og:locale', 'es_MX', true);
+    setMeta('article:published_time', '2026-03-04', true);
+    setMeta('article:author', 'Félix Reyes Contadores', true);
+    setMeta('article:section', 'Fiscal', true);
+    setMeta('twitter:title', PAGE_TITLE);
+    setMeta('twitter:description', PAGE_DESC);
+    setMeta('twitter:image', PAGE_IMAGE);
+
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical); }
+    const prevCanonical = canonical.href;
+    canonical.setAttribute('href', PAGE_URL);
+
+    const schema = document.createElement('script');
+    schema.type = 'application/ld+json';
+    schema.id = 'article-schema';
+    schema.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      'headline': 'Reformas Fiscales 2026: Resumen Ejecutivo',
+      'description': PAGE_DESC,
+      'image': PAGE_IMAGE,
+      'datePublished': '2026-03-04',
+      'dateModified': '2026-03-04',
+      'author': { '@type': 'Organization', 'name': 'Félix Reyes Contadores', 'url': 'https://felixreyescontadores.com.mx' },
+      'publisher': { '@type': 'Organization', 'name': 'Félix Reyes Contadores', 'logo': { '@type': 'ImageObject', 'url': 'https://felixreyescontadores.com.mx/favicon.png' } },
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': PAGE_URL },
+      'inLanguage': 'es-MX',
+      'keywords': 'reformas fiscales 2026, CFDI, RESICO, fiscalización SAT, due diligence, plataformas digitales'
+    });
+    document.head.appendChild(schema);
+
+    return () => {
+      document.title = 'Félix Reyes Contadores - Servicios Contables y Fiscales Profesionales';
+      canonical.setAttribute('href', prevCanonical);
+      document.getElementById('article-schema')?.remove();
+    };
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 400);
 

@@ -13,6 +13,10 @@ import RegimenFiscal624Post from "./pages/blog/RegimenFiscal624Post";
 import PlataformasTecnologicasPost from "./pages/blog/PlataformasTecnologicasPost";
 import DepositosBancariosPost from "./pages/blog/DepositosBancariosPost";
 import ResumenEjecutivoPost from "./pages/blog/ResumenEjecutivoPost";
+import DeclaracionAnualPost from "./pages/blog/DeclaracionAnualPost";
+import ReformaLaboralPost from "./pages/blog/ReformaLaboralPost";
+import DepositosEfectivoPost from "./pages/blog/DepositosEfectivoPost";
+import BuzonTributarioPost from "./pages/blog/BuzonTributarioPost";
 import { ServiceDetail } from "./components/ServiceDetail";
 import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
@@ -87,6 +91,26 @@ const App = () => (
             <Route path="/blog/resumen-ejecutivo" element={
               <MainLayout>
                 <ResumenEjecutivoPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/declaracion-anual" element={
+              <MainLayout>
+                <DeclaracionAnualPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/reforma-laboral-2026" element={
+              <MainLayout>
+                <ReformaLaboralPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/depositos-efectivo-140000" element={
+              <MainLayout>
+                <DepositosEfectivoPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/buzon-tributario-estatal-morelos" element={
+              <MainLayout>
+                <BuzonTributarioPost />
               </MainLayout>
             } />
             

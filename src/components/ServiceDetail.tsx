@@ -8,6 +8,7 @@ import { ServiceDetailHeader } from './ServicioDetalles/ServiceDetailHeader';
 import { ServiceDetailContent } from './ServicioDetalles/ServiceDetailContent';
 import { ServiceDetailNextServices } from './ServicioDetalles/ServiceDetailNextServices';
 import { ServiceDetailFloatingCTA } from './ServicioDetalles/ServiceDetailFloatingCTA';
+import { useSeoMeta } from '../hooks/useSeoMeta';
 
 /**
  * ServiceDetail component
@@ -17,6 +18,7 @@ import { ServiceDetailFloatingCTA } from './ServicioDetalles/ServiceDetailFloati
 export const ServiceDetail = memo(() => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const service = servicesData.find(s => s.id === serviceId);
+  useSeoMeta(`https://felixreyescontadores.com.mx/servicios/${serviceId}`);
 
   if (!service) {
     return <ServiceDetailNotFound />;

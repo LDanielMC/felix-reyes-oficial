@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { ServiciosHeader } from './Servicios/ServiciosHeader';
 import { ServiciosList } from './Servicios/ServiciosList';
+import { useSeoMeta } from '../hooks/useSeoMeta';
 
 /**
  * Services component
@@ -8,6 +9,7 @@ import { ServiciosList } from './Servicios/ServiciosList';
  * Refactored into smaller, reusable subcomponents for better maintainability.
  */
 export const Services = memo(() => {
+  useSeoMeta();
   return (
     <>
       <ServiciosHeader />

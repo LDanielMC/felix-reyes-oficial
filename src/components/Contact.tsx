@@ -3,6 +3,7 @@ import { ContactHeader } from './Contacto/ContactHeader';
 import { ContactInfo } from './Contacto/ContactInfo';
 import { ContactForm } from './Contacto/ContactForm';
 import { ContactMap } from './Contacto/ContactMap';
+import { useSeoMeta } from '../hooks/useSeoMeta';
 
 /**
  * Contact component
@@ -10,6 +11,7 @@ import { ContactMap } from './Contacto/ContactMap';
  * Refactored into smaller, reusable subcomponents for better maintainability.
  */
 export const Contact = () => {
+  useSeoMeta();
   return (
     <>
       <section id="contacto" className="section-padding bg-gradient-subtle pt-40">
