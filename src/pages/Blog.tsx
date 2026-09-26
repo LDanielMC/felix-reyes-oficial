@@ -28,6 +28,18 @@ type ContentCard = ArticleCard | VideoCard;
 const contentCards: ContentCard[] = [
   // Orden descendente por fecha: más reciente primero
 
+  // 11 de septiembre, 2026
+  {
+    kind: 'article',
+    id: 'reforma-fiscal-2027',
+    title: 'Proyecto de Reforma Fiscal 2027',
+    excerpt: 'Avance informativo del Paquete Económico 2027: RESICO ampliado, IVA simplificado de 7%, límites a deducciones e intereses y mayor fiscalización.',
+    date: '11 de septiembre, 2026',
+    readTime: '12 min de lectura',
+    category: 'Fiscal',
+    imageUrl: '/reforma-fiscal-2027.webp',
+  },
+
   // 7 de agosto, 2026
   {
     kind: 'article',

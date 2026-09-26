@@ -90,6 +90,17 @@
 
   <!-- Blog: Buzón Tributario Estatal Morelos (más reciente) -->
   <url>
+    <loc>https://felixreyescontadores.com.mx/blog/reforma-fiscal-2027</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://felixreyescontadores.com.mx/reforma-fiscal-2027.webp</image:loc>
+      <image:title>Proyecto de Reforma Fiscal 2027: propuestas en ISR, IVA y Código Fiscal de la Federación</image:title>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://felixreyescontadores.com.mx/blog/buzon-tributario-estatal-morelos</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>yearly</changefreq>

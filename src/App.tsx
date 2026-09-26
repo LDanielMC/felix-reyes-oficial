@@ -17,6 +17,7 @@ import DeclaracionAnualPost from "./pages/blog/DeclaracionAnualPost";
 import ReformaLaboralPost from "./pages/blog/ReformaLaboralPost";
 import DepositosEfectivoPost from "./pages/blog/DepositosEfectivoPost";
 import BuzonTributarioPost from "./pages/blog/BuzonTributarioPost";
+import ReformaFiscal2027Post from "./pages/blog/ReformaFiscal2027Post";
 import { ServiceDetail } from "./components/ServiceDetail";
 import { Services } from "./components/Services";
 import { MainLayout } from "./components/layout/MainLayout";
@@ -111,6 +112,11 @@ const App = () => (
             <Route path="/blog/buzon-tributario-estatal-morelos" element={
               <MainLayout>
                 <BuzonTributarioPost />
+              </MainLayout>
+            } />
+            <Route path="/blog/reforma-fiscal-2027" element={
+              <MainLayout>
+                <ReformaFiscal2027Post />
               </MainLayout>
             } />
             
